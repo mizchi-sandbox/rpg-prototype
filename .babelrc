@@ -1,0 +1,21 @@
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "Chorme": 56
+      }
+    }],
+    "@mizchi/babel-preset"
+  ],
+  "plugins": [
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "react": "inferno-compat",
+        "react-dom": "inferno-compat",
+        "react-redux": "inferno-redux",
+        "inferno": "inferno-compat"
+      }
+    }]
+  ]
+}
