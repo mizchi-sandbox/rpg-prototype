@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react'
 import { connect } from 'react-redux'
+// eslint-disable-next-line
 import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 import Battle from '../components/Battle'
 import type {

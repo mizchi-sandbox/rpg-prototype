@@ -1,0 +1,5 @@
+extends: mizchi
+rules:
+  object-curly-spacing:
+    - 2
+    - always

@@ -50,7 +50,7 @@ export default (
   state: State = initialState,
   action: Action
 ) => {
-  switch(action.type) {
+  switch (action.type) {
     case RESET:
       return initialState
     default:
