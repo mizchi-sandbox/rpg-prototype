@@ -1,7 +1,8 @@
 /* @flow */
 // TODO
-// import { delay, takeEvery } from 'redux-saga'
+import { fork } from 'redux-saga/lib/effects'
+import battleSaga from './battle-saga'
 
 export default function * rootSaga (): any {
-  // yield fork(taskListSaga)
+  yield fork(battleSaga)
 }

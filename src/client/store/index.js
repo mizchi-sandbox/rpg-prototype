@@ -9,8 +9,6 @@ import mySaga from '../sagas'
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(reducer, applyMiddleware(promiseMiddleware, logger, sagaMiddleware))
-// see https://github.com/reactjs/react-router-redux/issues/348#issuecomment-286657767
-// export const history = syncHistoryWithStore(createBrowserHistory(), store)
 sagaMiddleware.run(mySaga)
 
 export default store

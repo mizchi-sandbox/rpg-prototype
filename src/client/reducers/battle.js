@@ -2,14 +2,18 @@
 
 // Actions
 export const RESET = 'battle:reset'
-export const STEP_TO_NEXT_TURN = 'battle:step-to-next-turn'
+export const PROCESS_TURN_START = 'battle:process-turn:start'
+export const PROCESS_TURN_END = 'battle:process-turn:end'
 
 export type Action =
   | {
     type: typeof RESET
   }
   | {
-    type: typeof STEP_TO_NEXT_TURN
+    type: typeof PROCESS_TURN_START
+  }
+  | {
+    type: typeof PROCESS_TURN_END
   }
 
 export type Battler = {
@@ -18,9 +22,9 @@ export type Battler = {
   life: number
 }
 
-export const stepToNextTurn = () => {
+export const processTurnStart = () => {
   return {
-    type: STEP_TO_NEXT_TURN
+    type: PROCESS_TURN_START
   }
 }
 
@@ -28,7 +32,7 @@ export const stepToNextTurn = () => {
 export type State = {
   allies: Battler[],
   enemies: Battler[],
-  count: number
+  turn: number
 }
 
 const initialState: State = {
@@ -42,7 +46,19 @@ const initialState: State = {
       name: 'goblin', count: 0, life: 15
     }
   ],
-  count: 0
+  turn: 0
+}
+
+function processTurn (s: State) {
+  const allies = s.allies.map(ally => ({
+    ...ally,
+    count: ally.count + 1
+  }))
+  const enemies = s.enemies.map(enemy => ({
+    ...enemy,
+    count: enemy.count + 1
+  }))
+  return { turn: s.turn + 1, allies, enemies }
 }
 
 // Reducer
@@ -51,6 +67,8 @@ export default (
   action: Action
 ) => {
   switch (action.type) {
+    case PROCESS_TURN_END:
+      return processTurn(state)
     case RESET:
       return initialState
     default:

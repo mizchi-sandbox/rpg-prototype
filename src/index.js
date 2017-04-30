@@ -5,7 +5,7 @@ import startApp from './client'
 
 // HMR
 setStatefulModules(name => {
-  return /init\.js/.test(name)
+  return /init\.js|middlewares/.test(name)
 })
 
 startApp()
