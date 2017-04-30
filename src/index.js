@@ -1,4 +1,3 @@
-/* @flow */
 import startApp from './ui'
 
 // HMR

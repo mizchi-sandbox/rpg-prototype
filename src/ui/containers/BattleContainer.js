@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Battle from '../components/Battle'
-import type { Dispatcher, Connector } from '../types'
+import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 import type { State, Action } from '../reducers/battle'
 
 function BattleContainer (
