@@ -3,12 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "ava": {
+    "babel": "inherit",
+    "files": [
+      "src/**/*.test.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
+  },
   "scripts": {
     "build": "node fuse-build.js",
-    "watch": "WATCH=1 node fuse-build.js"
+    "watch": "WATCH=1 node fuse-build.js",
+    "test": "ava"
   },
   "devDependencies": {
     "@mizchi/babel-preset": "^1.0.2",
+    "ava": "^0.19.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
     "babel-plugin-module-resolver": "^2.7.0",
@@ -21,6 +32,7 @@
     "webpack-bundle-analyzer": "^2.4.0"
   },
   "dependencies": {
+    "flux-standard-action": "^1.2.0",
     "inferno": "^3.0.4",
     "inferno-compat": "^3.0.4",
     "inferno-redux": "^3.0.4",

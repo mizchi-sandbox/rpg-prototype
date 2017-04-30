@@ -1,3 +1,4 @@
+/* eslint-disable */
 const { FuseBox, BabelPlugin } = require("fuse-box")
 
 const ctx = FuseBox.init({

@@ -5,27 +5,46 @@ export const RESET = 'battle:reset'
 export const PROCESS_TURN_START = 'battle:process-turn:start'
 export const PROCESS_TURN_END = 'battle:process-turn:end'
 
-export type Action =
-  | {
-    type: typeof RESET
-  }
-  | {
-    type: typeof PROCESS_TURN_START
-  }
-  | {
-    type: typeof PROCESS_TURN_END
-  }
-
-export type Battler = {
-  name: string,
-  count: number,
-  life: number
+export type ResetAction = {
+  type: typeof RESET
 }
 
-export const processTurnStart = () => {
+export type ProcessTurnStartAction = {
+  type: typeof PROCESS_TURN_START
+}
+
+export type ProcessTurnEndAction = {
+  type: typeof PROCESS_TURN_END
+}
+
+export type Action =
+  | ResetAction
+  | ProcessTurnStartAction
+  | ProcessTurnEndAction
+
+type ConsumableValue = {
+  val: number,
+  max: number
+}
+
+export const processTurnStart = (): ProcessTurnStartAction => {
   return {
     type: PROCESS_TURN_START
   }
+}
+
+export type Skill = {
+  skillId: number,
+  displayName: string,
+  actionCost: number,
+  type: 'auto' | 'exec'
+}
+
+export type Battler = {
+  name: string,
+  ap: ConsumableValue,
+  life: number,
+  skills: Skill[]
 }
 
 // State
@@ -35,29 +54,66 @@ export type State = {
   turn: number
 }
 
-const initialState: State = {
+export type BattleState = State
+
+const initialState: BattleState = {
   allies: [
     {
-      name: 'mizchi', count: 0, life: 50
+      name: 'mizchi',
+      life: 50,
+      ap: { val: 0, max: 15 },
+      skills: [
+        {
+          skillId: 0,
+          displayName: 'Attack',
+          actionCost: 5,
+          type: 'exec'
+        },
+        {
+          skillId: 1,
+          displayName: 'PowerAttack',
+          actionCost: 9,
+          type: 'exec'
+        }
+      ]
+
     }
   ],
   enemies: [
     {
-      name: 'goblin', count: 0, life: 15
+      name: 'goblin',
+      life: 15,
+      ap: { val: 0, max: 10 },
+      skills: [
+        {
+          skillId: 0,
+          displayName: 'Attack',
+          actionCost: 8,
+          type: 'auto'
+        }
+      ]
     }
   ],
   turn: 0
 }
 
-function processTurn (s: State) {
-  const allies = s.allies.map(ally => ({
-    ...ally,
-    count: ally.count + 1
-  }))
-  const enemies = s.enemies.map(enemy => ({
-    ...enemy,
-    count: enemy.count + 1
-  }))
+// domain code
+function processButtler (battler: Battler): Battler {
+  return {
+    ...battler,
+    ap: {
+      ...battler.ap,
+      val: Math.min(
+        battler.ap.val + 1,
+        battler.ap.max
+      )
+    }
+  }
+}
+
+function processTurn (s: State): State {
+  const allies = s.allies.map(processButtler)
+  const enemies = s.enemies.map(processButtler)
   return { turn: s.turn + 1, allies, enemies }
 }
 
