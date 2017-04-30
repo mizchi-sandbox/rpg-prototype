@@ -48,7 +48,7 @@ fs.writeFileSync(
 console.log('> gen/types.js')
 
 fs.writeFileSync(
-  path.resolve(__dirname, '../gen/data.json'),
-  JSON.stringify(all)
+  path.resolve(__dirname, '../gen/data.js'),
+  '/* eslint-disable */\nmodule.exports =' + JSON.stringify(all)
 )
-console.log('> gen/data.json')
+console.log('> gen/data.js')

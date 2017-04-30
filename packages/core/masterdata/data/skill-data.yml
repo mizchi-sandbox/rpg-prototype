@@ -1,5 +1,11 @@
 -
   id: $attack
-  actionCost: 30
-  displayName: attack
+  actionCost: 5
+  displayName: Attack
   type: auto
+
+-
+  id: $power-attack
+  actionCost: 8
+  displayName: Power Attack
+  type: exec

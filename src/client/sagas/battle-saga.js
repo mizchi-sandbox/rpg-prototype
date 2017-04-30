@@ -1,5 +1,6 @@
 /* @flow */
 import { takeEvery, put } from 'redux-saga/lib/effects'
+import loadMaster from 'core/lib/loadMaster'
 import type { BattleState } from 'core/lib/battle'
 import { processTurn } from 'core/lib/battle'
 import { START, START_REQUEST, TICK, TICK_REQUEST } from '../reducers/battle'
@@ -11,20 +12,9 @@ const initialState: BattleState = {
       life: 50,
       ap: { val: 0, max: 15 },
       skills: [
-        {
-          skillId: 0,
-          displayName: 'Attack',
-          actionCost: 5,
-          type: 'exec'
-        },
-        {
-          skillId: 1,
-          displayName: 'PowerAttack',
-          actionCost: 9,
-          type: 'exec'
-        }
+        loadMaster('skill', '$attack'),
+        loadMaster('skill', '$power-attack')
       ]
-
     }
   ],
   enemies: [
@@ -33,12 +23,7 @@ const initialState: BattleState = {
       life: 15,
       ap: { val: 0, max: 10 },
       skills: [
-        {
-          skillId: 0,
-          displayName: 'Attack',
-          actionCost: 8,
-          type: 'auto'
-        }
+        loadMaster('skill', '$attack')
       ]
     }
   ],

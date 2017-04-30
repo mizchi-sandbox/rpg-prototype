@@ -1,5 +1,5 @@
 /* eslint-disable */
-const { FuseBox, BabelPlugin } = require("fuse-box")
+const { FuseBox, BabelPlugin, JSONPlugin } = require("fuse-box")
 
 const ctx = FuseBox.init({
   homeDir: "src/",
@@ -9,7 +9,8 @@ const ctx = FuseBox.init({
   },
   outFile: "./public/bundle.js",
   plugins: [
-    BabelPlugin()
+    BabelPlugin(),
+    JSONPlugin()
   ]
 })
 

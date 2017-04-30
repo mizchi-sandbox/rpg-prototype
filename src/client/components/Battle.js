@@ -62,7 +62,7 @@ export default class Battle extends Component {
               </div>
               {
                 battler.skills.map(skill => {
-                  return <SkillIcon {...skill} key={skill.skillId}/>
+                  return <SkillIcon {...skill} key={skill.id}/>
                 })
               }
             </div>
