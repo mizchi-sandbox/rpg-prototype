@@ -1,26 +1,31 @@
 /* @flow */
 import { takeEvery, put } from 'redux-saga/lib/effects'
-import loadMaster from 'core/lib/loadMaster'
-import type { BattleState } from 'core/lib/battle'
-import { processTurn } from 'core/lib/battle'
+import loadMaster from '../../domain/loadMaster'
+import { processTurn } from '../../domain/battle'
+import type { BattleState } from '../../domain/battle'
 import { START, START_REQUEST, TICK, TICK_REQUEST } from '../reducers/battle'
 
 const initialState: BattleState = {
-  allies: [
+  actionQueue: [],
+  battlers: [
     {
+      side: 'ally',
+      formationOrder: 0,
+      id: 'ally-0',
       name: 'mizchi',
-      life: 50,
+      life: { val: 50, max: 50 },
       ap: { val: 0, max: 15 },
       skills: [
         loadMaster('skill', '$attack'),
         loadMaster('skill', '$power-attack')
       ]
-    }
-  ],
-  enemies: [
+    },
     {
+      side: 'enemy',
+      formationOrder: 0,
+      id: 'enemy-0',
       name: 'goblin',
-      life: 15,
+      life: { val: 30, max: 30 },
       ap: { val: 0, max: 10 },
       skills: [
         loadMaster('skill', '$attack')

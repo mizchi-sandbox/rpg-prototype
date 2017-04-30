@@ -10,6 +10,12 @@ export const add: (ConsumableValue, number) => ConsumableValue =
     max: cv.max
   })
 
+export const consume: (ConsumableValue, number) => ConsumableValue =
+  (cv, n) => ({
+    val: Math.max(cv.val - n, 0) | 0,
+    max: cv.max
+  })
+
 export const increment: ConsumableValue => ConsumableValue =
   cv => ({
     val: Math.min(cv.val + 1, cv.max) | 0,

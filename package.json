@@ -13,14 +13,15 @@
     ]
   },
   "scripts": {
+    "gen": "node script/gen-code.js",
+    "prepare": "rm -r .fusebox; yarn gen",
     "build": "node fuse-build.js",
-    "watch:core": "cd packages/core; yarn watch",
-    "watch:main": "rm -r .fuse-box; WATCH=1 node fuse-build.js",
-    "watch": "run-p watch:*",
+    "watch:main": "WATCH=1 node fuse-build.js",
+    "watch": "yarn prepare; run-p watch:*",
     "test": "ava"
   },
   "devDependencies": {
-    "@mizchi/babel-preset": "^1.0.2",
+    "@mizchi/babel-preset": "^1.1.0",
     "ava": "^0.19.1",
     "babel-core": "^6.24.1",
     "babel-loader": "^6.4.1",
@@ -30,7 +31,10 @@
     "eslint-config-mizchi": "^1.0.0",
     "flow-bin": "^0.45.0",
     "fuse-box": "^1.3.131",
+    "json-schema-to-flow-type": "^0.2.6",
     "npm-run-all": "^4.0.2",
+    "require-yaml": "^0.0.1",
+    "tv4": "^1.3.0",
     "webpack": "^2.4.1",
     "webpack-bundle-analyzer": "^2.4.0"
   },

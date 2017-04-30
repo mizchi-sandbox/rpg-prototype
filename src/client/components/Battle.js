@@ -1,17 +1,21 @@
 /* @flow */
 import React, { Component } from 'react'
-import type { Skill } from 'core/lib/battle'
+import type { Skill } from '../../gen/types'
 import { tickRequest, startRequest } from '../reducers/battle'
 import type { BattleContainerProps } from '../containers/BattleContainer'
 
 export function SkillIcon (
-  props: Skill
+  props: {
+    skill: Skill,
+    onSelect: Function
+  },
 ) {
-  return <div onClick={_ev => {
-    console.log('skill clicked', props)
+  return <span onClick={_ev => {
+    // console.log('skill clicked', props)
+    props.onSelect(props.skill)
   }}>
-    {props.displayName}: {props.actionCost}
-  </div>
+    {props.skill.displayName}: {props.skill.actionCost} |
+  </span>
 }
 
 export default class Battle extends Component {
@@ -48,21 +52,26 @@ export default class Battle extends Component {
       return <h1>Loading</h1>
     } else {
       const battleState = this.props.battleState
-      const battlers = [].concat(battleState.allies).concat(battleState.enemies)
       return <div className='battle'>
         <span>{battleState.turn}</span>
         {
-          battlers.map(battler => {
+          battleState.battlers.map(battler => {
             return <div key={battler.name}>
               <div>
-                {battler.name}: {battler.life}
+                {battler.name}: {battler.life.val} / {battler.life.max}
               </div>
               <div>
                 AP: {battler.ap.val} / {battler.ap.max}
               </div>
               {
                 battler.skills.map(skill => {
-                  return <SkillIcon {...skill} key={skill.id}/>
+                  return <SkillIcon
+                    skill={skill}
+                    key={skill.id}
+                    onSelect={_sk => {
+                      // props.dispatch()
+                    }
+                  }/>
                 })
               }
             </div>

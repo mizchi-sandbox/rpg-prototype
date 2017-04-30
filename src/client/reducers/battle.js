@@ -1,5 +1,5 @@
 /* @flow */
-import type { BattleState } from 'core/lib/battle'
+import type { BattleState } from '../../domain/battle'
 
 // Start
 export const START = 'battle:start'
@@ -33,6 +33,25 @@ export const tickRequest = (): TickRequestAction => {
   }
 }
 
+// Add Skill
+export const ADD_ACTION_TO_QUEUE = 'battle:add-action-to-queue'
+export type AddActionToQueueAction = {
+  type: typeof ADD_ACTION_TO_QUEUE,
+  payload: {
+    battlerId: string,
+    skillId: string
+  }
+}
+
+export const addSkillToQueue = (battlerId: string, skillId: string): AddActionToQueueAction => {
+  return {
+    type: ADD_ACTION_TO_QUEUE,
+    payload: {
+      battlerId, skillId
+    }
+  }
+}
+
 // Reset
 export const RESET = 'battle:reset'
 export type ResetAction = {
@@ -45,6 +64,7 @@ export type Action =
   | StartRequestAction
   | StartAction
   | ResetAction
+  | AddActionToQueueAction
 
 export type State = {
   battleState: ?BattleState,

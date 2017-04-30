@@ -42,13 +42,13 @@ const all = {}
 })
 
 fs.writeFileSync(
-  path.resolve(__dirname, '../gen/types.js'),
+  path.resolve(__dirname, '../src/gen/types.js'),
   codeStr.join('\n')
 )
 console.log('> gen/types.js')
 
 fs.writeFileSync(
-  path.resolve(__dirname, '../gen/data.js'),
+  path.resolve(__dirname, '../src/gen/data.js'),
   '/* eslint-disable */\nmodule.exports =' + JSON.stringify(all)
 )
 console.log('> gen/data.js')
