@@ -1,0 +1,11 @@
+required:
+  - id
+  - displayName
+  - stackable
+properties:
+  id:
+    type: string
+  displayName:
+    type: string
+  stackable:
+    type: 'boolean'

@@ -1,0 +1,14 @@
+required:
+  - id
+  - displayName
+  - life
+  - mana
+properties:
+  id:
+    type: string
+  displayName:
+    type: string
+  life:
+    type: string
+  mana:
+    type: string

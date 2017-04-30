@@ -1,0 +1,11 @@
+-
+  id: $goblin-lv1x2
+  monsters:
+    -
+      displayName: goblin(1)
+      monster_id: goblin
+      lv: 1
+    -
+      displayName: goblin(2)
+      monster_id: goblin
+      lv: 1

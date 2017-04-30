@@ -1,0 +1,10 @@
+properties:
+  id:
+    type: 'string'
+  displayName:
+    type: 'string'
+  stackable: # Optional default true
+    type: 'boolean'
+required:
+  - id
+  - displayName

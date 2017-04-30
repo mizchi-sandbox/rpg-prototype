@@ -1,0 +1,15 @@
+properties:
+  id:
+    type: 'string'
+  displayName:
+    type: 'string'
+  race_id:
+    type: 'string'
+  job_id:
+    type: 'string'
+
+required:
+  - id
+  - displayName
+  - race_id
+  - job_id

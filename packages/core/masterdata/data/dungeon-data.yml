@@ -1,0 +1,12 @@
+-
+  id: cave
+  displayName: 谷
+  description: Cave
+  troopIds:
+    - goblin-lv1x2
+-
+  id: forest
+  displayName: 森
+  description: Forest
+  troopIds:
+    - goblin-lv1x2

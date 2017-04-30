@@ -1,120 +1,61 @@
 /* @flow */
+import type { BattleState } from 'core/lib/battle'
 
-// Actions
+// Start
+export const START = 'battle:start'
+export const START_REQUEST = 'battle:start:request'
+export type StartRequestAction = {
+  type: typeof START_REQUEST
+}
+export type StartAction = {
+  type: typeof START,
+  payload: BattleState
+}
+export const startRequest = (): StartRequestAction => {
+  return {
+    type: START_REQUEST
+  }
+}
+
+// Tick
+export const TICK = 'battle:tick'
+export const TICK_REQUEST = 'battle:tick:request'
+export type TickRequestAction = {
+  type: typeof TICK_REQUEST
+}
+export type TickAction = {
+  type: typeof TICK,
+  payload: BattleState
+}
+export const tickRequest = (): TickRequestAction => {
+  return {
+    type: TICK_REQUEST
+  }
+}
+
+// Reset
 export const RESET = 'battle:reset'
-export const PROCESS_TURN_START = 'battle:process-turn:start'
-export const PROCESS_TURN_END = 'battle:process-turn:end'
-
 export type ResetAction = {
   type: typeof RESET
 }
 
-export type ProcessTurnStartAction = {
-  type: typeof PROCESS_TURN_START
-}
-
-export type ProcessTurnEndAction = {
-  type: typeof PROCESS_TURN_END
-}
-
 export type Action =
+  | TickAction
+  | TickRequestAction
+  | StartRequestAction
+  | StartAction
   | ResetAction
-  | ProcessTurnStartAction
-  | ProcessTurnEndAction
 
-type ConsumableValue = {
-  val: number,
-  max: number
-}
-
-export const processTurnStart = (): ProcessTurnStartAction => {
-  return {
-    type: PROCESS_TURN_START
-  }
-}
-
-export type Skill = {
-  skillId: number,
-  displayName: string,
-  actionCost: number,
-  type: 'auto' | 'exec'
-}
-
-export type Battler = {
-  name: string,
-  ap: ConsumableValue,
-  life: number,
-  skills: Skill[]
-}
-
-// State
 export type State = {
-  allies: Battler[],
-  enemies: Battler[],
-  turn: number
+  battleState: ?BattleState,
+  loading: boolean,
+  active: boolean
 }
 
-export type BattleState = State
-
-const initialState: BattleState = {
-  allies: [
-    {
-      name: 'mizchi',
-      life: 50,
-      ap: { val: 0, max: 15 },
-      skills: [
-        {
-          skillId: 0,
-          displayName: 'Attack',
-          actionCost: 5,
-          type: 'exec'
-        },
-        {
-          skillId: 1,
-          displayName: 'PowerAttack',
-          actionCost: 9,
-          type: 'exec'
-        }
-      ]
-
-    }
-  ],
-  enemies: [
-    {
-      name: 'goblin',
-      life: 15,
-      ap: { val: 0, max: 10 },
-      skills: [
-        {
-          skillId: 0,
-          displayName: 'Attack',
-          actionCost: 8,
-          type: 'auto'
-        }
-      ]
-    }
-  ],
-  turn: 0
-}
-
-// domain code
-function processButtler (battler: Battler): Battler {
-  return {
-    ...battler,
-    ap: {
-      ...battler.ap,
-      val: Math.min(
-        battler.ap.val + 1,
-        battler.ap.max
-      )
-    }
-  }
-}
-
-function processTurn (s: State): State {
-  const allies = s.allies.map(processButtler)
-  const enemies = s.enemies.map(processButtler)
-  return { turn: s.turn + 1, allies, enemies }
+const initialState: State = {
+  loading: true,
+  active: true,
+  battleState: null
 }
 
 // Reducer
@@ -123,8 +64,29 @@ export default (
   action: Action
 ) => {
   switch (action.type) {
-    case PROCESS_TURN_END:
-      return processTurn(state)
+    case START_REQUEST:
+      return {
+        ...state,
+        battleState: null,
+        loading: false
+      }
+    case START:
+      return {
+        ...state,
+        battleState: action.payload,
+        loading: false
+      }
+    case TICK_REQUEST:
+      return {
+        ...state,
+        loading: true
+      }
+    case TICK:
+      return {
+        ...state,
+        battleState: action.payload,
+        loading: true
+      }
     case RESET:
       return initialState
     default:

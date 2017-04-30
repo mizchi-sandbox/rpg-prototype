@@ -1,0 +1,20 @@
+-
+  id: $warrior
+  displayName: Warrior
+  life: lv * 10 + status.str * 4
+  mana: lv * 3 + status.int * 3
+-
+  id: $mage
+  displayName: Mage
+  life: lv * 6 + status.str * 2
+  mana: lv * 5 + status.int * 5
+-
+  id: $rogue
+  displayName: Rogue
+  life: lv * 8 + status.str * 3
+  mana: lv * 4 + status.int * 4
+-
+  id: $novice
+  displayName: Novice
+  life: lv * 5 + status.str * 2
+  mana: lv * 4 + status.int * 2

@@ -1,0 +1,14 @@
+required:
+  - id
+  - type
+  - displayName
+  - actionCost
+properties:
+  id:
+    type: string
+  displayName:
+    type: string
+  type:
+    type: string
+  actionCost:
+    type: number

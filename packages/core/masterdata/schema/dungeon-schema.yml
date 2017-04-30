@@ -1,0 +1,13 @@
+properties:
+  id:
+    type: 'string'
+  displayName:
+    type: 'string'
+  troopIds:
+    type: 'array'
+    item:
+      type: 'string'
+required:
+  - id
+  - displayName
+  - troopIds

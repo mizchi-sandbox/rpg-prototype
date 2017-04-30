@@ -1,0 +1,9 @@
+-
+  id: $goblin
+  displayName: goblin
+  race_id: goblin
+  job_id: novice
+  status:
+    str: 10
+    int: 10
+    dex: 10

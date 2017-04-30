@@ -1,0 +1,17 @@
+required:
+  - id
+  - monsters
+properties:
+  id:
+    type: string
+  monsters:
+    type: array
+    item:
+      required:
+        - monster_id
+        - displayName
+      properties:
+        monster_id:
+          type: 'string'
+        displayName:
+          type: 'string'

@@ -6,6 +6,7 @@
 .*/node_modules/stylelint.*
 
 [include]
+./packages/core
 
 [libs]
 ./decls

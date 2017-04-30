@@ -1,0 +1,5 @@
+-
+  id: $attack
+  actionCost: 30
+  displayName: attack
+  type: auto

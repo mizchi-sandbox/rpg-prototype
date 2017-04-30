@@ -1,0 +1,12 @@
+-
+  id: $iron-ore
+  displayName: Iron Ore
+  stackable: true
+-
+  id: $iron-bar
+  displayName: Iron Bar
+  stackable: true
+-
+  id: $iron-ingot
+  displayName: Iron Ingot
+  stackable: true
