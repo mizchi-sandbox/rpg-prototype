@@ -1,4 +1,5 @@
-import startApp from './ui'
+import './init'
+import startApp from './client'
 
 // HMR
 import {setStatefulModules} from 'fuse-box/modules/fuse-hmr'

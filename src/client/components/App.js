@@ -8,7 +8,6 @@ import BattleContainer from '../containers/BattleContainer'
 export default (props: any) => {
   return <Provider store={store}>
     <Layout>
-      <h1>App</h1>
       <BattleContainer/>
     </Layout>
   </Provider>
