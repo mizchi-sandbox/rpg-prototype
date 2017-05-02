@@ -3,10 +3,10 @@ import { takeEvery, put } from 'redux-saga/lib/effects'
 import loadMaster from '../../domain/loadMaster'
 import { processTurn } from '../../domain/battle'
 import type { BattleState } from '../../domain/battle'
-import { START, START_REQUEST, TICK, TICK_REQUEST } from '../reducers/battle'
+import { START, START_REQUEST, TICK, TICK_REQUEST, ADD_INPUT_TO_QUEUE } from '../reducers/battle'
 
 const initialState: BattleState = {
-  actionQueue: [],
+  inputQueue: [],
   battlers: [
     {
       side: 'ally',
@@ -36,7 +36,7 @@ const initialState: BattleState = {
 }
 
 let _state: ?BattleState = null
-function * startRequest (_action: any): Generator<*, void, *> {
+function * startRequest (_action: any) {
   _state = initialState
   yield put({
     type: START,
@@ -54,7 +54,16 @@ function * tickRequest () {
   }
 }
 
+function * addInputToQueue (action: any) {
+  if (_state) {
+    _state = {
+      ..._state,
+      inputQueue: _state.inputQueue.concat([action.payload])
+    }
+  }
+}
 export default function * battleSaga (): any {
   yield takeEvery(START_REQUEST, startRequest)
+  yield takeEvery(ADD_INPUT_TO_QUEUE, addInputToQueue)
   yield takeEvery(TICK_REQUEST, tickRequest)
 }

@@ -27,6 +27,7 @@
     "babel-preset-env": "^1.4.0",
     "eslint": "^3.19.0",
     "eslint-config-mizchi": "^1.0.0",
+    "eslint-plugin-mutation": "^1.0.0",
     "flow-bin": "^0.45.0",
     "fuse-box": "^1.3.131",
     "json-schema-to-flow-type": "^0.2.6",
@@ -45,6 +46,7 @@
     "redux-logger": "^3.0.1",
     "redux-promise": "^0.5.3",
     "redux-saga": "^0.15.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "seamless-immutable": "^7.1.2"
   }
 }

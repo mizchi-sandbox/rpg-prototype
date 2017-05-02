@@ -1,7 +1,15 @@
 extends: mizchi
+plugins:
+  - mutation
 rules:
   no-duplicate-imports: 0
   import/no-extraneous-dependencies: 0
   object-curly-spacing:
     - 2
     - always
+  mutation/no-mutation:
+    - 2
+    -
+      execptions:
+        this
+        exports

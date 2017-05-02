@@ -34,18 +34,18 @@ export const tickRequest = (): TickRequestAction => {
 }
 
 // Add Skill
-export const ADD_ACTION_TO_QUEUE = 'battle:add-action-to-queue'
-export type AddActionToQueueAction = {
-  type: typeof ADD_ACTION_TO_QUEUE,
+export const ADD_INPUT_TO_QUEUE = 'battle:add-action-to-queue'
+export type AddInputToQueueAction = {
+  type: typeof ADD_INPUT_TO_QUEUE,
   payload: {
     battlerId: string,
     skillId: string
   }
 }
 
-export const addSkillToQueue = (battlerId: string, skillId: string): AddActionToQueueAction => {
+export const addInputToQueue = (battlerId: string, skillId: string): AddInputToQueueAction => {
   return {
-    type: ADD_ACTION_TO_QUEUE,
+    type: ADD_INPUT_TO_QUEUE,
     payload: {
       battlerId, skillId
     }
@@ -64,7 +64,7 @@ export type Action =
   | StartRequestAction
   | StartAction
   | ResetAction
-  | AddActionToQueueAction
+  | AddInputToQueueAction
 
 export type State = {
   battleState: ?BattleState,

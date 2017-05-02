@@ -9,7 +9,7 @@ export type ActionQueue = {
 
 // State
 export type BattleState = {
-  actionQueue: ActionQueue[],
+  inputQueue: ActionQueue[],
   battlers: Battler[],
   turn: number
 }
@@ -19,13 +19,12 @@ export function consumeActionQueue (s: BattleState): BattleState {
 }
 
 export function processTurn (s: BattleState): BattleState {
-  const actionQueue = []
+  const inputQueue = []
   const battlers = s.battlers.map(battler => {
     // TODO: Select
     const skill = battler.skills[0]
     if (skill && (skill.actionCost <= battler.ap.val)) {
-      // debugger
-      actionQueue.push({
+      inputQueue.push({
         battlerId: battler.id,
         skillId: skill.id
       })
@@ -40,5 +39,5 @@ export function processTurn (s: BattleState): BattleState {
       }
     }
   })
-  return { turn: s.turn + 1, battlers, actionQueue }
+  return { turn: s.turn + 1, battlers, inputQueue }
 }
