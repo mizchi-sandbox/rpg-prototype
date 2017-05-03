@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react'
 import { connect } from 'react-redux'
-// eslint-disable-next-line
-import type { Dispatcher, Connector } from '@mizchi/redux-helper'
-import Battle from '../components/Battle'
+import Battle from '../components/pages/Battle'
 import type { State } from '../reducers/battle'
 import type { BattleAction } from '../actions/battleActions'
+// eslint-disable-next-line
+import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 
 export type BattleContainerProps = State & Dispatcher<BattleAction>
 

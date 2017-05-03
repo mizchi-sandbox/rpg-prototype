@@ -1,8 +1,7 @@
 /* @flow */
 import { delay } from 'redux-saga'
 import { take, takeEvery, put, call, race } from 'redux-saga/lib/effects'
-import loadMaster from '../../domain/loadMaster'
-import { processTurn } from '../../domain/battle'
+import { processTurn, createBattleMock } from '../../domain/battle'
 import { sync } from '../actions/battleSagaActions'
 
 import type { BattleState } from '../../domain/battle'
@@ -11,39 +10,9 @@ import {
   paused, restarted
 } from '../actions/battleActions'
 
-const initialState: BattleState = {
-  inputQueue: [],
-  battlers: [
-    {
-      side: 'ally',
-      formationOrder: 0,
-      id: 'ally-0',
-      name: 'mizchi',
-      life: { val: 50, max: 50 },
-      ap: { val: 0, max: 15 },
-      skills: [
-        loadMaster('skill', '$attack'),
-        loadMaster('skill', '$power-attack')
-      ]
-    },
-    {
-      side: 'enemy',
-      formationOrder: 0,
-      id: 'enemy-0',
-      name: 'goblin',
-      life: { val: 30, max: 30 },
-      ap: { val: 0, max: 10 },
-      skills: [
-        loadMaster('skill', '$attack')
-      ]
-    }
-  ],
-  turn: 0
-}
-
 let _state: ?BattleState = null
 function * start (_action: any) {
-  _state = initialState
+  _state = createBattleMock()
   yield put(sync(_state))
   while (true) {
     // Wait or Pause

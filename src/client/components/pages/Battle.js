@@ -1,22 +1,8 @@
 /* @flow */
 import React, { Component } from 'react'
-import type { Skill } from '../../gen/types'
-import { requestStart, requestPause, requestRestart } from '../actions/battleActions'
-import type { BattleContainerProps } from '../containers/BattleContainer'
-
-export function SkillIcon (
-  props: {
-    skill: Skill,
-    onSelect: Function
-  },
-) {
-  return <span onClick={_ev => {
-    // console.log('skill clicked', props)
-    props.onSelect(props.skill)
-  }}>
-    {props.skill.displayName}: {props.skill.actionCost} |
-  </span>
-}
+import { requestStart, requestPause, requestRestart } from '../../actions/battleActions'
+import type { BattleContainerProps } from '../../containers/BattleContainer'
+import SkillBar from '../molecules/SkillBar'
 
 export default class Battle extends Component {
   props: BattleContainerProps
@@ -36,19 +22,16 @@ export default class Battle extends Component {
       return <h1>Loading</h1>
     } else {
       const battleState = this.props.battleState
-      // debugger
       return <div className='battle'>
         { this.props.paused
-          ?
-            <button
+          ? <button
               onClick={_ => {
                 this.props.dispatch(requestRestart())
               }}
             >
               Restart
             </button>
-          :
-            <button
+          : <button
               onClick={_ => {
                 this.props.dispatch(requestPause())
               }}
@@ -67,17 +50,7 @@ export default class Battle extends Component {
               <div>
                 AP: {battler.ap.val} / {battler.ap.max}
               </div>
-              {
-                battler.skills.map(skill => {
-                  return <SkillIcon
-                    skill={skill}
-                    key={skill.id}
-                    onSelect={_sk => {
-                      // props.dispatch()
-                    }
-                  }/>
-                })
-              }
+              <SkillBar skills={battler.skills} />
             </div>
           })
         }
