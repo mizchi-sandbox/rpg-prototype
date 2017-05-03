@@ -13,6 +13,16 @@ export const startRequest = (): StartRequestAction => {
     type: START_REQUEST
   }
 }
+// Pause
+export const PAUSE_REQUEST = 'battle:pause:request'
+export type PauseRequestAction = {
+  type: typeof START_REQUEST
+}
+export const pauseRequest = (): StartRequestAction => {
+  return {
+    type: START_REQUEST
+  }
+}
 
 // Add input
 export const ADD_INPUT_TO_QUEUE = 'battle:add-action-to-queue'

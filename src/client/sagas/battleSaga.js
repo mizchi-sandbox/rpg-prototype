@@ -1,9 +1,10 @@
 /* @flow */
 import { takeEvery, put, call } from 'redux-saga/lib/effects'
+import { delay } from 'redux-saga'
 import loadMaster from '../../domain/loadMaster'
 import { processTurn } from '../../domain/battle'
 import type { BattleState } from '../../domain/battle'
-import { START_REQUEST, ADD_INPUT_TO_QUEUE } from '../reducers/battle'
+import { START_REQUEST, PAUSE_REQUEST, ADD_INPUT_TO_QUEUE } from '../reducers/battle'
 
 // Action
 export const SYNC = 'battel-saga/sync'
@@ -47,14 +48,12 @@ const initialState: BattleState = {
   turn: 0
 }
 
-const wait = () => new Promise(resolve => setTimeout(resolve, 2000))
-
 let _state: ?BattleState = null
-function * startRequest (_action: any) {
+function * start (_action: any) {
   _state = initialState
   yield put(sync(_state))
   while (true) {
-    yield call(wait)
+    yield call(delay, 2000)
     _state = processTurn(_state)
     yield put(sync(_state))
   }
@@ -70,7 +69,7 @@ function * addInputToQueue (action: any) {
 }
 
 export default function * battleSaga (): any {
-  yield takeEvery(START_REQUEST, startRequest)
+  yield takeEvery(START_REQUEST, start)
   yield takeEvery(ADD_INPUT_TO_QUEUE, addInputToQueue)
   // yield takeEvery(TICK_REQUEST, tickRequest)
 }
