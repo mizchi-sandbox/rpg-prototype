@@ -5,7 +5,7 @@ import loadMaster from '../../domain/loadMaster'
 import { processTurn } from '../../domain/battle'
 import type { BattleState } from '../../domain/battle'
 import {
-  START_REQUEST, PAUSE_REQUEST, RESTART_REQUEST, ADD_INPUT_TO_QUEUE,
+  REQUEST_START, REQUEST_PAUSE, REQUEST_RESTART, ADD_INPUT_TO_QUEUE,
   paused, restarted
 } from '../actions/battleActions'
 
@@ -59,13 +59,13 @@ function * start (_action: any) {
     // Wait or Pause
     const { _paused } = yield race({
       _waited: call(delay, 1000),
-      _paused: take(PAUSE_REQUEST)
+      _paused: take(REQUEST_PAUSE)
     })
 
     // if user request pausing, wait for restart
     if (_paused) {
       yield put(paused())
-      yield take(RESTART_REQUEST)
+      yield take(REQUEST_RESTART)
       yield put(restarted())
     }
 
@@ -85,6 +85,6 @@ function * addInputToQueue (action: any) {
 }
 
 export default function * battleSaga (): any {
-  yield takeEvery(START_REQUEST, start)
+  yield takeEvery(REQUEST_START, start)
   yield takeEvery(ADD_INPUT_TO_QUEUE, addInputToQueue)
 }

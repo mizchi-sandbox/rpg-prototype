@@ -3,7 +3,7 @@ import * as BattleSaga from '../sagas/battleSaga'
 import type { BattleState } from '../../domain/battle'
 import type { SyncAction } from '../sagas/battleSaga'
 import {
-  START_REQUEST,
+  REQUEST_START,
   RESTARTED,
   PAUSED,
   RESET
@@ -29,7 +29,7 @@ export default (
   action: BattleAction | SyncAction
 ) => {
   switch (action.type) {
-    case START_REQUEST:
+    case REQUEST_START:
       return {
         ...state,
         battleState: null,
