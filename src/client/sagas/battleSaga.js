@@ -1,10 +1,13 @@
 /* @flow */
-import { takeEvery, put, call } from 'redux-saga/lib/effects'
+import { take, takeEvery, put, call, race } from 'redux-saga/lib/effects'
 import { delay } from 'redux-saga'
 import loadMaster from '../../domain/loadMaster'
 import { processTurn } from '../../domain/battle'
 import type { BattleState } from '../../domain/battle'
-import { START_REQUEST, PAUSE_REQUEST, ADD_INPUT_TO_QUEUE } from '../reducers/battle'
+import {
+  START_REQUEST, PAUSE_REQUEST, RESTART_REQUEST, ADD_INPUT_TO_QUEUE,
+  paused, restarted
+} from '../reducers/battle'
 
 // Action
 export const SYNC = 'battel-saga/sync'
@@ -53,7 +56,20 @@ function * start (_action: any) {
   _state = initialState
   yield put(sync(_state))
   while (true) {
-    yield call(delay, 2000)
+    // Wait or Pause
+    const { _paused } = yield race({
+      _waited: call(delay, 1000),
+      _paused: take(PAUSE_REQUEST)
+    })
+
+    // if user request pausing, wait for restart
+    if (_paused) {
+      yield put(paused())
+      yield take(RESTART_REQUEST)
+      yield put(restarted())
+    }
+
+    // Update state
     _state = processTurn(_state)
     yield put(sync(_state))
   }

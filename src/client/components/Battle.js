@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import type { Skill } from '../../gen/types'
 import { startRequest } from '../reducers/battle'
 import type { BattleContainerProps } from '../containers/BattleContainer'
+import { pauseRequest, restartRequest } from '../reducers/battle'
 
 export function SkillIcon (
   props: {
@@ -32,12 +33,31 @@ export default class Battle extends Component {
   }
 
   render () {
-    // const props = this.props
     if (!this.props.battleState) {
       return <h1>Loading</h1>
     } else {
       const battleState = this.props.battleState
+      // debugger
       return <div className='battle'>
+        { this.props.paused
+          ?
+            <button
+              onClick={_ => {
+                this.props.dispatch(restartRequest())
+              }}
+            >
+              Restart
+            </button>
+          :
+            <button
+              onClick={_ => {
+                this.props.dispatch(pauseRequest())
+              }}
+            >
+              Pause
+            </button>
+        }
+        <hr/>
         <span>{battleState.turn}</span>
         {
           battleState.battlers.map(battler => {
