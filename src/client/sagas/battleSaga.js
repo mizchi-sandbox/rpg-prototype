@@ -1,9 +1,21 @@
 /* @flow */
-import { takeEvery, put } from 'redux-saga/lib/effects'
+import { takeEvery, put, call } from 'redux-saga/lib/effects'
 import loadMaster from '../../domain/loadMaster'
 import { processTurn } from '../../domain/battle'
 import type { BattleState } from '../../domain/battle'
-import { START, START_REQUEST, TICK, TICK_REQUEST, ADD_INPUT_TO_QUEUE } from '../reducers/battle'
+import { START_REQUEST, ADD_INPUT_TO_QUEUE } from '../reducers/battle'
+
+// Action
+export const SYNC = 'battel-saga/sync'
+export type SyncAction = {
+  type: typeof SYNC,
+  payload: BattleState
+}
+
+export const sync = (state: BattleState): SyncAction => ({
+  type: SYNC,
+  payload: state
+})
 
 const initialState: BattleState = {
   inputQueue: [],
@@ -35,22 +47,16 @@ const initialState: BattleState = {
   turn: 0
 }
 
+const wait = () => new Promise(resolve => setTimeout(resolve, 2000))
+
 let _state: ?BattleState = null
 function * startRequest (_action: any) {
   _state = initialState
-  yield put({
-    type: START,
-    payload: _state
-  })
-}
-
-function * tickRequest () {
-  if (_state) {
+  yield put(sync(_state))
+  while (true) {
+    yield call(wait)
     _state = processTurn(_state)
-    yield put({
-      type: TICK,
-      payload: _state
-    })
+    yield put(sync(_state))
   }
 }
 
@@ -62,8 +68,9 @@ function * addInputToQueue (action: any) {
     }
   }
 }
+
 export default function * battleSaga (): any {
   yield takeEvery(START_REQUEST, startRequest)
   yield takeEvery(ADD_INPUT_TO_QUEUE, addInputToQueue)
-  yield takeEvery(TICK_REQUEST, tickRequest)
+  // yield takeEvery(TICK_REQUEST, tickRequest)
 }

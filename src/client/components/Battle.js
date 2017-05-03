@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Component } from 'react'
 import type { Skill } from '../../gen/types'
-import { tickRequest, startRequest } from '../reducers/battle'
+import { startRequest } from '../reducers/battle'
 import type { BattleContainerProps } from '../containers/BattleContainer'
 
 export function SkillIcon (
@@ -28,24 +28,9 @@ export default class Battle extends Component {
 
   _timeoutId = null
   componentDidMount () {
-    const fps = 0.5
-
     this.props.dispatch(startRequest())
-
-    const update = () => {
-      this._timeoutId = setTimeout(() => {
-        this.props.dispatch(tickRequest())
-        update()
-      }, 1000 / fps)
-    }
-    update()
   }
 
-  componentWillUnmount () {
-    if (this._timeoutId) {
-      clearTimeout(this._timeoutId)
-    }
-  }
   render () {
     // const props = this.props
     if (!this.props.battleState) {

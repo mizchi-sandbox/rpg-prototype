@@ -1,15 +1,12 @@
 /* @flow */
+import * as BattleSaga from '../sagas/battleSaga'
 import type { BattleState } from '../../domain/battle'
+import type { SyncAction } from '../sagas/battleSaga'
 
 // Start
-export const START = 'battle:start'
 export const START_REQUEST = 'battle:start:request'
 export type StartRequestAction = {
   type: typeof START_REQUEST
-}
-export type StartAction = {
-  type: typeof START,
-  payload: BattleState
 }
 export const startRequest = (): StartRequestAction => {
   return {
@@ -17,23 +14,7 @@ export const startRequest = (): StartRequestAction => {
   }
 }
 
-// Tick
-export const TICK = 'battle:tick'
-export const TICK_REQUEST = 'battle:tick:request'
-export type TickRequestAction = {
-  type: typeof TICK_REQUEST
-}
-export type TickAction = {
-  type: typeof TICK,
-  payload: BattleState
-}
-export const tickRequest = (): TickRequestAction => {
-  return {
-    type: TICK_REQUEST
-  }
-}
-
-// Add Skill
+// Add input
 export const ADD_INPUT_TO_QUEUE = 'battle:add-action-to-queue'
 export type AddInputToQueueAction = {
   type: typeof ADD_INPUT_TO_QUEUE,
@@ -59,10 +40,6 @@ export type ResetAction = {
 }
 
 export type Action =
-  | TickAction
-  | TickRequestAction
-  | StartRequestAction
-  | StartAction
   | ResetAction
   | AddInputToQueueAction
 
@@ -81,7 +58,7 @@ const initialState: State = {
 // Reducer
 export default (
   state: State = initialState,
-  action: Action
+  action: Action | SyncAction
 ) => {
   switch (action.type) {
     case START_REQUEST:
@@ -90,25 +67,14 @@ export default (
         battleState: null,
         loading: false
       }
-    case START:
-      return {
-        ...state,
-        battleState: action.payload,
-        loading: false
-      }
-    case TICK_REQUEST:
-      return {
-        ...state,
-        loading: true
-      }
-    case TICK:
-      return {
-        ...state,
-        battleState: action.payload,
-        loading: true
-      }
     case RESET:
       return initialState
+    case BattleSaga.SYNC:
+      return {
+        ...state,
+        battleState: action.payload,
+        loading: true
+      }
     default:
       return state
   }

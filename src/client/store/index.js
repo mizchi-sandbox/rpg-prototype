@@ -8,7 +8,12 @@ import mySaga from '../sagas'
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(reducer, applyMiddleware(promiseMiddleware, logger, sagaMiddleware))
+const store = createStore(
+  reducer,
+  global.__REDUX_DEVTOOLS_EXTENSION__ && global.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(
+  promiseMiddleware, logger, sagaMiddleware
+))
 sagaMiddleware.run(mySaga)
 
 export default store
