@@ -1,14 +1,13 @@
 /* @flow */
 import { delay } from 'redux-saga'
-import { take, takeEvery, put, call, race } from 'redux-saga/lib/effects'
 import { processTurn, createBattleMock } from '../../domain/battle'
 import { sync } from '../actions/battleSagaActions'
-
 import type { BattleState } from '../../domain/battle'
 import {
   REQUEST_START, REQUEST_PAUSE, REQUEST_RESTART, ADD_INPUT_TO_QUEUE,
   paused, restarted
 } from '../actions/battleActions'
+import { take, takeEvery, put, call, race } from 'redux-saga/effects'
 
 let _state: ?BattleState = null
 function * start (_action: any) {

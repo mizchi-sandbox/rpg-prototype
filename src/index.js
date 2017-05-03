@@ -1,11 +1,5 @@
-/* eslint-disable */
+/* @flow */
 import './init'
-import { setStatefulModules } from 'fuse-box/modules/fuse-hmr'
 import startApp from './client'
-
-// HMR
-setStatefulModules(name => {
-  return /init\.js|middlewares|gen\/.+\.js/.test(name)
-})
 
 startApp()

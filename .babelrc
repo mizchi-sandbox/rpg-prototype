@@ -1,5 +1,6 @@
 {
   "presets": [
+
     ["env", {
       "targets": {
         "Chorme": 56
@@ -10,5 +11,9 @@
       "modules": "commonjs"
     }],
     "@mizchi/babel-preset"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "dynamic-import-webpack"
   ]
 }
