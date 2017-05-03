@@ -4,10 +4,8 @@ import { connect } from 'react-redux'
 // eslint-disable-next-line
 import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 import Battle from '../components/Battle'
-import type {
-  State,
-  Action as BattleAction
-} from '../reducers/battle'
+import type { State } from '../reducers/battle'
+import type { BattleAction } from '../actions/battleActions'
 
 export type BattleContainerProps = State & Dispatcher<BattleAction>
 

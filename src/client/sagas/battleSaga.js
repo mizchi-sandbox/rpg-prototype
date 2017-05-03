@@ -7,7 +7,7 @@ import type { BattleState } from '../../domain/battle'
 import {
   START_REQUEST, PAUSE_REQUEST, RESTART_REQUEST, ADD_INPUT_TO_QUEUE,
   paused, restarted
-} from '../reducers/battle'
+} from '../actions/battleActions'
 
 // Action
 export const SYNC = 'battel-saga/sync'
@@ -87,5 +87,4 @@ function * addInputToQueue (action: any) {
 export default function * battleSaga (): any {
   yield takeEvery(START_REQUEST, start)
   yield takeEvery(ADD_INPUT_TO_QUEUE, addInputToQueue)
-  // yield takeEvery(TICK_REQUEST, tickRequest)
 }

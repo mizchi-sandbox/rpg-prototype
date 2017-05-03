@@ -1,9 +1,8 @@
 /* @flow */
 import React, { Component } from 'react'
 import type { Skill } from '../../gen/types'
-import { startRequest } from '../reducers/battle'
+import { startRequest, pauseRequest, restartRequest } from '../actions/battleActions'
 import type { BattleContainerProps } from '../containers/BattleContainer'
-import { pauseRequest, restartRequest } from '../reducers/battle'
 
 export function SkillIcon (
   props: {
