@@ -1,7 +1,7 @@
 /* @flow */
 import React, { Component } from 'react'
 import type { Skill } from '../../gen/types'
-import { startRequest, pauseRequest, restartRequest } from '../actions/battleActions'
+import { requestStart, requestPause, requestRestart } from '../actions/battleActions'
 import type { BattleContainerProps } from '../containers/BattleContainer'
 
 export function SkillIcon (
@@ -28,7 +28,7 @@ export default class Battle extends Component {
 
   _timeoutId = null
   componentDidMount () {
-    this.props.dispatch(startRequest())
+    this.props.dispatch(requestStart())
   }
 
   render () {
@@ -42,7 +42,7 @@ export default class Battle extends Component {
           ?
             <button
               onClick={_ => {
-                this.props.dispatch(restartRequest())
+                this.props.dispatch(requestRestart())
               }}
             >
               Restart
@@ -50,7 +50,7 @@ export default class Battle extends Component {
           :
             <button
               onClick={_ => {
-                this.props.dispatch(pauseRequest())
+                this.props.dispatch(requestPause())
               }}
             >
               Pause

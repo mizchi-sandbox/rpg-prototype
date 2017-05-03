@@ -1,25 +1,15 @@
 /* @flow */
-import { take, takeEvery, put, call, race } from 'redux-saga/lib/effects'
 import { delay } from 'redux-saga'
+import { take, takeEvery, put, call, race } from 'redux-saga/lib/effects'
 import loadMaster from '../../domain/loadMaster'
 import { processTurn } from '../../domain/battle'
+import { sync } from '../actions/battleSagaActions'
+
 import type { BattleState } from '../../domain/battle'
 import {
   REQUEST_START, REQUEST_PAUSE, REQUEST_RESTART, ADD_INPUT_TO_QUEUE,
   paused, restarted
 } from '../actions/battleActions'
-
-// Action
-export const SYNC = 'battel-saga/sync'
-export type SyncAction = {
-  type: typeof SYNC,
-  payload: BattleState
-}
-
-export const sync = (state: BattleState): SyncAction => ({
-  type: SYNC,
-  payload: state
-})
 
 const initialState: BattleState = {
   inputQueue: [],

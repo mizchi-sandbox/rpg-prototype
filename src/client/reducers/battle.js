@@ -1,13 +1,13 @@
 /* @flow */
-import * as BattleSaga from '../sagas/battleSaga'
 import type { BattleState } from '../../domain/battle'
-import type { SyncAction } from '../sagas/battleSaga'
+import type { BattleSagaAction } from '../actions/battleSagaActions'
 import {
   REQUEST_START,
   RESTARTED,
   PAUSED,
   RESET
 } from '../actions/battleActions'
+import { SYNC } from '../actions/battleSagaActions'
 import type { BattleAction } from '../actions/battleActions'
 
 // State
@@ -26,7 +26,7 @@ const initialState: State = {
 // Reducer
 export default (
   state: State = initialState,
-  action: BattleAction | SyncAction
+  action: BattleAction | BattleSagaAction
 ) => {
   switch (action.type) {
     case REQUEST_START:
@@ -45,7 +45,7 @@ export default (
         ...state,
         paused: false
       }
-    case BattleSaga.SYNC:
+    case SYNC:
       return {
         ...state,
         battleState: action.payload,

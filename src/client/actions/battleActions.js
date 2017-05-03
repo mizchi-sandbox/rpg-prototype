@@ -26,11 +26,12 @@ export type BattleAction =
   }
 
 // action creator
-export const startRequest = () => ({ type: REQUEST_START })
-export const pauseRequest = () => ({ type: REQUEST_PAUSE })
+export const requestStart = () => ({ type: REQUEST_START })
+export const requestPause = () => ({ type: REQUEST_PAUSE })
+export const requestRestart = () => ({ type: REQUEST_RESTART })
 export const paused = () => ({ type: PAUSED })
-export const restartRequest = () => ({ type: REQUEST_RESTART })
 export const restarted = () => ({ type: RESTARTED })
+export const reset = () => ({ type: RESET })
 export const addInputToQueue = (battlerId: string, skillId: string): BattleAction => {
   return {
     type: ADD_INPUT_TO_QUEUE,
