@@ -10,6 +10,7 @@ settings:
         - node_modules # defaults to 'node_modules', but...
         - src
 rules:
+  import/prefer-default-export: 0
   # mutation
   mutation/no-mutation:
     - 2
