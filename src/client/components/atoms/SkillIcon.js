@@ -1,10 +1,10 @@
 /* @flow */
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
-import type { EmittableSkill } from 'domain/battle'
+import type { BattlerSkill } from 'domain/battle'
 
 export default function SkillIcon(props: {
-  skill: EmittableSkill,
+  skill: BattlerSkill,
   onClick: Function
 }) {
   return (

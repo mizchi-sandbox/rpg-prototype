@@ -1,6 +1,6 @@
 /* @flow */
-import { updateCooldownCount } from './EmittableSkill'
-import type { EmittableSkill } from './EmittableSkill'
+import { updateCooldownCount } from './BattlerSkill'
+import type { BattlerSkill } from './BattlerSkill'
 import type { Input, Command } from './index'
 import type { ConsumableValue } from 'domain/values/ConsumableValue'
 
@@ -11,7 +11,7 @@ export type Battler = {
   id: string,
   name: string,
   life: ConsumableValue,
-  skills: EmittableSkill[]
+  skills: BattlerSkill[]
 }
 
 export function updateBattler(

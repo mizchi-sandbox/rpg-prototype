@@ -1,14 +1,14 @@
 /* @flow */
 import React from 'react'
 import SkillIcon from '../atoms/SkillIcon'
-import type { EmittableSkill } from 'domain/battle'
+import type { BattlerSkill } from 'domain/battle'
 
 export default function SkillBar({
   skills,
   onSkillSelect
 }: {
-  skills: EmittableSkill[],
-  onSkillSelect: EmittableSkill => void
+  skills: BattlerSkill[],
+  onSkillSelect: BattlerSkill => void
 }) {
   return (
     <span className="skillBar">

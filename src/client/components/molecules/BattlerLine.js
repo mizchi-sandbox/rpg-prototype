@@ -2,14 +2,14 @@
 import React from 'react'
 import SkillBar from './SkillBar'
 import type { Battler } from 'domain/battle'
-import type { EmittableSkill } from 'domain/battle'
+import type { BattlerSkill } from 'domain/battle'
 
 export default function BattlerLine({
   battler,
   onSkillSelect
 }: {
   battler: Battler,
-  onSkillSelect: EmittableSkill => void
+  onSkillSelect: BattlerSkill => void
 }) {
   return (
     <div key={battler.name}>

@@ -4,14 +4,14 @@ import type { SkillData, SkillId } from 'domain/master'
 import { increment } from 'domain/values/ConsumableValue'
 import { loadSkillData } from 'domain/master'
 
-export type EmittableSkill = {
+export type BattlerSkill = {
   id: Symbol,
   data: SkillData,
   lv: number,
   cooldown: ConsumableValue
 }
 
-export function buildEmittableSkill(id: SkillId, lv: number): EmittableSkill {
+export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {
   const data = loadSkillData(id)
   return {
     data,
@@ -24,7 +24,7 @@ export function buildEmittableSkill(id: SkillId, lv: number): EmittableSkill {
   }
 }
 
-export function updateCooldownCount(skill: EmittableSkill): EmittableSkill {
+export function updateCooldownCount(skill: BattlerSkill): BattlerSkill {
   return {
     ...skill,
     cooldown: increment(skill.cooldown)

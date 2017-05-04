@@ -1,6 +1,6 @@
 /* @flow */
 import { updateBattler } from './Battler'
-import { buildEmittableSkill } from './EmittableSkill'
+import { buildBattlerSkill } from './BattlerSkill'
 import { execCommand } from './Command'
 import type { Battler } from './Battler'
 import type { Command, CommandOnProgressState } from './Command'
@@ -80,8 +80,8 @@ const initialState: BattleState = {
       name: 'mizchi',
       life: { val: 50, max: 50 },
       skills: [
-        buildEmittableSkill('$attack', 1),
-        buildEmittableSkill('$power-attack', 1)
+        buildBattlerSkill('$attack', 1),
+        buildBattlerSkill('$power-attack', 1)
       ]
     },
     {
@@ -91,7 +91,7 @@ const initialState: BattleState = {
       controllable: false,
       name: 'goblin',
       life: { val: 30, max: 30 },
-      skills: [buildEmittableSkill('$attack', 1)]
+      skills: [buildBattlerSkill('$attack', 1)]
     }
   ],
   turn: 0
