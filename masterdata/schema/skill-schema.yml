@@ -2,7 +2,7 @@ required:
   - id
   - type
   - displayName
-  - actionCost
+  - cooldownCount
 properties:
   id:
     type: string
@@ -10,5 +10,5 @@ properties:
     type: string
   type:
     type: string
-  actionCost:
+  cooldownCount:
     type: number

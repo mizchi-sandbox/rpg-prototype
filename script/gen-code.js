@@ -1,11 +1,16 @@
 /* eslint-disable */
 require('require-yaml')
+const cc = require('change-case')
 const path = require('path')
 const fs = require('fs')
 const tv4 = require('tv4')
 const { convertSchema, schemaToFlow } = require('json-schema-to-flow-type')
 
-let codeStr = ['/* @flow */', '/* eslint-disable */']
+let code = `
+/* @flow */
+/* eslint-disable */
+import data from './data'
+`
 const all = {}
 ;[
   'consume-item',
@@ -30,21 +35,26 @@ const all = {}
     }
   }
 
+  const pascalName = cc.pascalCase(t)
   // data
   all[t] = data
 
   // flow
-  const schemaForGen = Object.assign({}, { id: t }, schema)
+  const schemaForGen = Object.assign({}, { id: pascalName + 'Data' }, schema)
+  // type
+  let flowCode = schemaToFlow(convertSchema(schemaForGen))
 
-  const code = schemaToFlow(convertSchema(schemaForGen))
-  codeStr.push(code)
+  // ids
+  const ids = data.filter(i => i.id).map(i => `'${i.id}'`)
+  // TODO: Validate relational ids
+  code += `\n// === ${pascalName} ===\n`
+  code += `export type ${pascalName}Id = ${ids.join(' | ')}\n`
+  code += flowCode + '\n'
+  code += `export function load${pascalName}Data(id: ${pascalName}Id): ${pascalName}Data  { return data['${t}'].find(i => i.id === id) }\n`
 })
 
-fs.writeFileSync(
-  path.resolve(__dirname, '../src/domain/master/types.js'),
-  codeStr.join('\n')
-)
-console.log('> src/domain/master/types.js')
+fs.writeFileSync(path.resolve(__dirname, '../src/domain/master/index.js'), code)
+console.log('> src/domain/master/index.js')
 
 fs.writeFileSync(
   path.resolve(__dirname, '../src/domain/master/data.js'),

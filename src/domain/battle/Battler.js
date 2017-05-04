@@ -1,7 +1,8 @@
 /* @flow */
+import { updateCooldownCount } from './EmittableSkill'
+import type { EmittableSkill } from './EmittableSkill'
 import type { Input, Command } from './index'
 import type { ConsumableValue } from 'domain/values/ConsumableValue'
-import type { Skill } from 'domain/types'
 
 export type Battler = {
   side: 'ally' | 'enemy',
@@ -9,20 +10,33 @@ export type Battler = {
   formationOrder: 0 | 1 | 2 | 3 | 4,
   id: string,
   name: string,
-  ap: ConsumableValue,
   life: ConsumableValue,
-  skills: Skill[]
+  skills: EmittableSkill[]
 }
 
 export function updateBattler(
   battler: Battler,
   inputs: Input[]
 ): { battler: Battler, commands: Command[] } {
-  if (inputs.length) {
-    console.log(battler.id, inputs)
+  if (battler.controllable) {
+    // Player
+    if (inputs.length) {
+      for (const input of inputs) {
+        console.log(battler.id, input)
+      }
+    }
+  } else {
+    // AI or BOT
   }
+  const updatedSkills = battler.skills.map(skill => {
+    return updateCooldownCount(skill)
+  })
+
   return {
-    battler,
+    battler: {
+      ...battler,
+      skills: updatedSkills
+    },
     commands: []
   }
 }

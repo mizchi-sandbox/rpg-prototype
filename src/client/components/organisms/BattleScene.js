@@ -9,6 +9,7 @@ import {
 import type { BattleContainerProps } from '../../containers/BattleContainer'
 import Button from '../atoms/Button'
 import BattlerLine from '../molecules/BattlerLine'
+import LogBoard from '../molecules/LogBoard'
 
 export default class BattleScene extends Component {
   props: BattleContainerProps
@@ -46,10 +47,12 @@ export default class BattleScene extends Component {
               battler={battler}
               key={battler.id}
               onSkillSelect={skill => {
-                this.props.dispatch(addInputToQueue(battler.id, skill.id))
+                this.props.dispatch(addInputToQueue(battler.id, skill.data.id))
               }}
             />
           ))}
+          <hr />
+          <LogBoard max={10} messages={['Started']} direction="bottom" />
         </div>
       )
     }

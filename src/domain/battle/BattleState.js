@@ -1,6 +1,6 @@
 /* @flow */
-import loadMaster from '../util/loadMaster'
 import { updateBattler } from './Battler'
+import { buildEmittableSkill } from './EmittableSkill'
 import { execCommand } from './Command'
 import type { Battler } from './Battler'
 import type { Command, CommandOnProgressState } from './Command'
@@ -79,10 +79,9 @@ const initialState: BattleState = {
       id: 'ally-0',
       name: 'mizchi',
       life: { val: 50, max: 50 },
-      ap: { val: 0, max: 15 },
       skills: [
-        loadMaster('skill', '$attack'),
-        loadMaster('skill', '$power-attack')
+        buildEmittableSkill('$attack', 1),
+        buildEmittableSkill('$power-attack', 1)
       ]
     },
     {
@@ -92,8 +91,7 @@ const initialState: BattleState = {
       controllable: false,
       name: 'goblin',
       life: { val: 30, max: 30 },
-      ap: { val: 0, max: 10 },
-      skills: [loadMaster('skill', '$attack')]
+      skills: [buildEmittableSkill('$attack', 1)]
     }
   ],
   turn: 0

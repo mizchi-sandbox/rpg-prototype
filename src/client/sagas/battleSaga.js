@@ -39,7 +39,6 @@ function* start(_action: any) {
       const processed = processTurn(_state)
       _state = processed.state
 
-      console.log(processed.results)
       yield put(sync(_state))
     }
   }

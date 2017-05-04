@@ -46,6 +46,7 @@
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-module-resolver": "^2.7.0",
     "babel-preset-env": "^1.4.0",
+    "change-case": "^3.0.1",
     "chokidar-cli": "^1.2.0",
     "eslint": "^3.19.0",
     "eslint-config-mizchi": "^1.0.2",

@@ -1,5 +1,4 @@
 /* @flow */
-import type { BattleState } from '../../domain/battle'
 import type { BattleSagaAction } from '../actions/battleSagaActions'
 import {
   REQUEST_START,
@@ -9,6 +8,7 @@ import {
 } from '../actions/battleActions'
 import { SYNC } from '../actions/battleSagaActions'
 import type { BattleAction } from '../actions/battleActions'
+import type { BattleState } from 'domain/battle'
 
 // State
 export type State = {
