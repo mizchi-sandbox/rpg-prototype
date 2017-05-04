@@ -16,7 +16,7 @@ export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {
   return {
     data,
     lv,
-    id: Symbol(),
+    id: Symbol('BattlerSkill'),
     cooldown: {
       val: 0,
       max: data.cooldownCount
@@ -30,3 +30,14 @@ export function updateCooldownCount(skill: BattlerSkill): BattlerSkill {
     cooldown: increment(skill.cooldown)
   }
 }
+
+export function isExecutable(skill: BattlerSkill): boolean {
+  return skill.cooldown.val >= skill.cooldown.max
+}
+
+// export function execute (skill: BattlerSkill): BattlerSkill {
+//   return {
+//     ...skill,
+//     cooldown: increment(skill.cooldown)
+//   }
+// }

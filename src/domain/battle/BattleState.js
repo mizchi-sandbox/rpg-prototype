@@ -22,7 +22,11 @@ export function processDecisionPhase(
   const { inputQueue } = state
   const battlers = state.battlers.map(battler => {
     const inputs = inputQueue.filter(input => input.battlerId === battler.id)
-    const { battler: nextBattler, commands } = updateBattler(battler, inputs)
+    const { battler: nextBattler, commands } = updateBattler(
+      battler,
+      inputs,
+      state
+    )
     commandQueue = commandQueue.concat(commands)
     return nextBattler
   })
@@ -73,10 +77,10 @@ const initialState: BattleState = {
   inputQueue: [],
   battlers: [
     {
+      id: Symbol(),
       side: 'ally',
       formationOrder: 0,
       controllable: true,
-      id: 'ally-0',
       name: 'mizchi',
       life: { val: 50, max: 50 },
       skills: [
@@ -85,9 +89,9 @@ const initialState: BattleState = {
       ]
     },
     {
+      id: Symbol(),
       side: 'enemy',
       formationOrder: 0,
-      id: 'enemy-0',
       controllable: false,
       name: 'goblin',
       life: { val: 30, max: 30 },

@@ -3,8 +3,10 @@ import type { BattleState } from './BattleState'
 import type { Result } from './Result'
 
 export type Command = {
-  battlerId: string,
-  skillId: string
+  id: Symbol,
+  skillId: Symbol,
+  actorId: Symbol,
+  targetId: ?Symbol
 }
 
 export type CommandOnProgressState = {

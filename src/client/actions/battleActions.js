@@ -20,8 +20,8 @@ export type BattleAction =
   | {
       type: typeof ADD_INPUT_TO_QUEUE,
       payload: {
-        battlerId: string,
-        skillId: string
+        battlerId: Symbol,
+        skillId: Symbol
       }
     }
 
@@ -33,8 +33,8 @@ export const paused = () => ({ type: PAUSED })
 export const restarted = () => ({ type: RESTARTED })
 export const reset = () => ({ type: RESET })
 export const addInputToQueue = (
-  battlerId: string,
-  skillId: string
+  battlerId: Symbol,
+  skillId: Symbol
 ): BattleAction => {
   return {
     type: ADD_INPUT_TO_QUEUE,

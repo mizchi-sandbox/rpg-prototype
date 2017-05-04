@@ -42,12 +42,12 @@ export default class BattleScene extends Component {
           <hr />
           <span>Turn: {battleState.turn}</span>
           <span>InputQueue: {battleState.inputQueue.length}</span>
-          {battleState.battlers.map(battler => (
+          {battleState.battlers.map((battler, index) => (
             <BattlerLine
               battler={battler}
-              key={battler.id}
+              key={index}
               onSkillSelect={skill => {
-                this.props.dispatch(addInputToQueue(battler.id, skill.data.id))
+                this.props.dispatch(addInputToQueue(battler.id, skill.id))
               }}
             />
           ))}
