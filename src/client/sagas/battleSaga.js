@@ -14,18 +14,27 @@ import { processTurn, createBattleMock } from 'domain/battle'
 import { take, takeEvery, put, call, race } from 'redux-saga/effects'
 import * as ResultActions from 'domain/battle/Result'
 import type { Result } from 'domain/battle/Result'
+import type { Input } from 'domain/battle/Input'
 
-let _state: ?BattleState = null
+let _inputQueue: Input[] = []
+
+function hydrateInputQueue() {
+  const iq = _inputQueue
+  _inputQueue = []
+  return iq
+}
+
+function* addInputToQueue(action: any) {
+  _inputQueue = _inputQueue.concat([{ ...action.payload, id: Symbol('input') }])
+}
+
 function* start(_action: any) {
-  if (_state) {
-    return // stop on duplicated
-  }
-  _state = createBattleMock()
-  yield put(sync(_state))
+  let state: BattleState = createBattleMock()
+  yield put(sync(state))
   while (true) {
     // Wait or Pause
     const { _paused, _waited } = yield race({
-      _waited: call(delay, 1000),
+      _waited: call(delay, 300),
       _paused: take(REQUEST_PAUSE)
     })
 
@@ -37,14 +46,14 @@ function* start(_action: any) {
     }
 
     if (_waited) {
-      // Update state
-      const processed = processTurn(_state)
-      _state = processed.state
+      const inputQueue = hydrateInputQueue()
+      const processed = processTurn(state, inputQueue)
+      state = processed.state
       for (const result of processed.results) {
         handleResult(result)
       }
 
-      yield put(sync(_state))
+      yield put(sync(state))
     }
   }
 }
@@ -56,16 +65,6 @@ function handleResult(result: Result) {
       console.log(result.message)
       break
     default:
-  }
-}
-
-function* addInputToQueue(action: any) {
-  if (_state) {
-    _state = {
-      ..._state,
-      inputQueue: _state.inputQueue.concat([action.payload])
-    }
-    yield put(sync(_state))
   }
 }
 

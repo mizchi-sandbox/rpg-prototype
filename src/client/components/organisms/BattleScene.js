@@ -41,7 +41,8 @@ export default class BattleScene extends Component {
               />}
           <hr />
           <span>Turn: {battleState.turn}</span>
-          <span>InputQueue: {battleState.inputQueue.length}</span>
+          {/* &nbsp;
+          <span>InputQueue: {battleState.inputQueue.length}</span> */}
           {battleState.battlers.map((battler, index) => (
             <BattlerLine
               battler={battler}

@@ -2,23 +2,22 @@
 import { updateBattler } from './Battler'
 import { buildBattlerSkill } from './BattlerSkill'
 import type { Battler } from './Battler'
-import type { Command, CommandOnProgressState } from './Command'
+import type { Command, CommandApplicationProgress } from './Command'
 import type { Result } from './Result'
 import type { Input } from './Input'
 
 // State
 export type BattleState = {
-  inputQueue: Input[],
   battlers: Battler[],
   turn: number
 }
 
 export function processDecisionPhase(
-  state: BattleState
+  state: BattleState,
+  inputQueue: Input[]
 ): { state: BattleState, commandQueue: Command[] } {
   let commandQueue: Command[] = []
   // process battlers
-  const { inputQueue } = state
   const battlers = state.battlers.map(battler => {
     const inputs = inputQueue.filter(input => input.battlerId === battler.id)
     const { battler: nextBattler, commands } = updateBattler(
@@ -39,8 +38,8 @@ export function processCommandPhase(
   state: BattleState,
   commandQueue: Command[]
 ): { state: BattleState, results: Result[] } {
-  const commanded: CommandOnProgressState = commandQueue.reduce(
-    (next: CommandOnProgressState, nextCmd: Command) => {
+  const commanded: CommandApplicationProgress = commandQueue.reduce(
+    (next: CommandApplicationProgress, nextCmd: Command) => {
       const { state: nextState, results } = nextCmd(next.state)
       return {
         state: nextState,
@@ -53,10 +52,14 @@ export function processCommandPhase(
 }
 
 export function processTurn(
-  state: BattleState
+  state: BattleState,
+  inputQueue: Input[]
 ): { state: BattleState, results: Result[] } {
   // decide command
-  const { state: decisionedState, commandQueue } = processDecisionPhase(state)
+  const { state: decisionedState, commandQueue } = processDecisionPhase(
+    state,
+    inputQueue
+  )
   // exec command
   const { state: resultedState, results } = processCommandPhase(
     decisionedState,

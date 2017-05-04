@@ -2,9 +2,9 @@
 import type { BattleState } from './BattleState'
 import type { Result } from './Result'
 
-export type Command = BattleState => CommandOnProgressState
+export type Command = BattleState => CommandApplicationProgress
 
-export type CommandOnProgressState = {
+export type CommandApplicationProgress = {
   state: BattleState,
   results: Result[]
 }
