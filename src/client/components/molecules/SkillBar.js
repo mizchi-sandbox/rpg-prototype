@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
-import type { Skill } from '../../../gen/types'
 import Icon from '../atoms/Icon'
+import type { Skill } from 'domain/types'
 
 export default function SkillBar({ skills }: { skills: Skill[] }) {
   return (

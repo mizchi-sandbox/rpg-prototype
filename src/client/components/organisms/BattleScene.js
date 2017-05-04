@@ -6,15 +6,11 @@ import {
   requestRestart
 } from '../../actions/battleActions'
 import type { BattleContainerProps } from '../../containers/BattleContainer'
-import SkillBar from '../molecules/SkillBar'
+import Button from '../atoms/Button'
+import BattlerLine from '../organisms/BattlerLine'
 
-export default class Battle extends Component {
+export default class BattleScene extends Component {
   props: BattleContainerProps
-  state: {
-    drawCounter: number
-  } = {
-    drawCounter: 0
-  }
 
   _timeoutId = null
   componentDidMount() {
@@ -29,35 +25,23 @@ export default class Battle extends Component {
       return (
         <div className="battle">
           {this.props.paused
-            ? <button
+            ? <Button
                 onClick={_ => {
                   this.props.dispatch(requestRestart())
                 }}
-              >
-                Restart
-              </button>
-            : <button
+                label="Restart"
+              />
+            : <Button
                 onClick={_ => {
                   this.props.dispatch(requestPause())
                 }}
-              >
-                Pause
-              </button>}
+                label="Pause"
+              />}
           <hr />
-          <span>{battleState.turn}</span>
-          {battleState.battlers.map(battler => {
-            return (
-              <div key={battler.name}>
-                <div>
-                  {battler.name}: {battler.life.val} / {battler.life.max}
-                </div>
-                <div>
-                  AP: {battler.ap.val} / {battler.ap.max}
-                </div>
-                <SkillBar skills={battler.skills} />
-              </div>
-            )
-          })}
+          <span>Turn: {battleState.turn}</span>
+          {battleState.battlers.map(battler => (
+            <BattlerLine battler={battler} key={battler.id} />
+          ))}
         </div>
       )
     }

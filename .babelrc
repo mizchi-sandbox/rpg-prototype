@@ -1,19 +1,23 @@
 {
   "presets": [
-
     ["env", {
       "targets": {
         "Chorme": 56
       },
       "exclude": [
         "transform-regenerator"
-      ],
-      "modules": "commonjs"
+      ]
     }],
     "@mizchi/babel-preset"
   ],
   "plugins": [
     "react-hot-loader/babel",
-    "dynamic-import-webpack"
+    "dynamic-import-webpack",
+    ["module-resolver", {
+      "root": ["./src"],
+      "alias": {
+        "domain": "./domain"
+      }
+    }]
   ]
 }

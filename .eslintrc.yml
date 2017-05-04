@@ -2,6 +2,13 @@ extends:
   - mizchi
 plugins:
   - mutation
+# // export * from './battle/index'
+settings:
+  import/resolver:
+    node:
+      moduleDirectory:
+        - node_modules # defaults to 'node_modules', but...
+        - src
 rules:
   # mutation
   mutation/no-mutation:

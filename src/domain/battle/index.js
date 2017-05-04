@@ -1,7 +1,8 @@
 /* @flow */
-import type { Battler } from '../types'
 import { increment, consume } from '../values/ConsumableValue'
-import loadMaster from '../loadMaster'
+import loadMaster from '../util/loadMaster'
+import type { Skill } from '../master/types'
+import type { ConsumableValue } from '../values/ConsumableValue'
 
 export type ActionQueue = {
   battlerId: string,
@@ -13,6 +14,16 @@ export type BattleState = {
   inputQueue: ActionQueue[],
   battlers: Battler[],
   turn: number
+}
+
+export type Battler = {
+  side: 'ally' | 'enemy',
+  formationOrder: 0 | 1 | 2 | 3 | 4,
+  id: string,
+  name: string,
+  ap: ConsumableValue,
+  life: ConsumableValue,
+  skills: Skill[]
 }
 
 export function consumeActionQueue(s: BattleState): BattleState {

@@ -6,22 +6,22 @@ import App from './components/App'
 
 export default async () => {
   if (process.env.NODE_ENV === 'production') {
-    ReactDOM.render(
-      <App/>,
-      document.querySelector('main')
-    )
+    ReactDOM.render(<App />, document.querySelector('main'))
   } else {
     const render = async () => {
-      const { default: App } = (await import('./components/App'))
+      const { default: App } = await import('./components/App')
       ReactDOM.render(
         <AppContainer>
-          <App/>
+          <App />
         </AppContainer>,
         document.querySelector('main')
       )
     }
     render()
     if (module.hot) {
+      const { default: store } = await import('./store')
+      const { default: nextRootReducer } = await import('./reducers')
+      store.replaceReducer(nextRootReducer)
       // eslint-disable-next-line
       module.hot.accept('./components/App', render)
     }

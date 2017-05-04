@@ -5,10 +5,7 @@ const fs = require('fs')
 const tv4 = require('tv4')
 const { convertSchema, schemaToFlow } = require('json-schema-to-flow-type')
 
-let codeStr = [
-  '/* @flow */',
-  '/* eslint-disable */'
-]
+let codeStr = ['/* @flow */', '/* eslint-disable */']
 const all = {}
 ;[
   'consume-item',
@@ -21,7 +18,10 @@ const all = {}
   'troop'
 ].forEach(t => {
   const data = require(path.resolve(__dirname, `../masterdata/data/${t}-data`))
-  const schema = require(path.resolve(__dirname, `../masterdata/schema/${t}-schema`))
+  const schema = require(path.resolve(
+    __dirname,
+    `../masterdata/schema/${t}-schema`
+  ))
   for (const i of data) {
     const r = tv4.validateResult(i, schema)
     if (!r.valid) {
@@ -31,7 +31,6 @@ const all = {}
   }
 
   // data
-
   all[t] = data
 
   // flow
@@ -42,13 +41,13 @@ const all = {}
 })
 
 fs.writeFileSync(
-  path.resolve(__dirname, '../src/gen/types.js'),
+  path.resolve(__dirname, '../src/domain/master/types.js'),
   codeStr.join('\n')
 )
-console.log('> gen/types.js')
+console.log('> src/domain/master/types.js')
 
 fs.writeFileSync(
-  path.resolve(__dirname, '../src/gen/data.js'),
+  path.resolve(__dirname, '../src/domain/master/data.js'),
   '/* eslint-disable */\nmodule.exports =' + JSON.stringify(all)
 )
-console.log('> gen/data.js')
+console.log('> src/domain/master/data.js')

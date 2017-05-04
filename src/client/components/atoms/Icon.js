@@ -17,6 +17,7 @@ export default function Icon(props: { name: string, onClick: Function }) {
 
 const styles = StyleSheet.create({
   red: {
-    backgroundColor: 'red'
+    padding: '3px',
+    outline: '1px solid black'
   }
 })

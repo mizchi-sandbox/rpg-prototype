@@ -1,5 +1,5 @@
 {
-  "name": "rel-vdoms",
+  "name": "rpg-prototyping",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -13,7 +13,7 @@
     ]
   },
   "scripts": {
-    "clean": "rimraf src/gen/*.js public/bundle.js",
+    "clean": "rimraf src/master/*.js public/bundle.js",
     "prepare": "yarn run clean; yarn build:master",
     "build:master": "node script/gen-code.js",
     "watch:master": "chokidar masterdata/**/* -c 'yarn build:master' --polling",
@@ -44,10 +44,12 @@
     "ava": "^0.19.1",
     "babel-core": "^6.24.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
+    "babel-plugin-module-resolver": "^2.7.0",
     "babel-preset-env": "^1.4.0",
     "chokidar-cli": "^1.2.0",
     "eslint": "^3.19.0",
     "eslint-config-mizchi": "^1.0.2",
+    "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-mutation": "^1.0.0",
     "flow-bin": "^0.45.0",
     "json-schema-to-flow-type": "^0.2.6",

@@ -19,7 +19,7 @@ function* start(_action: any) {
   yield put(sync(_state))
   while (true) {
     // Wait or Pause
-    const { _paused } = yield race({
+    const { _paused, _waited } = yield race({
       _waited: call(delay, 1000),
       _paused: take(REQUEST_PAUSE)
     })
@@ -31,9 +31,11 @@ function* start(_action: any) {
       yield put(restarted())
     }
 
-    // Update state
-    _state = processTurn(_state)
-    yield put(sync(_state))
+    if (_waited) {
+      // Update state
+      _state = processTurn(_state)
+      yield put(sync(_state))
+    }
   }
 }
 
@@ -43,6 +45,7 @@ function* addInputToQueue(action: any) {
       ..._state,
       inputQueue: _state.inputQueue.concat([action.payload])
     }
+    yield put(sync(_state))
   }
 }
 

@@ -1,5 +1,5 @@
 /* @flow */
-import type { Skill } from '../gen/types'
+import type { Skill } from './master/types'
 import type { ConsumableValue } from './values/ConsumableValue'
 
 export type Battler = {
@@ -11,3 +11,5 @@ export type Battler = {
   life: ConsumableValue,
   skills: Skill[]
 }
+
+export * from './master/types'
