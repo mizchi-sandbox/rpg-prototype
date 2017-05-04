@@ -10,8 +10,7 @@ export type SyncAction = {
   payload: BattleState
 }
 
-export type BattleSagaAction =
-| SyncAction
+export type BattleSagaAction = SyncAction
 
 // Action creator
 export const sync = (state: BattleState): SyncAction => ({

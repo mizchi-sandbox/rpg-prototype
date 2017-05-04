@@ -4,13 +4,17 @@ import { processTurn, createBattleMock } from '../../domain/battle'
 import { sync } from '../actions/battleSagaActions'
 import type { BattleState } from '../../domain/battle'
 import {
-  REQUEST_START, REQUEST_PAUSE, REQUEST_RESTART, ADD_INPUT_TO_QUEUE,
-  paused, restarted
+  REQUEST_START,
+  REQUEST_PAUSE,
+  REQUEST_RESTART,
+  ADD_INPUT_TO_QUEUE,
+  paused,
+  restarted
 } from '../actions/battleActions'
 import { take, takeEvery, put, call, race } from 'redux-saga/effects'
 
 let _state: ?BattleState = null
-function * start (_action: any) {
+function* start(_action: any) {
   _state = createBattleMock()
   yield put(sync(_state))
   while (true) {
@@ -33,7 +37,7 @@ function * start (_action: any) {
   }
 }
 
-function * addInputToQueue (action: any) {
+function* addInputToQueue(action: any) {
   if (_state) {
     _state = {
       ..._state,
@@ -42,7 +46,7 @@ function * addInputToQueue (action: any) {
   }
 }
 
-export default function * battleSaga (): any {
+export default function* battleSaga(): any {
   yield takeEvery(REQUEST_START, start)
   yield takeEvery(ADD_INPUT_TO_QUEUE, addInputToQueue)
 }

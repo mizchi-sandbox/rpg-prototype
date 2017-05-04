@@ -21,10 +21,11 @@
     "watch:src": "webpack-dev-server",
     "watch": "yarn prepare; run-p watch:*",
     "test": "ava",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "dependencies": {
-    "@kadira/storybook": "^2.35.3",
     "aphrodite": "^1.2.1",
     "babel-runtime": "^6.23.0",
     "prop-types": "^15.5.8",
@@ -38,6 +39,7 @@
     "seamless-immutable": "^7.1.2"
   },
   "devDependencies": {
+    "@kadira/storybook": "^2.35.3",
     "@mizchi/babel-preset": "^1.1.1",
     "ava": "^0.19.1",
     "babel-core": "^6.24.1",
@@ -45,7 +47,7 @@
     "babel-preset-env": "^1.4.0",
     "chokidar-cli": "^1.2.0",
     "eslint": "^3.19.0",
-    "eslint-config-mizchi": "^1.0.0",
+    "eslint-config-mizchi": "^1.0.2",
     "eslint-plugin-mutation": "^1.0.0",
     "flow-bin": "^0.45.0",
     "json-schema-to-flow-type": "^0.2.6",

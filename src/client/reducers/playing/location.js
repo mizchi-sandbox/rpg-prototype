@@ -1,17 +1,11 @@
 /* @flow */
-export type Action =
-  | {
-    type: 'TODO'
-  }
-export type State = {
+export type Action = {
+  type: 'TODO'
 }
-const initialState: State = {
-}
+export type State = {}
+const initialState: State = {}
 
-export default (
-  state: State = initialState,
-  action: Action
-) => {
+export default (state: State = initialState, action: Action) => {
   switch (action.type) {
     default:
       return state

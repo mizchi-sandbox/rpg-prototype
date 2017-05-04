@@ -15,16 +15,16 @@ export type BattleState = {
   turn: number
 }
 
-export function consumeActionQueue (s: BattleState): BattleState {
+export function consumeActionQueue(s: BattleState): BattleState {
   return s
 }
 
-export function processTurn (s: BattleState): BattleState {
+export function processTurn(s: BattleState): BattleState {
   const inputQueue = []
   const battlers = s.battlers.map(battler => {
     // TODO: Select
     const skill = battler.skills[0]
-    if (skill && (skill.actionCost <= battler.ap.val)) {
+    if (skill && skill.actionCost <= battler.ap.val) {
       inputQueue.push({
         battlerId: battler.id,
         skillId: skill.id
@@ -65,14 +65,12 @@ const initialState: BattleState = {
       name: 'goblin',
       life: { val: 30, max: 30 },
       ap: { val: 0, max: 10 },
-      skills: [
-        loadMaster('skill', '$attack')
-      ]
+      skills: [loadMaster('skill', '$attack')]
     }
   ],
   turn: 0
 }
 
-export function createBattleMock (): BattleState {
+export function createBattleMock(): BattleState {
   return initialState
 }

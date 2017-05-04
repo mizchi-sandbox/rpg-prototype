@@ -1,12 +1,9 @@
-extends: mizchi
+extends:
+  - mizchi
 plugins:
   - mutation
 rules:
-  no-duplicate-imports: 0
-  import/no-extraneous-dependencies: 0
-  object-curly-spacing:
-    - 2
-    - always
+  # mutation
   mutation/no-mutation:
     - 2
     -

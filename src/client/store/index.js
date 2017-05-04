@@ -12,7 +12,7 @@ const store = createStore(
   reducer,
   global.__REDUX_DEVTOOLS_EXTENSION__ && global.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(
-    sagaMiddleware,
+    sagaMiddleware
     // promiseMiddleware
     // logger,
   )

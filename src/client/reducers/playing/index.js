@@ -4,5 +4,6 @@ import location from './location'
 import savedata from './savedata'
 
 export default combineReducers({
-  location, savedata
+  location,
+  savedata
 })
