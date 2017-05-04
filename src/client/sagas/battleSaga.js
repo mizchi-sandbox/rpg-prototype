@@ -1,8 +1,6 @@
 /* @flow */
 import { delay } from 'redux-saga'
-import { processTurn, createBattleMock } from '../../domain/battle'
 import { sync } from '../actions/battleSagaActions'
-import type { BattleState } from '../../domain/battle'
 import {
   REQUEST_START,
   REQUEST_PAUSE,
@@ -11,7 +9,11 @@ import {
   paused,
   restarted
 } from '../actions/battleActions'
+import type { BattleState } from 'domain/battle'
+import { processTurn, createBattleMock } from 'domain/battle'
 import { take, takeEvery, put, call, race } from 'redux-saga/effects'
+import * as ResultActions from 'domain/battle/Result'
+import type { Result } from 'domain/battle/Result'
 
 let _state: ?BattleState = null
 function* start(_action: any) {
@@ -38,9 +40,22 @@ function* start(_action: any) {
       // Update state
       const processed = processTurn(_state)
       _state = processed.state
+      for (const result of processed.results) {
+        handleResult(result)
+      }
 
       yield put(sync(_state))
     }
+  }
+}
+
+function handleResult(result: Result) {
+  switch (result.type) {
+    case ResultActions.LOG:
+      // TODO: Send to LogBoard
+      console.log(result.message)
+      break
+    default:
   }
 }
 

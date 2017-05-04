@@ -1,5 +1,7 @@
 /* @flow */
+export const LOG = 'result/LOG'
 
 export type Result = {
-  type: string
+  type: typeof LOG,
+  message: string
 }

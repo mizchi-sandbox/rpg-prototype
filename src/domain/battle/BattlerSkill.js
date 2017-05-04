@@ -31,6 +31,15 @@ export function updateCooldownCount(skill: BattlerSkill): BattlerSkill {
   }
 }
 
+export function resetCooldownCount(skill: BattlerSkill): BattlerSkill {
+  return {
+    ...skill,
+    cooldown: {
+      val: 0,
+      max: skill.data.cooldownCount
+    }
+  }
+}
 export function isExecutable(skill: BattlerSkill): boolean {
   return skill.cooldown.val >= skill.cooldown.max
 }

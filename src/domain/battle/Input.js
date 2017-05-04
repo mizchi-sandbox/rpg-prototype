@@ -1,6 +1,6 @@
 /* @flow */
 
 export type Input = {
-  battlerId: string,
-  skillId: string
+  battlerId: Symbol,
+  skillId: Symbol
 }

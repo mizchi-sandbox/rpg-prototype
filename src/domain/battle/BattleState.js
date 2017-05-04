@@ -1,7 +1,6 @@
 /* @flow */
 import { updateBattler } from './Battler'
 import { buildBattlerSkill } from './BattlerSkill'
-import { execCommand } from './Command'
 import type { Battler } from './Battler'
 import type { Command, CommandOnProgressState } from './Command'
 import type { Result } from './Result'
@@ -42,7 +41,7 @@ export function processCommandPhase(
 ): { state: BattleState, results: Result[] } {
   const commanded: CommandOnProgressState = commandQueue.reduce(
     (next: CommandOnProgressState, nextCmd: Command) => {
-      const { state: nextState, results } = execCommand(next.state, nextCmd)
+      const { state: nextState, results } = nextCmd(next.state)
       return {
         state: nextState,
         results: next.results.concat(results)
