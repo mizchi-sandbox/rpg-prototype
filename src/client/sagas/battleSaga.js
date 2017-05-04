@@ -15,6 +15,9 @@ import { take, takeEvery, put, call, race } from 'redux-saga/effects'
 
 let _state: ?BattleState = null
 function* start(_action: any) {
+  if (_state) {
+    return // stop on duplicated
+  }
   _state = createBattleMock()
   yield put(sync(_state))
   while (true) {
@@ -33,7 +36,10 @@ function* start(_action: any) {
 
     if (_waited) {
       // Update state
-      _state = processTurn(_state)
+      const processed = processTurn(_state)
+      _state = processed.state
+
+      console.log(processed.results)
       yield put(sync(_state))
     }
   }

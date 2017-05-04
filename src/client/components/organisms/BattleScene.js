@@ -3,11 +3,12 @@ import React, { Component } from 'react'
 import {
   requestStart,
   requestPause,
-  requestRestart
+  requestRestart,
+  addInputToQueue
 } from '../../actions/battleActions'
 import type { BattleContainerProps } from '../../containers/BattleContainer'
 import Button from '../atoms/Button'
-import BattlerLine from '../organisms/BattlerLine'
+import BattlerLine from '../molecules/BattlerLine'
 
 export default class BattleScene extends Component {
   props: BattleContainerProps
@@ -39,8 +40,15 @@ export default class BattleScene extends Component {
               />}
           <hr />
           <span>Turn: {battleState.turn}</span>
+          <span>InputQueue: {battleState.inputQueue.length}</span>
           {battleState.battlers.map(battler => (
-            <BattlerLine battler={battler} key={battler.id} />
+            <BattlerLine
+              battler={battler}
+              key={battler.id}
+              onSkillSelect={skill => {
+                this.props.dispatch(addInputToQueue(battler.id, skill.id))
+              }}
+            />
           ))}
         </div>
       )

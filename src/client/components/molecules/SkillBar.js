@@ -3,7 +3,13 @@ import React from 'react'
 import Icon from '../atoms/Icon'
 import type { Skill } from 'domain/types'
 
-export default function SkillBar({ skills }: { skills: Skill[] }) {
+export default function SkillBar({
+  skills,
+  onSkillSelect
+}: {
+  skills: Skill[],
+  onSkillSelect: Skill => void
+}) {
   return (
     <span className="skillBar">
       {skills.map(skill => {
@@ -13,7 +19,7 @@ export default function SkillBar({ skills }: { skills: Skill[] }) {
             key={skill.id}
             name={name}
             onClick={() => {
-              console.log(name)
+              onSkillSelect(skill)
             }}
           />
         )
