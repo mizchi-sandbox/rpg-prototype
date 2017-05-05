@@ -1,4 +1,5 @@
 /* @flow */
+import type { Input } from 'domain/battle'
 
 // Constants
 export const REQUEST_START = 'battle:request-start'
@@ -7,6 +8,7 @@ export const REQUEST_RESTART = 'battle:request-restart'
 export const PAUSED = 'battle:paused'
 export const RESTARTED = 'battle:restarted'
 export const ADD_INPUT_TO_QUEUE = 'battle:add-input-to-queue'
+export const UPDATE_INPUT_QUEUE = 'battle:update-input-queue'
 export const RESET = 'battle:reset'
 
 // Actions
@@ -24,8 +26,14 @@ export type BattleAction =
         skillId: Symbol
       }
     }
+  | {
+      type: typeof UPDATE_INPUT_QUEUE,
+      payload: {
+        inputQueue: Input[]
+      }
+    }
 
-// action creator
+// Action creator
 export const requestStart = () => ({ type: REQUEST_START })
 export const requestPause = () => ({ type: REQUEST_PAUSE })
 export const requestRestart = () => ({ type: REQUEST_RESTART })
@@ -44,3 +52,7 @@ export const addInputToQueue = (
     }
   }
 }
+export const updateInputQueue = (inputQueue: Input[]) => ({
+  type: UPDATE_INPUT_QUEUE,
+  payload: { inputQueue }
+})

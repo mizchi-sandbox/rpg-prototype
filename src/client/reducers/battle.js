@@ -1,18 +1,20 @@
 /* @flow */
-import type { BattleSagaAction } from '../actions/battleSagaActions'
 import {
   REQUEST_START,
   RESTARTED,
+  UPDATE_INPUT_QUEUE,
   PAUSED,
   RESET
 } from '../actions/battleActions'
+import type { BattleSagaAction } from '../actions/battleSagaActions'
 import { SYNC } from '../actions/battleSagaActions'
 import type { BattleAction } from '../actions/battleActions'
-import type { BattleState } from 'domain/battle'
+import type { BattleState, Input } from 'domain/battle'
 
 // State
 export type State = {
   battleState: ?BattleState,
+  inputQueue: Input[],
   loading: boolean,
   paused: boolean
 }
@@ -20,7 +22,8 @@ export type State = {
 const initialState: State = {
   loading: true,
   paused: false,
-  battleState: null
+  battleState: null,
+  inputQueue: []
 }
 
 // Reducer
@@ -50,6 +53,11 @@ export default (
         ...state,
         battleState: action.payload,
         loading: true
+      }
+    case UPDATE_INPUT_QUEUE:
+      return {
+        ...state,
+        inputQueue: action.payload.inputQueue
       }
     case RESET:
       return initialState

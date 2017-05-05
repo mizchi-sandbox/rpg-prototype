@@ -23,7 +23,7 @@ export default class BattleScene extends Component {
     if (!this.props.battleState) {
       return <h1>Loading</h1>
     } else {
-      const battleState = this.props.battleState
+      const { battleState, inputQueue } = this.props
       return (
         <div className="battle">
           {this.props.paused
@@ -41,8 +41,8 @@ export default class BattleScene extends Component {
               />}
           <hr />
           <span>Turn: {battleState.turn}</span>
-          {/* &nbsp;
-          <span>InputQueue: {battleState.inputQueue.length}</span> */}
+          &nbsp;
+          <span>InputQueue: {inputQueue.length}</span>
           {battleState.battlers.map((battler, index) => (
             <BattlerLine
               battler={battler}
