@@ -1,7 +1,7 @@
 {
-  "name": "rpg-prototyping",
+  "name": "rpg-prototype",
   "version": "1.0.0",
-  "main": "index.js",
+  "private": true,
   "license": "MIT",
   "ava": {
     "babel": "inherit",
@@ -28,15 +28,21 @@
   "dependencies": {
     "aphrodite": "^1.2.1",
     "babel-runtime": "^6.23.0",
+    "paths-js": "^0.4.5",
     "prop-types": "^15.5.8",
     "react": "next",
+    "react-dnd": "^2.3.0",
     "react-dom": "next",
+    "react-move": "^1.1.8",
     "react-redux": "^5.0.4",
+    "react-tooltip": "^3.3.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-saga": "^0.15.0",
     "redux-thunk": "^2.2.0",
-    "seamless-immutable": "^7.1.2"
+    "seamless-immutable": "^7.1.2",
+    "semantic-ui-css": "^2.2.10",
+    "semantic-ui-react": "^0.68.2"
   },
   "devDependencies": {
     "@kadira/storybook": "^2.35.3",

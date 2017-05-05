@@ -1,20 +1,16 @@
 /* @flow */
 import React from 'react'
-import { StyleSheet, css } from 'aphrodite'
+// import { StyleSheet, css } from 'aphrodite'
+import { Button as SemanticButton } from 'semantic-ui-react'
 
 export default function Button(props: { label: string, onClick: Function }) {
   return (
-    <button
-      className={css(styles.button)}
+    <SemanticButton
       onClick={ev => {
         props.onClick(ev)
       }}
     >
       {props.label}
-    </button>
+    </SemanticButton>
   )
 }
-
-const styles = StyleSheet.create({
-  button: {}
-})

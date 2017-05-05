@@ -35,6 +35,21 @@ storiesOf('SkillIcon', module)
 
     return <SkillIcon skill={mockSkill} onClick={action('clicked')} />
   })
+  .add('9/10', () => {
+    const mockSkill = {
+      data: {
+        id: '$hoge',
+        displayName: 'hoge',
+        type: 'auto',
+        cooldownCount: 10
+      },
+      id: Symbol(),
+      cooldown: { val: 9, max: 10 },
+      lv: 1
+    }
+
+    return <SkillIcon skill={mockSkill} onClick={action('clicked')} />
+  })
   .add('10/10', () => {
     const mockSkill = {
       data: {
