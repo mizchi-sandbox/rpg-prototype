@@ -4,7 +4,6 @@ import { StyleSheet, css } from 'aphrodite'
 
 export default function LogBoard(props: {
   messages: string[],
-  max: number,
   direction: 'upper' | 'bottom'
 }) {
   return (

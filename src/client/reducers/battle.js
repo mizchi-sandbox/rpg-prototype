@@ -4,6 +4,7 @@ import {
   RESTARTED,
   UPDATE_INPUT_QUEUE,
   PAUSED,
+  LOG,
   RESET
 } from '../actions/battleActions'
 import type { BattleSagaAction } from '../actions/battleSagaActions'
@@ -16,6 +17,7 @@ export type State = {
   battleState: ?BattleState,
   inputQueue: Input[],
   loading: boolean,
+  log: string[],
   paused: boolean
 }
 
@@ -23,6 +25,7 @@ const initialState: State = {
   loading: true,
   paused: false,
   battleState: null,
+  log: [],
   inputQueue: []
 }
 
@@ -58,6 +61,13 @@ export default (
       return {
         ...state,
         inputQueue: action.payload.inputQueue
+      }
+    case LOG:
+      return {
+        ...state,
+        log: state.log.length < 10
+          ? [].concat([action.payload], state.log)
+          : [].concat([action.payload], state.log.slice(0, -1))
       }
     case RESET:
       return initialState

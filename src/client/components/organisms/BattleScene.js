@@ -23,7 +23,7 @@ export default class BattleScene extends Component {
     if (!this.props.battleState) {
       return <h1>Loading</h1>
     } else {
-      const { battleState, inputQueue } = this.props
+      const { battleState, inputQueue, log } = this.props
       return (
         <div className="battle">
           {this.props.paused
@@ -53,7 +53,7 @@ export default class BattleScene extends Component {
             />
           ))}
           <hr />
-          <LogBoard max={10} messages={['Started']} direction="bottom" />
+          <LogBoard messages={log} direction="bottom" />
         </div>
       )
     }

@@ -45,7 +45,11 @@ function* start(_action: any) {
       const processed = processTurn(state, inputQueue)
       state = processed.state
       for (const result of processed.results) {
-        handleResult(result)
+        switch (result.type) {
+          case ResultActions.LOG:
+            yield put(battleActions.log(result.message))
+            break
+        }
       }
 
       yield put(sync(state))
@@ -53,15 +57,7 @@ function* start(_action: any) {
   }
 }
 
-function handleResult(result: Result) {
-  switch (result.type) {
-    case ResultActions.LOG:
-      // TODO: Send to LogBoard
-      console.log(result.message)
-      break
-    default:
-  }
-}
+function handleResult(result: Result) {}
 
 export default function* battleSaga(): any {
   yield takeEvery(battleActions.REQUEST_START, start)

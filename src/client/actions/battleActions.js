@@ -10,6 +10,7 @@ export const RESTARTED = 'battle:restarted'
 export const ADD_INPUT_TO_QUEUE = 'battle:add-input-to-queue'
 export const UPDATE_INPUT_QUEUE = 'battle:update-input-queue'
 export const RESET = 'battle:reset'
+export const LOG = 'battle:log'
 
 // Actions
 export type BattleAction =
@@ -19,6 +20,7 @@ export type BattleAction =
   | { type: typeof PAUSED }
   | { type: typeof RESTARTED }
   | { type: typeof RESET }
+  | { type: typeof LOG, payload: string }
   | {
       type: typeof ADD_INPUT_TO_QUEUE,
       payload: {
@@ -40,6 +42,7 @@ export const requestRestart = () => ({ type: REQUEST_RESTART })
 export const paused = () => ({ type: PAUSED })
 export const restarted = () => ({ type: RESTARTED })
 export const reset = () => ({ type: RESET })
+export const log = (message: string) => ({ type: LOG, payload: message })
 export const addInputToQueue = (
   battlerId: Symbol,
   skillId: Symbol
