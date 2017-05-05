@@ -6,4 +6,4 @@ export type { Result } from './Result'
 export type { Input } from './Input'
 export type { BattlerSkill } from './BattlerSkill'
 
-export { processTurn, createBattleMock } from './BattleState'
+export { processTurn, createBattleMock, isFinished } from './BattleState'

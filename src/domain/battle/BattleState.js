@@ -51,6 +51,22 @@ export function processCommandPhase(
   return commanded
 }
 
+export function isFinished(state: BattleState): ?{ winner: 'ally' | 'enemy' } {
+  if (
+    state.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
+  ) {
+    return { winner: 'ally' }
+  }
+
+  if (
+    state.battlers.filter(b => b.side === 'ally').every(b => b.life.val <= 0)
+  ) {
+    return { winner: 'enemy' }
+  }
+
+  return null
+}
+
 export function processTurn(
   state: BattleState,
   inputQueue: Input[]

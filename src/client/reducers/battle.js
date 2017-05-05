@@ -65,7 +65,7 @@ export default (
     case LOG:
       return {
         ...state,
-        log: state.log.length < 10
+        log: state.log.length < 5
           ? [].concat([action.payload], state.log)
           : [].concat([action.payload], state.log.slice(0, -1))
       }

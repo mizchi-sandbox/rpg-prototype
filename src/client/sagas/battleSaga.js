@@ -3,10 +3,9 @@ import { delay } from 'redux-saga'
 import { sync } from '../actions/battleSagaActions'
 import * as battleActions from '../actions/battleActions'
 import type { BattleState } from 'domain/battle'
-import { processTurn, createBattleMock } from 'domain/battle'
+import { processTurn, createBattleMock, isFinished } from 'domain/battle'
 import { take, takeEvery, put, call, race } from 'redux-saga/effects'
 import * as ResultActions from 'domain/battle/Result'
-import type { Result } from 'domain/battle/Result'
 import type { Input } from 'domain/battle/Input'
 
 let _inputQueue: Input[] = []
@@ -53,11 +52,16 @@ function* start(_action: any) {
       }
 
       yield put(sync(state))
+
+      // Check finish flag
+      const finshed = isFinished(state)
+      if (finshed) {
+        yield put(battleActions.log(`Finish: Winner ${finshed.winner}`))
+        break
+      }
     }
   }
 }
-
-function handleResult(result: Result) {}
 
 export default function* battleSaga(): any {
   yield takeEvery(battleActions.REQUEST_START, start)
