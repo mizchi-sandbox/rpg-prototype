@@ -20,13 +20,14 @@ export default class BattleScene extends Component {
   }
 
   render() {
-    if (!this.props.battleState) {
+    const { runner, log } = this.props
+    if (!runner.battleState) {
       return <h1>Loading</h1>
     } else {
-      const { battleState, inputQueue, log } = this.props
+      const { battleState, inputQueue, paused } = runner
       return (
         <div className="battle">
-          {this.props.paused
+          {paused
             ? <Button
                 onClick={_ => {
                   this.props.dispatch(requestRestart())

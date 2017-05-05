@@ -56,7 +56,7 @@ function* start(_action: any) {
       // Check finish flag
       const finshed = isFinished(state)
       if (finshed) {
-        yield put(battleActions.log(`Finish: Winner ${finshed.winner}`))
+        yield put(battleActions.log(`${finshed.winner} win.`))
         break
       }
     }
