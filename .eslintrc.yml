@@ -2,7 +2,6 @@ extends:
   - mizchi
 plugins:
   - mutation
-# // export * from './battle/index'
 settings:
   import/resolver:
     node:

@@ -3,7 +3,7 @@ import * as BattlerSkillAction from './BattlerSkill'
 import * as Result from './Result'
 import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
-import type { Input, Command } from './index'
+import type { Command, Input } from './index'
 import type { ConsumableValue } from 'domain/values/ConsumableValue'
 
 export type Battler = {

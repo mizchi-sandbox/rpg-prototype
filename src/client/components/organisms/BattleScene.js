@@ -1,17 +1,20 @@
 /* @flow */
-import React, { Component } from 'react'
+import React from 'react'
+import { StyleSheet, css } from 'aphrodite'
+
+import type { BattleContainerProps } from '../../containers/BattleContainer'
 import {
-  requestStart,
+  addInputToQueue,
   requestPause,
   requestRestart,
-  addInputToQueue
+  requestStart
 } from '../../actions/battleActions'
-import type { BattleContainerProps } from '../../containers/BattleContainer'
-import Button from '../atoms/Button'
 import BattlerLine from '../molecules/BattlerLine'
+import Button from '../atoms/Button'
 import LogBoard from '../molecules/LogBoard'
+import type { Battler, BattleState, Input, BattlerSkill } from 'domain/battle'
 
-export default class BattleScene extends Component {
+export default class BattleScene extends React.Component {
   props: BattleContainerProps
 
   _timeoutId = null
@@ -26,33 +29,24 @@ export default class BattleScene extends Component {
     } else {
       const { battleState, inputQueue, paused } = runner
       return (
-        <div className="battle">
-          {paused
-            ? <Button
-                onClick={_ => {
-                  this.props.dispatch(requestRestart())
-                }}
-                label="Restart"
-              />
-            : <Button
-                onClick={_ => {
-                  this.props.dispatch(requestPause())
-                }}
-                label="Pause"
-              />}
+        <div className={css(styles.container)}>
+          <BattleStateController
+            paused={paused}
+            onClickPause={_ => {
+              this.props.dispatch(requestPause())
+            }}
+            onClickRestart={_ => {
+              this.props.dispatch(requestRestart())
+            }}
+          />
           <hr />
-          <span>Turn: {battleState.turn}</span>
-          &nbsp;
-          <span>InputQueue: {inputQueue.length}</span>
-          {battleState.battlers.map((battler, index) => (
-            <BattlerLine
-              battler={battler}
-              key={index}
-              onSkillSelect={skill => {
-                this.props.dispatch(addInputToQueue(battler.id, skill.id))
-              }}
-            />
-          ))}
+          <InputQueueDisplay inputQueue={inputQueue} />
+          <hr />
+          <BattleStateDisplay
+            battleState={battleState}
+            onSkillSelect={battler => skill =>
+              this.props.dispatch(addInputToQueue(battler.id, skill.id))}
+          />
           <hr />
           <LogBoard messages={log} direction="bottom" />
         </div>
@@ -60,3 +54,45 @@ export default class BattleScene extends Component {
     }
   }
 }
+
+export function BattleStateController({
+  paused,
+  onClickPause,
+  onClickRestart
+}: {
+  paused: boolean,
+  onClickPause: Function,
+  onClickRestart: Function
+}) {
+  return paused
+    ? <Button onClick={onClickPause} label="Restart" />
+    : <Button onClick={onClickRestart} label="Pause" />
+}
+
+export function InputQueueDisplay({ inputQueue }: { inputQueue: Input[] }) {
+  return <span>InputQueue: {inputQueue.length}</span>
+}
+
+export function BattleStateDisplay({
+  battleState,
+  onSkillSelect
+}: {
+  battleState: BattleState,
+  onSkillSelect: Battler => BattlerSkill => void
+}) {
+  return (
+    <div className="battle">
+      {battleState.battlers.map((battler, index) => (
+        <BattlerLine
+          battler={battler}
+          key={index}
+          onSkillSelect={onSkillSelect(battler)}
+        />
+      ))}
+    </div>
+  )
+}
+
+const styles = StyleSheet.create({
+  container: {}
+})

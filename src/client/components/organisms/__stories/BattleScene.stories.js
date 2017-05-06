@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react'
-import { storiesOf, action } from '@kadira/storybook'
+import { action, storiesOf } from '@kadira/storybook'
 import BattleScene from '../BattleScene'
 import { createBattleMock } from 'domain/battle/BattleState'
 

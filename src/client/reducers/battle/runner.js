@@ -1,10 +1,10 @@
 /* @flow */
 import {
-  REQUEST_START,
-  RESTARTED,
-  UPDATE_INPUT_QUEUE,
   PAUSED,
-  RESET
+  REQUEST_START,
+  RESET,
+  RESTARTED,
+  UPDATE_INPUT_QUEUE
 } from '../../actions/battleActions'
 import type { BattleSagaAction } from '../../actions/battleSagaActions'
 import { SYNC } from '../../actions/battleSagaActions'
