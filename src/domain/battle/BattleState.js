@@ -99,12 +99,30 @@ const initialState: BattleState = {
       side: 'ally',
       formationOrder: 0,
       controllable: true,
-      name: 'mizchi',
-      life: { val: 50, max: 50 },
+      name: 'Player1',
+      life: { val: 150, max: 150 },
       skills: [
         buildBattlerSkill('$attack', 1),
         buildBattlerSkill('$power-attack', 1)
       ]
+    },
+    {
+      id: Symbol(),
+      side: 'ally',
+      formationOrder: 1,
+      controllable: false,
+      name: 'BOT1',
+      life: { val: 30, max: 30 },
+      skills: [buildBattlerSkill('$attack', 1)]
+    },
+    {
+      id: Symbol(),
+      side: 'enemy',
+      formationOrder: 0,
+      controllable: false,
+      name: 'goblin',
+      life: { val: 30, max: 30 },
+      skills: [buildBattlerSkill('$attack', 1)]
     },
     {
       id: Symbol(),

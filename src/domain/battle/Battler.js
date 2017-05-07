@@ -33,7 +33,7 @@ export function createCommand(
             target = env.battlers.find(b => b.id === plannedTargetId)
           } else {
             target = env.battlers.find(b => {
-              return b.side !== actor.side
+              return b.side !== actor.side && b.life.val > 0
             })
           }
           if (target) {

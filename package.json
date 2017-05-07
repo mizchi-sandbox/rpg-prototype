@@ -23,7 +23,7 @@
     "test": "ava",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "storybook": "start-storybook -p 9001 -c .storybook"
+    "storybook": "start-storybook -p 9001 -c .storybook -s public"
   },
   "dependencies": {
     "aphrodite": "^1.2.1",

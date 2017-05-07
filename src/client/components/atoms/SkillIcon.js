@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
+import Tooltip from 'react-tooltip'
 import type { BattlerSkill } from 'domain/battle'
 
 const { sin, cos, PI } = Math
@@ -18,38 +19,51 @@ const arcPath = (
   `
 }
 
-export default function SkillIcon(props: {
+export default function SkillIcon({
+  skill,
+  onClick
+}: {
   skill: BattlerSkill,
   onClick: Function
 }) {
-  const rad = props.skill.cooldown.val / props.skill.cooldown.max
+  const rad = skill.cooldown.val / skill.cooldown.max
   const filled = rad >= 1
+  const tooltipId = `skillName${skill.data.displayName}`
+  const size = 40
   return (
-    <span
-      className={css(styles.red)}
-      onClick={ev => {
-        props.onClick(ev)
-      }}
-      style={{ width: '30px', height: '30px' }}
-    >
-      <svg x="0" y="0" width="30px" height="30px" viewBox="0 0 100 100">
+    <span style={{ width: `${size}px`, height: `${size}px` }} onClick={onClick}>
+      <Tooltip id={tooltipId} place="top" type="dark" effect="solid">
+        {skill.data.displayName}
+      </Tooltip>
+      <svg
+        data-tip
+        data-for={tooltipId}
+        x="0"
+        y="0"
+        width="40px"
+        height="40px"
+        viewBox="0 0 100 100"
+      >
         {filled
           ? <circle
+              key="filledCircle"
               cx={50}
               cy={50}
               r={42}
-              stroke="blue"
-              strokeWidth={4}
+              stroke="green"
+              strokeWidth={6}
               fill="transparent"
             />
           : [
               <path
+                key="progress"
                 d={arcPath(rad, 50, 50, 40)}
                 fill="none"
                 stroke="blue"
                 strokeWidth={3}
               />,
               <circle
+                key="grayout"
                 cx={50}
                 cy={50}
                 r={42}
@@ -58,15 +72,16 @@ export default function SkillIcon(props: {
                 fill="transparent"
               />
             ]}
-        <text
-          x="50"
-          y="50"
-          fill="green"
-          textAnchor="middle"
-          style={{ fontSize: '2em' }}
-        >
-          {props.skill.data.displayName}
-        </text>
+        <image
+          xlinkHref="/assets/icons/icon000.png"
+          x="25"
+          y="25"
+          height="50"
+          width="50"
+          style={{
+            filter: 'grayscale(1)' /* W3C */
+          }}
+        />
       </svg>
     </span>
   )

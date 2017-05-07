@@ -13,17 +13,18 @@ export default function SkillBar({
 }) {
   return (
     <span className={css(styles.container)}>
-      {skills.map(skill => {
+      {skills.map((skill, index) => {
         return (
-          <span className={css(styles.skillSlot)}>
-            <SkillIcon
-              key={skill.data.id}
-              skill={skill}
-              onClick={() => {
-                onSkillSelect(skill)
-              }}
-            />
-          </span>
+          <div key={index}>
+            <span className={css(styles.skillSlot)}>
+              <SkillIcon
+                skill={skill}
+                onClick={() => {
+                  onSkillSelect(skill)
+                }}
+              />
+            </span>
+          </div>
         )
       })}
     </span>

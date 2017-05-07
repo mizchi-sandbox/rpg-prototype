@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Layout(props: any) {
   return (
-    <div>
+    <div style={{ userSelect: 'none' }}>
       {props.children}
     </div>
   )

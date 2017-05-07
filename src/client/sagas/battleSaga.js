@@ -6,7 +6,7 @@ import type { BattleState } from 'domain/battle'
 import { createBattleMock, isFinished, processTurn } from 'domain/battle'
 import { call, put, race, take, takeEvery } from 'redux-saga/effects'
 import * as ResultActions from 'domain/battle/Result'
-import type { Input } from 'domain/battle/Input'
+import type { Input, Battler, BattlerSkill } from 'domain/battle'
 
 let _inputQueue: Input[] = []
 
@@ -17,49 +17,107 @@ function hydrateInputQueue() {
 }
 
 function* addInputToQueue(action: any) {
+  if (waitMode) {
+    // Can't intercept
+    return
+  }
   _inputQueue = _inputQueue.concat([{ ...action.payload, id: Symbol('input') }])
   yield put(battleActions.updateInputQueue(_inputQueue))
 }
 
+export function findActiveSkill(battlers: Battler[]): ?BattlerSkill {
+  for (const b of battlers) {
+    if (b.controllable) {
+      const executableSkill = b.skills.find(
+        sk => sk.cooldown.val >= sk.cooldown.max
+      )
+      if (executableSkill) {
+        return executableSkill
+      }
+    }
+  }
+  return
+}
+
+// type LoopMode = 'wait' | 'active'
+// const loopMode: LoopMode = 'wait'
+// const waitMode = true
+const waitMode = true
 function* start(_action: any) {
   let state: BattleState = createBattleMock()
+
+  // Sync first
   yield put(sync(state))
+
+  // Start loop
   while (true) {
-    // Wait or Pause
-    const { paused, waited } = yield race({
-      waited: call(delay, 300),
-      paused: take(battleActions.REQUEST_PAUSE)
-    })
+    // InputQueue buffer
+    let takenInputQueue: Input[] = []
 
-    // if user request pausing, wait for restart
-    if (paused) {
-      yield put(battleActions.paused())
-      yield take(battleActions.REQUEST_RESTART)
-      yield put(battleActions.restarted())
+    // WaitMode: check executableSkill
+    if (waitMode) {
+      // Wait input on wait mode
+      const executableSkill = findActiveSkill(state.battlers)
+      if (executableSkill) {
+        yield put(sync(state))
+        yield put(battleActions.paused())
+        const takenInputAction: { payload: Input } = yield take(
+          battleActions.ADD_INPUT_TO_QUEUE
+        )
+        takenInputQueue = [takenInputAction.payload]
+        yield put(battleActions.restarted())
+        yield call(delay, 100)
+      }
     }
 
-    if (waited) {
-      const inputQueue = hydrateInputQueue()
+    // ActiveMode: wait interval or intercept by pause request
+    if (!waitMode) {
+      // const { paused, waited } = yield race({
+      const { paused } = yield race({
+        waited: call(delay, 300),
+        paused: take(battleActions.REQUEST_PAUSE)
+      })
+      // if user request pausing, wait for restart
+      if (paused) {
+        yield put(battleActions.paused())
+        yield take(battleActions.REQUEST_RESTART)
+        yield put(battleActions.restarted())
+      }
+      // Get input
+      takenInputQueue = hydrateInputQueue()
       yield put(battleActions.updateInputQueue([]))
-      const processed = processTurn(state, inputQueue)
-      state = processed.state
-      for (const result of processed.results) {
-        switch (result.type) {
-          case ResultActions.LOG:
-            yield put(battleActions.log(result.message))
-            break
-        }
-      }
+    }
 
-      yield put(sync(state))
-
-      // Check finish flag
-      const finshed = isFinished(state)
-      if (finshed) {
-        yield put(battleActions.log(`${finshed.winner} win.`))
-        break
+    // Update state
+    const processed = processTurn(state, takenInputQueue)
+    state = processed.state
+    for (const result of processed.results) {
+      switch (result.type) {
+        case ResultActions.LOG:
+          yield put(battleActions.log(result.message))
+          if (waitMode) {
+            yield put(sync(state))
+          }
+          yield call(delay, 100)
+          break
       }
     }
+
+    // Check finished flag
+    const finshed = isFinished(state)
+    if (finshed) {
+      yield put(sync(state))
+      yield put(battleActions.log(`${finshed.winner} win.`))
+      break
+    }
+
+    // Sync state by each frame on active
+    if (!waitMode) {
+      yield put(sync(state))
+    }
+
+    // Clear inputQueue
+    takenInputQueue = []
   }
 }
 

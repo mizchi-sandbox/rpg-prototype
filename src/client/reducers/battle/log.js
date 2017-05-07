@@ -9,7 +9,7 @@ export type State = string[]
 export default (log: State = [], action: BattleAction) => {
   switch (action.type) {
     case LOG:
-      return log.length < 5
+      return log.length < 10
         ? [].concat([action.payload], log)
         : [].concat([action.payload], log.slice(0, -1))
     case RESET:
