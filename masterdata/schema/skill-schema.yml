@@ -1,14 +1,20 @@
 required:
   - id
-  - type
   - displayName
   - cooldownCount
+  - skillType
+  - altIconText
 properties:
   id:
     type: string
   displayName:
     type: string
-  type:
+  displayIcon:
     type: string
   cooldownCount:
     type: number
+  skillType:
+    type: string
+  # Instant name instead of icon
+  altIconText:
+    type: string

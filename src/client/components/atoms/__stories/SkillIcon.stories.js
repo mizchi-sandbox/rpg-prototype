@@ -1,20 +1,15 @@
 /* @flow */
 import React from 'react'
 import { action, storiesOf } from '@kadira/storybook'
-
 import SkillIcon from '../SkillIcon'
+import { loadSkillData } from 'domain/master'
 
 storiesOf('SkillIcon', module)
-  .add('0/10', () => {
+  .add('0/15', () => {
     const mockSkill = {
-      data: {
-        id: '$power-attack',
-        displayName: 'hoge',
-        type: 'auto',
-        cooldownCount: 10
-      },
+      data: loadSkillData('$power-attack'),
       id: Symbol(),
-      cooldown: { val: 0, max: 10 },
+      cooldown: { val: 0, max: 15 },
       lv: 1
     }
 
@@ -26,16 +21,11 @@ storiesOf('SkillIcon', module)
       />
     )
   })
-  .add('5/10', () => {
+  .add('5/15', () => {
     const mockSkill = {
-      data: {
-        id: '$hoge',
-        displayName: 'hoge',
-        type: 'auto',
-        cooldownCount: 10
-      },
+      data: loadSkillData('$power-attack'),
       id: Symbol(),
-      cooldown: { val: 5, max: 10 },
+      cooldown: { val: 5, max: 15 },
       lv: 1
     }
 
@@ -47,16 +37,11 @@ storiesOf('SkillIcon', module)
       />
     )
   })
-  .add('9/10', () => {
+  .add('10/15', () => {
     const mockSkill = {
-      data: {
-        id: '$hoge',
-        displayName: 'hoge',
-        type: 'auto',
-        cooldownCount: 10
-      },
+      data: loadSkillData('$power-attack'),
       id: Symbol(),
-      cooldown: { val: 9, max: 10 },
+      cooldown: { val: 9, max: 15 },
       lv: 1
     }
 
@@ -68,16 +53,11 @@ storiesOf('SkillIcon', module)
       />
     )
   })
-  .add('10/10', () => {
+  .add('15/15', () => {
     const mockSkill = {
-      data: {
-        id: '$hoge',
-        displayName: 'hoge',
-        type: 'auto',
-        cooldownCount: 10
-      },
+      data: loadSkillData('$power-attack'),
       id: Symbol(),
-      cooldown: { val: 10, max: 10 },
+      cooldown: { val: 15, max: 15 },
       lv: 1
     }
 
@@ -89,16 +69,11 @@ storiesOf('SkillIcon', module)
       />
     )
   })
-  .add('10/10 inQueue', () => {
+  .add('15/15 inQueue', () => {
     const mockSkill = {
-      data: {
-        id: '$hoge',
-        displayName: 'hoge',
-        type: 'auto',
-        cooldownCount: 10
-      },
+      data: loadSkillData('$power-attack'),
       id: Symbol(),
-      cooldown: { val: 10, max: 10 },
+      cooldown: { val: 15, max: 15 },
       lv: 1
     }
 

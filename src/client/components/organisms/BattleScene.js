@@ -113,8 +113,8 @@ export function BattleStateController({
 const styles = StyleSheet.create({
   container: {
     display: 'grid',
-    height: '60vh',
-    width: '80vw',
+    height: '100%',
+    width: '100%',
     gridTemplateAreas: `
       "header header"
       "enemies log"
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     `
   },
   header: {
-    backgroundColor: 'wheat',
+    padding: '3px',
     gridArea: 'header'
   },
   main: {

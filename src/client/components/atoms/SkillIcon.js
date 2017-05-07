@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react'
-import { StyleSheet, css } from 'aphrodite'
+// import { StyleSheet, css } from 'aphrodite'
 import Tooltip from 'react-tooltip'
 import type { BattlerSkill } from 'domain/battle'
 
@@ -74,24 +74,33 @@ export default function SkillIcon({
                 fill="transparent"
               />
             ]}
-        <image
-          xlinkHref="/assets/icons/icon000.png"
-          x="25"
-          y="25"
-          height="50"
-          width="50"
-          style={{
-            filter: 'grayscale(1)' /* W3C */
-          }}
-        />
+        {skill.data.displayIcon
+          ? <image
+              xlinkHref={skill.data.displayIcon}
+              x="25"
+              y="25"
+              height="50"
+              width="50"
+              style={{
+                filter: 'grayscale(1)' /* W3C */
+              }}
+            />
+          : <text
+              x="50"
+              y="60"
+              textAnchor="middle"
+              style={{ fontSize: '2.5em' }}
+            >
+              {skill.data.altIconText}
+            </text>}
       </svg>
     </span>
   )
 }
 
-const styles = StyleSheet.create({
-  red: {
-    padding: '3px'
-    // outline: '1px solid black'
-  }
-})
+// const styles = StyleSheet.create({
+//   red: {
+//     padding: '3px'
+//     // outline: '1px solid black'
+//   }
+// })

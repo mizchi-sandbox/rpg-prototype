@@ -2,10 +2,12 @@
   id: $attack
   cooldownCount: 5
   displayName: Attack
-  type: auto
-
+  displayIcon: /assets/icons/icon000.png
+  altIconText: A
+  skillType: DAMAGE_SINGLE
 -
   id: $power-attack
-  cooldownCount: 8
+  cooldownCount: 12
   displayName: Power Attack
-  type: exec
+  altIconText: PA
+  skillType: DAMAGE_SINGLE
