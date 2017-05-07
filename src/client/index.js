@@ -2,18 +2,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
-import App from './components/App'
+import App from './containers/AppContainer'
+import { Provider } from 'react-redux'
+import store from './store/index'
 
 export default async () => {
   if (process.env.NODE_ENV === 'production') {
-    ReactDOM.render(<App />, document.querySelector('main'))
+    ReactDOM.render(
+      <Provider store={store}><App /></Provider>,
+      document.querySelector('main')
+    )
   } else {
     const render = async () => {
-      const { default: App } = await import('./components/App')
+      const { default: App } = await import('./containers/AppContainer')
       ReactDOM.render(
-        <AppContainer>
-          <App />
-        </AppContainer>,
+        <Provider store={store}>
+          <AppContainer>
+            <App />
+          </AppContainer>
+        </Provider>,
         document.querySelector('main')
       )
     }
@@ -22,26 +29,7 @@ export default async () => {
       const { default: store } = await import('./store')
       const { default: nextRootReducer } = await import('./reducers')
       store.replaceReducer(nextRootReducer)
-      // eslint-disable-next-line
       module.hot.accept('./components/App', render)
     }
   }
 }
-
-// if (process.env.NODE_ENV === 'production') {
-//   ReactDOM.render(<Provider store={store}><App/></Provider>, root)
-// } else {
-//   const render = async () => {
-//     const { default: App } = (await import('./components/App'))
-//     ReactDOM.render(
-//       <AppContainer>
-//         <Provider store={store}>
-//           <App/>
-//         </Provider>
-//       </AppContainer>,
-//       root
-//     )
-//   }
-//   render()
-//   if (module.hot) module.hot.accept('./components/App', render)
-// }
