@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rimraf src/master/*.js public/bundle.js",
     "prepare": "yarn run clean; yarn build:master",
-    "deploy": "yarn prepare; yarn build:prod; yarn gh-pages -d public",
+    "deploy": "yarn prepare; yarn build:src:prod; yarn gh-pages -- -d public/",
     "build:master": "node script/gen-code.js",
     "watch:master": "chokidar masterdata/**/* -c 'yarn build:master' --polling",
     "build:src": "webpack",

@@ -2,7 +2,7 @@
   id: $attack
   cooldownCount: 5
   displayName: Attack
-  displayIcon: /assets/icons/icon000.png
+  displayIcon: assets/icons/icon000.png
   altIconText: A
   skillType: DAMAGE_SINGLE
 -

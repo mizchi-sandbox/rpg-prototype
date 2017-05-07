@@ -1,7 +1,7 @@
 -
   id: $goblin
   displayName: Goblin
-  displayImage: /assets/EnemyGraphic/GD_Goblin(Green).png
+  displayImage: assets/EnemyGraphic/GD_Goblin(Green).png
   race_id: goblin
   job_id: novice
   status:
@@ -12,7 +12,7 @@
 -
   id: $hob-goblin
   displayName: Hob Goblin
-  displayImage: /assets/EnemyGraphic/GD_Goblin(Red).png
+  displayImage: assets/EnemyGraphic/GD_Goblin(Red).png
   race_id: goblin
   job_id: novice
   status:
