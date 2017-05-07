@@ -21,9 +21,11 @@ const arcPath = (
 
 export default function SkillIcon({
   skill,
+  inQueue,
   onClick
 }: {
   skill: BattlerSkill,
+  inQueue: boolean,
   onClick: Function
 }) {
   const rad = skill.cooldown.val / skill.cooldown.max
@@ -50,7 +52,7 @@ export default function SkillIcon({
               cx={50}
               cy={50}
               r={42}
-              stroke="green"
+              stroke={inQueue ? 'yellow' : 'green'}
               strokeWidth={6}
               fill="transparent"
             />

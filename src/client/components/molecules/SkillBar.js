@@ -6,10 +6,12 @@ import type { BattlerSkill } from 'domain/battle'
 
 export default function SkillBar({
   skills,
-  onSkillSelect
+  onSkillSelect,
+  isSkillInQueue
 }: {
   skills: BattlerSkill[],
-  onSkillSelect: BattlerSkill => void
+  onSkillSelect: BattlerSkill => void,
+  isSkillInQueue: BattlerSkill => boolean
 }) {
   return (
     <span className={css(styles.container)}>
@@ -19,6 +21,7 @@ export default function SkillBar({
             <span className={css(styles.skillSlot)}>
               <SkillIcon
                 skill={skill}
+                inQueue={isSkillInQueue(skill)}
                 onClick={() => {
                   onSkillSelect(skill)
                 }}

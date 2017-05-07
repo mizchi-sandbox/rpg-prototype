@@ -11,9 +11,9 @@ import Button from '../atoms/Button'
 import LogBoard from '../molecules/LogBoard'
 import AllyBattlersDisplay from '../molecules/AllyBattlersDisplay'
 import EnemyBattlersDisplay from '../molecules/EnemyBattlersDisplay'
+import InputQueueDisplay from '../molecules/InputQueueDisplay'
 import GlobalKeyListner from '../helpers/GlobalKeyListener'
 import type { BattleContainerProps } from '../../containers/BattleContainer'
-import type { Input, BattleState } from 'domain/battle'
 
 export default class BattleScene extends React.Component {
   props: BattleContainerProps
@@ -68,6 +68,8 @@ export default class BattleScene extends React.Component {
             <div className={css(styles.allies)}>
               <AllyBattlersDisplay
                 allies={battleState.battlers.filter(b => b.side === 'ally')}
+                isSkillInQueue={skill =>
+                  inputQueue.map(input => input.skillId).includes(skill.id)}
                 onAllyAndSkillSelect={ally => skill => {
                   // Check skill is executable with queue
                   if (
@@ -107,31 +109,8 @@ export function BattleStateController({
   onClickRestart: Function
 }) {
   return paused
-    ? <Button onClick={onClickRestart} label="Restart" />
-    : <Button onClick={onClickPause} label="Pause" />
-}
-
-export function InputQueueDisplay({
-  inputQueue,
-  battleState
-}: {
-  inputQueue: Input[],
-  battleState: BattleState
-}) {
-  return (
-    <div>
-      {inputQueue.map((input, index) => {
-        const actorToAction = battleState.battlers.find(
-          b => b.id === input.battlerId
-        )
-        return (
-          <div key={index}>
-            {actorToAction && actorToAction.name}: Ready {input.skillId}
-          </div>
-        )
-      })}
-    </div>
-  )
+    ? <Button onClick={onClickRestart} label="Restart(Space)" />
+    : <Button onClick={onClickPause} label="Pause(Space)" />
 }
 
 const styles = StyleSheet.create({
