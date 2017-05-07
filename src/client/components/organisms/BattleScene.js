@@ -18,7 +18,6 @@ import type { BattleContainerProps } from '../../containers/BattleContainer'
 export default class BattleScene extends React.Component {
   props: BattleContainerProps
 
-  _timeoutId = null
   componentDidMount() {
     this.props.dispatch(requestStart())
   }
@@ -58,29 +57,25 @@ export default class BattleScene extends React.Component {
             />
           </div>
           <div className={css(styles.enemies)}>
-            <div className={css(styles.enemies)}>
-              <EnemyBattlersDisplay
-                enemies={battleState.battlers.filter(b => b.side === 'enemy')}
-              />
-            </div>
+            <EnemyBattlersDisplay
+              enemies={battleState.battlers.filter(b => b.side === 'enemy')}
+            />
           </div>
           <div className={css(styles.allies)}>
-            <div className={css(styles.allies)}>
-              <AllyBattlersDisplay
-                allies={battleState.battlers.filter(b => b.side === 'ally')}
-                isSkillInQueue={skill =>
-                  inputQueue.map(input => input.skillId).includes(skill.id)}
-                onAllyAndSkillSelect={ally => skill => {
-                  // Check skill is executable with queue
-                  if (
-                    skill.cooldown.val >= skill.cooldown.max &&
-                    !inputQueue.map(iq => iq.skillId).includes(skill.id)
-                  ) {
-                    this.props.dispatch(addInputToQueue(ally.id, skill.id))
-                  }
-                }}
-              />
-            </div>
+            <AllyBattlersDisplay
+              allies={battleState.battlers.filter(b => b.side === 'ally')}
+              isSkillInQueue={skill =>
+                inputQueue.map(input => input.skillId).includes(skill.id)}
+              onAllyAndSkillSelect={ally => skill => {
+                // Check skill is executable with queue
+                if (
+                  skill.cooldown.val >= skill.cooldown.max &&
+                  !inputQueue.map(iq => iq.skillId).includes(skill.id)
+                ) {
+                  this.props.dispatch(addInputToQueue(ally.id, skill.id))
+                }
+              }}
+            />
           </div>
           <div className={css(styles.log)}>
             <InputQueueDisplay
