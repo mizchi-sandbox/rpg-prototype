@@ -18,7 +18,7 @@ export default function EnemyBattlersDisplay({
             }}
           />
           <div>
-            <span>{enemy.name}</span>
+            <span>{enemy.monsterData && enemy.monsterData.displayName}</span>
             &nbsp;
             <span>{enemy.life.val}</span>
             /
