@@ -1,12 +1,12 @@
 -
-  id: cave
-  displayName: 谷
+  id: $cave
+  displayName: Cave
   description: Cave
   troopIds:
     - goblin-lv1x2
 -
-  id: forest
-  displayName: 森
+  id: $forest
+  displayName: Forest
   description: Forest
   troopIds:
     - goblin-lv1x2

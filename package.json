@@ -1,6 +1,6 @@
 {
   "name": "rpg-prototype",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
   "license": "MIT",
   "ava": {
@@ -15,9 +15,11 @@
   "scripts": {
     "clean": "rimraf src/master/*.js public/bundle.js",
     "prepare": "yarn run clean; yarn build:master",
+    "deploy": "yarn prepare; yarn build:prod; yarn gh-pages -d public",
     "build:master": "node script/gen-code.js",
     "watch:master": "chokidar masterdata/**/* -c 'yarn build:master' --polling",
     "build:src": "webpack",
+    "build:src:prod": "NODE_ENV=production webpack",
     "watch:src": "webpack-dev-server",
     "watch": "yarn prepare; run-p watch:*",
     "test": "ava",
@@ -28,20 +30,15 @@
   "dependencies": {
     "aphrodite": "^1.2.1",
     "babel-runtime": "^6.23.0",
-    "paths-js": "^0.4.5",
     "prop-types": "^15.5.8",
     "react": "next",
-    "react-dnd": "^2.3.0",
     "react-dom": "next",
     "react-modal": "^1.7.7",
-    "react-move": "^1.1.8",
     "react-redux": "^5.0.4",
     "react-tooltip": "^3.3.0",
     "redux": "^3.6.0",
     "redux-logger": "^3.0.1",
     "redux-saga": "^0.15.0",
-    "redux-thunk": "^2.2.0",
-    "seamless-immutable": "^7.1.2",
     "semantic-ui-css": "^2.2.10",
     "semantic-ui-react": "^0.68.2"
   },
@@ -60,6 +57,7 @@
     "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-mutation": "^1.0.0",
     "flow-bin": "^0.45.0",
+    "gh-pages": "^0.12.0",
     "json-schema-to-flow-type": "^0.2.6",
     "npm-run-all": "^4.0.2",
     "react-hot-loader": "next",

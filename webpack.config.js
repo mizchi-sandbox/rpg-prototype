@@ -9,6 +9,7 @@ const BASE_PLUGINS = [
   })
 ]
 
+console.log('env >', process.env.NODE_ENV)
 module.exports = {
   entry: process.env.NODE_ENV === 'production'
     ? ['./src/index.js']
@@ -30,18 +31,20 @@ module.exports = {
     hot: true
   },
   plugins: process.env.NODE_ENV === 'production'
-    ? BASE_PLUGINS.concat([
-        new webpack.optimize.UglifyJsPlugin({
-          minimize: true,
-          sourceMap: false,
-          compressor: {
-            warnings: false
-          },
-          output: {
-            comments: false
-          }
-        })
-      ])
+    ? BASE_PLUGINS.concat(
+        [
+          // new webpack.optimize.UglifyJsPlugin({
+          //   minimize: true,
+          //   sourceMap: false,
+          //   compressor: {
+          //     warnings: false
+          //   },
+          //   output: {
+          //     comments: false
+          //   }
+          // })
+        ]
+      )
     : BASE_PLUGINS.concat([
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),

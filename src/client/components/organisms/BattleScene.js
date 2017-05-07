@@ -26,14 +26,6 @@ export function BattleResultModal(props: {
     <Modal
       isOpen={props.isOpen}
       style={{
-        // overlay: {
-        //   position: 'fixed',
-        //   top: 0,
-        //   left: 0,
-        //   right: 0,
-        //   bottom: 0,
-        //   backgroundColor: 'rgba(255, 255, 255, 0.75)'
-        // },
         content: {
           top: '30%',
           left: '50%',
@@ -72,7 +64,7 @@ export default class BattleScene extends React.Component {
         <div
           className={css(styles.container)}
           style={{
-            backgroundColor: paused ? '#bbb' : '#fff'
+            backgroundColor: paused ? '#eee' : '#fff'
           }}
         >
           <BattleResultModal

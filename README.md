@@ -1,10 +1,14 @@
-# rpg
+# rpg-prototype
 
 ```
 yarn install
-npm link packages/core
 yarn watch
+# open locolhost:4444
 ```
+
+## ASSETS
+
+- http://www.silversecond.com/WolfRPGEditor/
 
 ## license
 

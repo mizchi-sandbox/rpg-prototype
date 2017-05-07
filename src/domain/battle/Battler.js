@@ -1,6 +1,7 @@
 /* @flow */
 import * as BattlerSkillAction from './BattlerSkill'
 import * as Result from './Result'
+import * as ConsumableValueAction from 'domain/values/ConsumableValue'
 import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
@@ -35,9 +36,8 @@ export function createCommand(
     const actor: ?Battler = env.battlers.find(b => b.id === actorId)
     const skill = actor && actor.skills.find(s => s.id === skillId)
     if (actor && skill && skill.data) {
-      switch (skill.data.id) {
-        case '$attack':
-        case '$power-attack':
+      switch (skill.data.skillType) {
+        case 'DAMAGE_SINGLE':
           let target: ?Battler
           if (plannedTargetId) {
             target = env.battlers.find(b => b.id === plannedTargetId)
@@ -47,9 +47,11 @@ export function createCommand(
             })
           }
           if (target) {
+            // TODO: Calc damage by master
+            const damageAmmount = 5
             const damaged: Battler = {
               ...target,
-              life: { ...target.life, val: target.life.val - 5 }
+              life: ConsumableValueAction.consume(target.life, damageAmmount)
             }
             const battlers = env.battlers.map(
               b => (target && b.id === target.id ? damaged : b)
@@ -59,12 +61,20 @@ export function createCommand(
               results: [
                 {
                   type: Result.LOG,
-                  message: `${actor.name} attacked ${target.name} : 5 damage`
+                  message: `${actor.name} attacked ${target.name} : ${damageAmmount} damage`
                 }
               ]
             }
           } else {
-            throw new Error('attacking target does not exist')
+            return {
+              state: env,
+              results: [
+                {
+                  type: Result.LOG,
+                  message: `${actor.name} failed to attack`
+                }
+              ]
+            }
           }
         default:
           return {
@@ -96,7 +106,6 @@ export function updateBattler(
     // Player
     if (inputs.length) {
       for (const input of inputs) {
-        console.log(battler.id, input)
         updatedSkills = updatedSkills.map(skill => {
           if (
             skill.id === input.skillId &&

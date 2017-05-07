@@ -96,7 +96,7 @@ const initialState: BattleState = {
   inputQueue: [],
   battlers: [
     {
-      id: Symbol(),
+      id: Symbol('ally'),
       side: 'ally',
       formationOrder: 0,
       controllable: true,
@@ -108,7 +108,7 @@ const initialState: BattleState = {
       ]
     },
     {
-      id: Symbol(),
+      id: Symbol('ally'),
       side: 'ally',
       formationOrder: 1,
       controllable: false,
@@ -117,7 +117,7 @@ const initialState: BattleState = {
       skills: [buildBattlerSkill('$attack', 1)]
     },
     {
-      id: Symbol(),
+      id: Symbol('enemy'),
       side: 'enemy',
       monsterData: loadMonsterData('$goblin'),
       formationOrder: 0,
@@ -127,13 +127,13 @@ const initialState: BattleState = {
       skills: [buildBattlerSkill('$attack', 1)]
     },
     {
-      id: Symbol(),
+      id: Symbol('enemy'),
       side: 'enemy',
       monsterData: loadMonsterData('$hob-goblin'),
       formationOrder: 0,
       controllable: false,
       name: 'goblin',
-      life: { val: 30, max: 30 },
+      life: { val: 45, max: 45 },
       skills: [buildBattlerSkill('$attack', 1)]
     }
   ],

@@ -39,8 +39,11 @@ export function findActiveSkill(battlers: Battler[]): ?BattlerSkill {
   return
 }
 
-const waitMode = false
+let waitMode = false
 function* start(_action: any) {
+  // Use wait mode
+  waitMode = location.search.indexOf('wait') > -1
+
   let state: BattleState = createBattleMock()
 
   // Sync first
