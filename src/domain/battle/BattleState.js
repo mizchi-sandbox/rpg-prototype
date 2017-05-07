@@ -1,4 +1,5 @@
 /* @flow */
+import { loadMonsterData } from '../master'
 import { updateBattler } from './Battler'
 import { buildBattlerSkill } from './BattlerSkill'
 import type { Battler } from './Battler'
@@ -118,6 +119,7 @@ const initialState: BattleState = {
     {
       id: Symbol(),
       side: 'enemy',
+      monsterData: loadMonsterData('$goblin'),
       formationOrder: 0,
       controllable: false,
       name: 'goblin',
@@ -127,6 +129,7 @@ const initialState: BattleState = {
     {
       id: Symbol(),
       side: 'enemy',
+      monsterData: loadMonsterData('$hob-goblin'),
       formationOrder: 0,
       controllable: false,
       name: 'goblin',

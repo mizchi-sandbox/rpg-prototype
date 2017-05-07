@@ -1,15 +1,18 @@
 properties:
   id:
-    type: 'string'
+    type: string
   displayName:
-    type: 'string'
+    type: string
+  displayImage:
+    type: string
   race_id:
-    type: 'string'
+    type: string
   job_id:
-    type: 'string'
+    type: string
 
 required:
   - id
   - displayName
+  - displayImage
   - race_id
   - job_id

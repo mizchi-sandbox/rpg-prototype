@@ -5,6 +5,7 @@ import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
 import type { ConsumableValue } from 'domain/values/ConsumableValue'
+import type { MonsterData } from 'domain/master'
 
 export type Battler = {
   side: 'ally' | 'enemy',
@@ -13,7 +14,16 @@ export type Battler = {
   id: Symbol,
   name: string,
   life: ConsumableValue,
+  monsterData?: MonsterData,
   skills: BattlerSkill[]
+}
+
+export type AllyBattler = Battler & {
+  monsterData: void
+}
+
+export type EnemyBattler = Battler & {
+  monsterData: MonsterData
 }
 
 export function createCommand(
@@ -22,7 +32,7 @@ export function createCommand(
   plannedTargetId?: Symbol
 ): Command {
   return (env: BattleState) => {
-    const actor = env.battlers.find(b => b.id === actorId)
+    const actor: ?Battler = env.battlers.find(b => b.id === actorId)
     const skill = actor && actor.skills.find(s => s.id === skillId)
     if (actor && skill && skill.data) {
       switch (skill.data.id) {
@@ -37,7 +47,7 @@ export function createCommand(
             })
           }
           if (target) {
-            const damaged = {
+            const damaged: Battler = {
               ...target,
               life: { ...target.life, val: target.life.val - 5 }
             }

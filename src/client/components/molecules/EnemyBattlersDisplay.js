@@ -12,7 +12,7 @@ export default function EnemyBattlersDisplay({
       {enemies.map((enemy, index) => (
         <div style={{ display: 'inline-block', padding: '15px' }} key={index}>
           <img
-            src="/assets/EnemyGraphic/GD_Goblin(Green).png"
+            src={enemy.monsterData && enemy.monsterData.displayImage}
             style={{
               filter: enemy.life.val > 0 ? 'grayscale(0)' : 'grayscale(1)'
             }}

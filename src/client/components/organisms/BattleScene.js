@@ -90,9 +90,6 @@ export default class BattleScene extends React.Component {
             {inputQueue.length > 0 && <hr />}
             <LogBoard messages={log} direction="bottom" />
           </div>
-          <div className={css(styles.footer)}>
-            Footer
-          </div>
         </div>
       )
     }
@@ -122,14 +119,12 @@ const styles = StyleSheet.create({
       "header header"
       "enemies log"
       "allies log"
-      "footer footer"
     `,
     gridTemplateColumns: `3fr 2fr`,
     gridTemplateRows: `
       40px
       1fr
       1fr
-      30px
     `
   },
   header: {
@@ -139,11 +134,6 @@ const styles = StyleSheet.create({
   main: {
     gridArea: 'main'
   },
-  footer: {
-    backgroundColor: 'wheat',
-    gridArea: 'footer'
-  },
-
   allies: {
     boxSizing: 'border-box',
     padding: '15px',
