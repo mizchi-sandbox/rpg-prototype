@@ -7,7 +7,7 @@ import {
   requestPause,
   requestRestart,
   requestStart,
-  closeResult
+  closeCommandResult
 } from '../../actions/battleActions'
 import Button from '../atoms/Button'
 import LogBoard from '../molecules/LogBoard'
@@ -68,10 +68,10 @@ export default class BattleScene extends React.Component {
           }}
         >
           <BattleResultModal
-            isOpen={!!runner.battleResult}
-            result={runner.battleResult}
+            isOpen={!!runner.battleCommandResult}
+            result={runner.battleCommandResult}
             onClickClose={_ev => {
-              dispatch(closeResult())
+              dispatch(closeCommandResult())
             }}
           />
           <GlobalKeyListner

@@ -4,7 +4,7 @@ import { updateBattler } from './Battler'
 import { buildBattlerSkill } from './BattlerSkill'
 import type { Battler } from './Battler'
 import type { Command, CommandApplicationProgress } from './Command'
-import type { Result } from './Result'
+import type { CommandResult } from './CommandResult'
 import type { Input } from './Input'
 
 // State
@@ -69,7 +69,7 @@ export function isFinished(state: BattleState): ?{ winner: 'ally' | 'enemy' } {
 export function processTurn(
   state: BattleState,
   inputQueue: Input[]
-): { state: BattleState, results: Result[] } {
+): { state: BattleState, results: CommandResult[] } {
   // decide command
   const { state: decisionedState, commandQueue } = processDecisionPhase(
     state,

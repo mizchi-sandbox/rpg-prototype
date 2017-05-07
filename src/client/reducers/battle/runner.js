@@ -19,7 +19,7 @@ export type State = {
   inputQueue: Input[],
   loading: boolean,
   paused: boolean,
-  battleResult: ?BattleResult
+  battleCommandResult: ?BattleResult
 }
 
 const initialState: State = {
@@ -27,7 +27,7 @@ const initialState: State = {
   paused: false,
   battleState: null,
   inputQueue: [],
-  battleResult: null
+  battleCommandResult: null
 }
 
 // Reducer
@@ -61,12 +61,12 @@ export default (
     case OPEN_RESULT:
       return {
         ...state,
-        battleResult: action.payload
+        battleCommandResult: action.payload
       }
     case CLOSE_RESULT:
       return {
         ...state,
-        battleResult: null
+        battleCommandResult: null
       }
     case UPDATE_INPUT_QUEUE:
       return {

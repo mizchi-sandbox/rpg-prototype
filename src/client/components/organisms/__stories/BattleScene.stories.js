@@ -14,7 +14,7 @@ storiesOf('BattleScene', module)
           inputQueue: [],
           loading: true,
           paused: false,
-          battleResult: null
+          battleCommandResult: null
         }}
         dispatch={() => {
           action('clicked')
@@ -31,7 +31,7 @@ storiesOf('BattleScene', module)
           inputQueue: [],
           loading: false,
           paused: true,
-          battleResult: null
+          battleCommandResult: null
         }}
         dispatch={() => {
           action('clicked')

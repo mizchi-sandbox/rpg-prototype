@@ -51,13 +51,13 @@ export const requestRestart = () => ({ type: REQUEST_RESTART })
 export const paused = () => ({ type: PAUSED })
 export const restarted = () => ({ type: RESTARTED })
 export const reset = () => ({ type: RESET })
-export const openResult = (message: string) => ({
+export const openCommandResult = (message: string) => ({
   type: OPEN_RESULT,
   payload: {
     message
   }
 })
-export const closeResult = () => ({ type: CLOSE_RESULT })
+export const closeCommandResult = () => ({ type: CLOSE_RESULT })
 export const log = (message: string) => ({ type: LOG, payload: message })
 export const addInputToQueue = (
   battlerId: Symbol,

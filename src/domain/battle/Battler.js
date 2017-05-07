@@ -1,10 +1,10 @@
 /* @flow */
 import * as BattlerSkillAction from './BattlerSkill'
-import * as Result from './Result'
-import * as ConsumableValueAction from 'domain/values/ConsumableValue'
+import * as CommandResult from './CommandResult'
 import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
+import * as ConsumableValueAction from 'domain/values/ConsumableValue'
 import type { ConsumableValue } from 'domain/values/ConsumableValue'
 import type { MonsterData } from 'domain/master'
 
@@ -60,7 +60,7 @@ export function createCommand(
               state: { ...env, battlers },
               results: [
                 {
-                  type: Result.LOG,
+                  type: CommandResult.LOG,
                   message: `${actor.name} attacked ${target.name} : ${damageAmmount} damage`
                 }
               ]
@@ -70,7 +70,7 @@ export function createCommand(
               state: env,
               results: [
                 {
-                  type: Result.LOG,
+                  type: CommandResult.LOG,
                   message: `${actor.name} failed to attack`
                 }
               ]

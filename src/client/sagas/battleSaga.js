@@ -5,7 +5,7 @@ import * as battleActions from '../actions/battleActions'
 import type { BattleState } from 'domain/battle'
 import { createBattleMock, isFinished, processTurn } from 'domain/battle'
 import { call, put, race, take, takeEvery } from 'redux-saga/effects'
-import * as ResultActions from 'domain/battle/Result'
+import * as CommandResultActions from 'domain/battle/CommandResult'
 import type { Input, Battler, BattlerSkill } from 'domain/battle'
 
 let _inputQueue: Input[] = []
@@ -93,7 +93,7 @@ function* start(_action: any) {
     state = processed.state
     for (const result of processed.results) {
       switch (result.type) {
-        case ResultActions.LOG:
+        case CommandResultActions.LOG:
           yield put(battleActions.log(result.message))
           if (waitMode) {
             yield put(sync(state))
@@ -108,7 +108,7 @@ function* start(_action: any) {
     if (finshed) {
       yield put(sync(state))
       // yield put(battleActions.log(`${finshed.winner} win.`))
-      yield put(battleActions.openResult(`${finshed.winner} win.`))
+      yield put(battleActions.openCommandResult(`${finshed.winner} win.`))
       break
     }
 
