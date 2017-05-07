@@ -39,10 +39,7 @@ export function findActiveSkill(battlers: Battler[]): ?BattlerSkill {
   return
 }
 
-// type LoopMode = 'wait' | 'active'
-// const loopMode: LoopMode = 'wait'
-// const waitMode = true
-const waitMode = true
+const waitMode = false
 function* start(_action: any) {
   let state: BattleState = createBattleMock()
 
@@ -97,8 +94,8 @@ function* start(_action: any) {
           yield put(battleActions.log(result.message))
           if (waitMode) {
             yield put(sync(state))
+            yield call(delay, 100)
           }
-          yield call(delay, 100)
           break
       }
     }

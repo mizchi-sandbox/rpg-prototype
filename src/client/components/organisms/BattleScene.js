@@ -1,8 +1,6 @@
 /* @flow */
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
-
-import type { BattleContainerProps } from '../../containers/BattleContainer'
 import {
   addInputToQueue,
   requestPause,
@@ -11,8 +9,11 @@ import {
 } from '../../actions/battleActions'
 import Button from '../atoms/Button'
 import LogBoard from '../molecules/LogBoard'
-import SkillBar from '../molecules/SkillBar'
-import type { Battler, Input, BattlerSkill } from 'domain/battle'
+import AllyBattlersDisplay from '../molecules/AllyBattlersDisplay'
+import EnemyBattlersDisplay from '../molecules/EnemyBattlersDisplay'
+import GlobalKeyListner from '../helpers/GlobalKeyListener'
+import type { BattleContainerProps } from '../../containers/BattleContainer'
+import type { Input, BattleState } from 'domain/battle'
 
 export default class BattleScene extends React.Component {
   props: BattleContainerProps
@@ -29,7 +30,22 @@ export default class BattleScene extends React.Component {
     } else {
       const { battleState, inputQueue, paused } = runner
       return (
-        <div className={css(styles.container)}>
+        <div
+          className={css(styles.container)}
+          style={{
+            backgroundColor: paused ? '#bbb' : '#fff'
+          }}
+        >
+          <GlobalKeyListner
+            keyCode={32} // space
+            handler={_ => {
+              if (paused) {
+                this.props.dispatch(requestRestart())
+              } else {
+                this.props.dispatch(requestPause())
+              }
+            }}
+          />
           <div className={css(styles.header)}>
             <BattleStateController
               paused={paused}
@@ -40,7 +56,6 @@ export default class BattleScene extends React.Component {
                 this.props.dispatch(requestRestart())
               }}
             />
-            <InputQueueDisplay inputQueue={inputQueue} />
           </div>
           <div className={css(styles.enemies)}>
             <div className={css(styles.enemies)}>
@@ -53,12 +68,24 @@ export default class BattleScene extends React.Component {
             <div className={css(styles.allies)}>
               <AllyBattlersDisplay
                 allies={battleState.battlers.filter(b => b.side === 'ally')}
-                onSkillSelect={ally => skill =>
-                  this.props.dispatch(addInputToQueue(ally.id, skill.id))}
+                onAllyAndSkillSelect={ally => skill => {
+                  // Check skill is executable with queue
+                  if (
+                    skill.cooldown.val >= skill.cooldown.max &&
+                    !inputQueue.map(iq => iq.skillId).includes(skill.id)
+                  ) {
+                    this.props.dispatch(addInputToQueue(ally.id, skill.id))
+                  }
+                }}
               />
             </div>
           </div>
           <div className={css(styles.log)}>
+            <InputQueueDisplay
+              inputQueue={inputQueue}
+              battleState={battleState}
+            />
+            {inputQueue.length > 0 && <hr />}
             <LogBoard messages={log} direction="bottom" />
           </div>
           <div className={css(styles.footer)}>
@@ -84,89 +111,28 @@ export function BattleStateController({
     : <Button onClick={onClickPause} label="Pause" />
 }
 
-export function InputQueueDisplay({ inputQueue }: { inputQueue: Input[] }) {
-  return <span>InputQueue: {inputQueue.length}</span>
-}
-
-export function AllyBattlersDisplay({
-  allies,
-  onSkillSelect
+export function InputQueueDisplay({
+  inputQueue,
+  battleState
 }: {
-  allies: Battler[],
-  onSkillSelect: Battler => BattlerSkill => void
+  inputQueue: Input[],
+  battleState: BattleState
 }) {
   return (
     <div>
-      {allies.map((ally, index) => (
-        <div
-          key={index}
-          style={{
-            display: 'flex'
-          }}
-        >
-          <div style={{ width: '80px' }}>
-            <div>{ally.name}</div>
-            <div style={{ width: '100px' }}>
-              <span>{ally.life.val}</span>
-              /
-              <span>{ally.life.max}</span>
-            </div>
+      {inputQueue.map((input, index) => {
+        const actorToAction = battleState.battlers.find(
+          b => b.id === input.battlerId
+        )
+        return (
+          <div key={index}>
+            {actorToAction && actorToAction.name}: Ready {input.skillId}
           </div>
-          <div style={{ flex: 1 }}>
-            <SkillBar
-              skills={ally.skills}
-              onSkillSelect={onSkillSelect(ally)}
-            />
-          </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
-
-export function EnemyBattlersDisplay({ enemies }: { enemies: Battler[] }) {
-  return (
-    <div>
-      {enemies.map((enemy, index) => (
-        <div style={{ display: 'inline-block', padding: '15px' }} key={index}>
-          <img
-            src="/assets/EnemyGraphic/GD_Goblin(Green).png"
-            style={{
-              filter: enemy.life.val > 0 ? 'grayscale(0)' : 'grayscale(1)'
-            }}
-          />
-          <div>
-            <span>{enemy.name}</span>
-            &nbsp;
-            <span>{enemy.life.val}</span>
-            /
-            <span>{enemy.life.max}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-// export function BattlersDisplay({
-//   battleState,
-//   onSkillSelect
-// }: {
-//   battleState: BattleState,
-//   onSkillSelect: Battler => BattlerSkill => void
-// }) {
-//   return (
-//     <div className="battle">
-//       {battleState.battlers.map((battler, index) => (
-//         <BattlerLine
-//           battler={battler}
-//           key={index}
-//           onSkillSelect={onSkillSelect(battler)}
-//         />
-//       ))}
-//     </div>
-//   )
-// }
 
 const styles = StyleSheet.create({
   container: {
@@ -196,7 +162,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: 'wheat',
-    // height: '20vh',
     gridArea: 'footer'
   },
 
@@ -208,7 +173,6 @@ const styles = StyleSheet.create({
   },
 
   enemies: {
-    // paddingTop: '32px',
     margin: 'auto auto',
     gridArea: 'enemies'
   },
