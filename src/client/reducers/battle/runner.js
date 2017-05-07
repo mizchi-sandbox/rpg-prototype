@@ -4,26 +4,30 @@ import {
   REQUEST_START,
   RESET,
   RESTARTED,
-  UPDATE_INPUT_QUEUE
+  UPDATE_INPUT_QUEUE,
+  OPEN_RESULT,
+  CLOSE_RESULT
 } from '../../actions/battleActions'
 import type { BattleSagaAction } from '../../actions/battleSagaActions'
 import { SYNC } from '../../actions/battleSagaActions'
 import type { BattleAction } from '../../actions/battleActions'
-import type { BattleState, Input } from 'domain/battle'
+import type { BattleState, Input, BattleResult } from 'domain/battle'
 
 // State
 export type State = {
   battleState: ?BattleState,
   inputQueue: Input[],
   loading: boolean,
-  paused: boolean
+  paused: boolean,
+  battleResult: ?BattleResult
 }
 
 const initialState: State = {
   loading: true,
   paused: false,
   battleState: null,
-  inputQueue: []
+  inputQueue: [],
+  battleResult: null
 }
 
 // Reducer
@@ -53,6 +57,16 @@ export default (
         ...state,
         battleState: action.payload,
         loading: true
+      }
+    case OPEN_RESULT:
+      return {
+        ...state,
+        battleResult: action.payload
+      }
+    case CLOSE_RESULT:
+      return {
+        ...state,
+        battleResult: null
       }
     case UPDATE_INPUT_QUEUE:
       return {

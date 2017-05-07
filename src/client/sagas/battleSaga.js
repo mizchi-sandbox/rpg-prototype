@@ -104,7 +104,8 @@ function* start(_action: any) {
     const finshed = isFinished(state)
     if (finshed) {
       yield put(sync(state))
-      yield put(battleActions.log(`${finshed.winner} win.`))
+      // yield put(battleActions.log(`${finshed.winner} win.`))
+      yield put(battleActions.openResult(`${finshed.winner} win.`))
       break
     }
 

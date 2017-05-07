@@ -13,7 +13,8 @@ storiesOf('BattleScene', module)
           battleState: null,
           inputQueue: [],
           loading: true,
-          paused: false
+          paused: false,
+          battleResult: null
         }}
         dispatch={() => {
           action('clicked')
@@ -29,7 +30,8 @@ storiesOf('BattleScene', module)
           battleState: createBattleMock(),
           inputQueue: [],
           loading: false,
-          paused: true
+          paused: true,
+          battleResult: null
         }}
         dispatch={() => {
           action('clicked')

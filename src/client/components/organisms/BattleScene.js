@@ -1,11 +1,13 @@
 /* @flow */
 import React from 'react'
+import Modal from 'react-modal'
 import { StyleSheet, css } from 'aphrodite'
 import {
   addInputToQueue,
   requestPause,
   requestRestart,
-  requestStart
+  requestStart,
+  closeResult
 } from '../../actions/battleActions'
 import Button from '../atoms/Button'
 import LogBoard from '../molecules/LogBoard'
@@ -15,6 +17,44 @@ import InputQueueDisplay from '../molecules/InputQueueDisplay'
 import GlobalKeyListner from '../helpers/GlobalKeyListener'
 import type { BattleContainerProps } from '../../containers/BattleContainer'
 
+export function BattleResultModal(props: {
+  isOpen: boolean,
+  onClickClose: Function,
+  result: any
+}) {
+  return (
+    <Modal
+      isOpen={props.isOpen}
+      style={{
+        // overlay: {
+        //   position: 'fixed',
+        //   top: 0,
+        //   left: 0,
+        //   right: 0,
+        //   bottom: 0,
+        //   backgroundColor: 'rgba(255, 255, 255, 0.75)'
+        // },
+        content: {
+          top: '30%',
+          left: '50%',
+          right: 'auto',
+          bottom: 'auto',
+          width: '50%',
+          marginRight: '-50%',
+          transform: 'translate(-50%, -50%)'
+        }
+      }}
+      contentLabel="Modal"
+    >
+      {props.result &&
+        <div>
+          <h1>{props.result.message}</h1>
+          <button onClick={props.onClickClose}>close</button>
+        </div>}
+    </Modal>
+  )
+}
+
 export default class BattleScene extends React.Component {
   props: BattleContainerProps
 
@@ -23,7 +63,7 @@ export default class BattleScene extends React.Component {
   }
 
   render() {
-    const { runner, log } = this.props
+    const { runner, log, dispatch } = this.props
     if (!runner.battleState) {
       return <h1>Loading</h1>
     } else {
@@ -35,13 +75,20 @@ export default class BattleScene extends React.Component {
             backgroundColor: paused ? '#bbb' : '#fff'
           }}
         >
+          <BattleResultModal
+            isOpen={!!runner.battleResult}
+            result={runner.battleResult}
+            onClickClose={_ev => {
+              dispatch(closeResult())
+            }}
+          />
           <GlobalKeyListner
             keyCode={32} // space
             handler={_ => {
               if (paused) {
-                this.props.dispatch(requestRestart())
+                dispatch(requestRestart())
               } else {
-                this.props.dispatch(requestPause())
+                dispatch(requestPause())
               }
             }}
           />
@@ -49,10 +96,10 @@ export default class BattleScene extends React.Component {
             <BattleStateController
               paused={paused}
               onClickPause={_ => {
-                this.props.dispatch(requestPause())
+                dispatch(requestPause())
               }}
               onClickRestart={_ => {
-                this.props.dispatch(requestRestart())
+                dispatch(requestRestart())
               }}
             />
           </div>
@@ -72,7 +119,7 @@ export default class BattleScene extends React.Component {
                   skill.cooldown.val >= skill.cooldown.max &&
                   !inputQueue.map(iq => iq.skillId).includes(skill.id)
                 ) {
-                  this.props.dispatch(addInputToQueue(ally.id, skill.id))
+                  dispatch(addInputToQueue(ally.id, skill.id))
                 }
               }}
             />

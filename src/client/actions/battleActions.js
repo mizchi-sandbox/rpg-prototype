@@ -1,5 +1,5 @@
 /* @flow */
-import type { Input } from 'domain/battle'
+import type { Input, BattleResult } from 'domain/battle'
 
 // Constants
 export const REQUEST_START = 'battle:request-start'
@@ -7,6 +7,8 @@ export const REQUEST_PAUSE = 'battle:request-pause'
 export const REQUEST_RESTART = 'battle:request-restart'
 export const PAUSED = 'battle:paused'
 export const RESTARTED = 'battle:restarted'
+export const OPEN_RESULT = 'battle:open-result'
+export const CLOSE_RESULT = 'battle:close-result'
 export const ADD_INPUT_TO_QUEUE = 'battle:add-input-to-queue'
 export const UPDATE_INPUT_QUEUE = 'battle:update-input-queue'
 export const RESET = 'battle:reset'
@@ -20,6 +22,13 @@ export type BattleAction =
   | { type: typeof PAUSED }
   | { type: typeof RESTARTED }
   | { type: typeof RESET }
+  | {
+      type: typeof OPEN_RESULT,
+      payload: BattleResult
+    }
+  | {
+      type: typeof CLOSE_RESULT
+    }
   | { type: typeof LOG, payload: string }
   | {
       type: typeof ADD_INPUT_TO_QUEUE,
@@ -42,6 +51,13 @@ export const requestRestart = () => ({ type: REQUEST_RESTART })
 export const paused = () => ({ type: PAUSED })
 export const restarted = () => ({ type: RESTARTED })
 export const reset = () => ({ type: RESET })
+export const openResult = (message: string) => ({
+  type: OPEN_RESULT,
+  payload: {
+    message
+  }
+})
+export const closeResult = () => ({ type: CLOSE_RESULT })
 export const log = (message: string) => ({ type: LOG, payload: message })
 export const addInputToQueue = (
   battlerId: Symbol,
