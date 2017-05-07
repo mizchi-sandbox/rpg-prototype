@@ -34,12 +34,11 @@ export function processDecisionPhase(
     commandQueue
   }
 }
-
 export function processCommandPhase(
   state: BattleState,
   commandQueue: Command[]
-): { state: BattleState, results: Result[] } {
-  const commanded: CommandApplicationProgress = commandQueue.reduce(
+): CommandApplicationProgress {
+  return commandQueue.reduce(
     (next: CommandApplicationProgress, nextCmd: Command) => {
       const { state: nextState, results } = nextCmd(next.state)
       return {
@@ -49,7 +48,6 @@ export function processCommandPhase(
     },
     { state, results: [] }
   )
-  return commanded
 }
 
 export function isFinished(state: BattleState): ?{ winner: 'ally' | 'enemy' } {
