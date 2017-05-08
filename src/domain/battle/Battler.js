@@ -7,6 +7,7 @@ import type { Command, Input } from './index'
 import * as RangedValueAction from 'domain/values/RangedValue'
 import type { RangedValue } from 'domain/values/RangedValue'
 import type { MonsterData } from 'domain/master'
+import { pickRandom } from 'domain/utils/arrayUtils'
 
 export type Battler = {
   side: 'ally' | 'enemy',
@@ -42,9 +43,11 @@ export function createCommand(
           if (plannedTargetId) {
             target = env.battlers.find(b => b.id === plannedTargetId)
           } else {
-            target = env.battlers.find(b => {
-              return b.side !== actor.side && b.life.val > 0
-            })
+            target = pickRandom(
+              env.battlers.filter(b => {
+                return b.side !== actor.side && b.life.val > 0
+              })
+            )
           }
           if (target) {
             // TODO: Calc damage by master
