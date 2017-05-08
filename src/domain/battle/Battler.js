@@ -95,6 +95,55 @@ export function updateBattler(
   })
 }
 
+export const planDamageOponentSingleSkill: (
+  BattleState,
+  {
+    actor: Battler,
+    skill: BattlerSkill,
+    plannedTargetId?: Symbol
+  }
+) => BattleState => CommandApplicationProgress = (env, plan) => {
+  let plannedTarget: ?Battler = null
+  if (plan.plannedTargetId) {
+    plannedTarget = env.battlers.find(b => b.id === plan.plannedTargetId)
+  }
+
+  const defineRealTarget = (env: BattleState): ?Battler => {
+    if (plannedTarget && isAlive(plannedTarget)) {
+      return plannedTarget
+    } else {
+      // Pick random oponent
+      return pickRandom(
+        env.battlers.filter(b => {
+          return b.side !== plan.actor.side && isTargetable(b)
+        })
+      )
+    }
+  }
+
+  return (nextEnv: BattleState) => {
+    const target = defineRealTarget(nextEnv)
+    if (target) {
+      return handleDamageOponentSingleSkill(
+        nextEnv,
+        plan.actor,
+        plan.skill,
+        target
+      )
+    } else {
+      return Object.freeze({
+        state: nextEnv,
+        commandResults: [
+          {
+            type: CommandResult.LOG,
+            message: `${plan.actor.name} failed to attack`
+          }
+        ]
+      })
+    }
+  }
+}
+
 export const handleDamageOponentSingleSkill = (
   state: BattleState,
   actor: Battler,
@@ -135,29 +184,12 @@ export function createCommand(
     if (actor && skill && skill.data) {
       switch (skill.data.skillType) {
         case 'DAMAGE_OPONENT_SINGLE':
-          let target: ?Battler
-          if (plannedTargetId) {
-            target = env.battlers.find(b => b.id === plannedTargetId)
-          } else {
-            target = pickRandom(
-              env.battlers.filter(b => {
-                return b.side !== actor.side && isTargetable(b)
-              })
-            )
-          }
-          if (target) {
-            return handleDamageOponentSingleSkill(env, actor, skill, target)
-          } else {
-            return Object.freeze({
-              state: env,
-              commandResults: [
-                {
-                  type: CommandResult.LOG,
-                  message: `${actor.name} failed to attack`
-                }
-              ]
-            })
-          }
+          const planned = planDamageOponentSingleSkill(env, {
+            actor,
+            skill,
+            plannedTargetId
+          })
+          return planned(env)
         default:
           return Object.freeze({
             state: env,
