@@ -4,8 +4,8 @@ import * as CommandResult from './CommandResult'
 import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
-import * as ConsumableValueAction from 'domain/values/ConsumableValue'
-import type { ConsumableValue } from 'domain/values/ConsumableValue'
+import * as RangedValueAction from 'domain/values/RangedValue'
+import type { RangedValue } from 'domain/values/RangedValue'
 import type { MonsterData } from 'domain/master'
 
 export type Battler = {
@@ -14,7 +14,7 @@ export type Battler = {
   formationOrder: 0 | 1 | 2 | 3 | 4,
   id: Symbol,
   name: string,
-  life: ConsumableValue,
+  life: RangedValue,
   monsterData?: MonsterData,
   skills: BattlerSkill[]
 }
@@ -51,7 +51,7 @@ export function createCommand(
             const damageAmmount = 5
             const damaged: Battler = {
               ...target,
-              life: ConsumableValueAction.sub(target.life, damageAmmount)
+              life: RangedValueAction.sub(target.life, damageAmmount)
             }
             const battlers = env.battlers.map(
               b => (target && b.id === target.id ? damaged : b)

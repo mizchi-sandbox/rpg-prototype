@@ -1,14 +1,14 @@
 /* @flow */
-import type { ConsumableValue } from 'domain/values/ConsumableValue'
+import type { RangedValue } from 'domain/values/RangedValue'
 import type { SkillData, SkillId } from 'domain/master'
-import { increment } from 'domain/values/ConsumableValue'
+import { increment } from 'domain/values/RangedValue'
 import { loadSkillData } from 'domain/master'
 
 export type BattlerSkill = {
   id: Symbol,
   data: SkillData,
   lv: number,
-  cooldown: ConsumableValue
+  cooldown: RangedValue
 }
 
 export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {

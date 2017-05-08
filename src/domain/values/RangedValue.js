@@ -1,10 +1,10 @@
 /* @flow */
-export type ConsumableValue = {|
-  val: number,
+export type RangedValue = {|
+  val: number, // int
   max: number
 |}
 
-export const set: (ConsumableValue, number) => ConsumableValue = (cv, n) =>
+export const set: (RangedValue, number) => RangedValue = (cv, n) =>
   Object.freeze({
     val: (() => {
       if (n > cv.max) {
@@ -18,31 +18,31 @@ export const set: (ConsumableValue, number) => ConsumableValue = (cv, n) =>
     max: cv.max
   })
 
-export const add: (ConsumableValue, number) => ConsumableValue = (cv, n) =>
+export const add: (RangedValue, number) => RangedValue = (cv, n) =>
   Object.freeze({
     val: Math.min(cv.val + n, cv.max) | 0,
     max: cv.max
   })
 
-export const sub: (ConsumableValue, number) => ConsumableValue = (cv, n) =>
+export const sub: (RangedValue, number) => RangedValue = (cv, n) =>
   Object.freeze({
     val: Math.max(cv.val - n, 0) | 0,
     max: cv.max
   })
 
-export const increment: ConsumableValue => ConsumableValue = cv =>
+export const increment: RangedValue => RangedValue = cv =>
   Object.freeze({
     val: Math.min(cv.val + 1, cv.max) | 0,
     max: cv.max
   })
 
-export const decrement: ConsumableValue => ConsumableValue = cv =>
+export const decrement: RangedValue => RangedValue = cv =>
   Object.freeze({
     val: Math.max(cv.val - 1, 0) | 0,
     max: cv.max
   })
 
-export const create: number => ConsumableValue = max =>
+export const create: number => RangedValue = max =>
   Object.freeze({
     val: max,
     max
