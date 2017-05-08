@@ -31,7 +31,7 @@ const handleDamageOponentSingleSkill = (
     commandResults: [
       {
         type: CommandResult.LOG,
-        message: `${actor.name} attacked ${target.name} : ${damageAmmount} damage`
+        message: `${actor.displayName} attacked ${target.displayName} : ${damageAmmount} damage`
       }
     ]
   }
@@ -78,7 +78,7 @@ const planDamageOponentSingleSkill: (
         commandResults: [
           {
             type: CommandResult.LOG,
-            message: `${plan.actor.name} failed to attack`
+            message: `${plan.actor.displayName} failed to attack`
           }
         ]
       })

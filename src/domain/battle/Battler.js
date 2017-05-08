@@ -12,7 +12,7 @@ export type Battler = {
   controllable: boolean,
   formationOrder: 0 | 1 | 2 | 3 | 4,
   id: Symbol,
-  name: string,
+  displayName: string,
   life: RangedValue,
   monsterData?: MonsterData,
   skills: BattlerSkill[]

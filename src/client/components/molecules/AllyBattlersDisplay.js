@@ -22,7 +22,7 @@ export default function AllyBattlersDisplay({
           }}
         >
           <div style={{ width: '80px' }}>
-            <div>{ally.name}</div>
+            <div>{ally.displayName}</div>
             <div style={{ width: '100px' }}>
               <span>{ally.life.val}</span>
               /

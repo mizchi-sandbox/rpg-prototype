@@ -17,7 +17,7 @@ export default function InputQueueDisplay({
         )
         return (
           <div key={index}>
-            {actorToAction && actorToAction.name}: Ready {input.skillId}
+            {actorToAction && actorToAction.displayName}: Ready {input.skillId}
           </div>
         )
       })}

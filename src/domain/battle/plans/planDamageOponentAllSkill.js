@@ -24,7 +24,7 @@ const handleDamageOponentAllSkill = (
     target => {
       results = results.concat({
         type: CommandResult.LOG,
-        message: `${actor.name} exec ${skill.data.displayName} to ${target.name} : ${damageAmmount} damage`
+        message: `${actor.displayName} exec ${skill.data.displayName} to ${target.displayName} : ${damageAmmount} damage`
       })
       return {
         ...target,
