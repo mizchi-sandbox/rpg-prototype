@@ -1,6 +1,5 @@
 /* @flow */
 import planDamageOponentSingleSkill from './plans/planSingleDamegeOponentSkill'
-import type { Battler } from './Battler'
 import type { BattleState } from './BattleState'
 import type { Command, CommandApplicationProgress } from './Command'
 
