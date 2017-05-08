@@ -9,5 +9,5 @@ export function updateIn<T>(
   matcher: T => boolean,
   replacer: T => T
 ): T[] {
-  return arr.map(b => (matcher(b) ? replacer(b) : b))
+  return arr.map(i => (matcher(i) ? replacer(i) : i))
 }

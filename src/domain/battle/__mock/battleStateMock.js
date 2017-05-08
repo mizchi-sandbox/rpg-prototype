@@ -15,7 +15,8 @@ export const battleStateMock0: BattleState = Object.freeze({
       life: { val: 150, max: 150 },
       skills: [
         buildBattlerSkill('$attack', 1),
-        buildBattlerSkill('$power-attack', 1)
+        buildBattlerSkill('$power-attack', 1),
+        buildBattlerSkill('$fire-wave', 1)
       ]
     },
     {
@@ -41,7 +42,7 @@ export const battleStateMock0: BattleState = Object.freeze({
       id: Symbol('enemy'),
       side: 'enemy',
       monsterData: loadMonsterData('$hob-goblin'),
-      formationOrder: 0,
+      formationOrder: 1,
       controllable: false,
       name: 'goblin',
       life: { val: 45, max: 45 },

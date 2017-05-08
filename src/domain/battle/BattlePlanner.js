@@ -1,5 +1,6 @@
 /* @flow */
-import planDamageOponentSingleSkill from './plans/planSingleDamegeOponentSkill'
+import planDamageOponentSingleSkill from './plans/planDamageOponentSingleSkill'
+import planDamageOponentAllSkill from './plans/planDamageOponentAllSkill'
 import type { BattleState } from './BattleState'
 import type { Command, CommandApplicationProgress } from './Command'
 
@@ -13,7 +14,6 @@ export function createCommandPlan(
 ): ?CommandPlan {
   const actor = prevEnv.battlers.find(b => b.id === actorId)
   const skill = actor && actor.skills.find(s => s.id === skillId)
-
   if (actor && skill && skill.data) {
     switch (skill.data.skillType) {
       case 'DAMAGE_OPONENT_SINGLE':
@@ -21,6 +21,11 @@ export function createCommandPlan(
           actor,
           skill,
           plannedTargetId
+        })
+      case 'DAMAGE_OPONENT_ALL':
+        return planDamageOponentAllSkill(prevEnv, {
+          actor,
+          skill
         })
     }
   }
