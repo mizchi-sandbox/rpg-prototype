@@ -50,7 +50,7 @@ const all = {}
   code += `\n// === ${pascalName} ===\n`
   code += `export type ${pascalName}Id = ${ids.join(' | ')}\n`
   code += flowCode + '\n'
-  code += `export function load${pascalName}Data(id: ${pascalName}Id): ${pascalName}Data  { return data['${t}'].find(i => i.id === id) }\n`
+  code += `export function load${pascalName}Data(id: ${pascalName}Id): ${pascalName}Data  { return Object.freeze(data['${t}'].find(i => i.id === id)) }\n`
 })
 
 fs.writeFileSync(path.resolve(__dirname, '../src/domain/master/index.js'), code)

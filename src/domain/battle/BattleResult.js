@@ -1,4 +1,4 @@
 /* @flow */
-export type BattleResult = {
+export type BattleResult = {|
   message: string
-}
+|}

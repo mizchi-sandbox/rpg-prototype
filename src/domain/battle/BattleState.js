@@ -28,24 +28,26 @@ export function processDecisionPhase(
     commandQueue = commandQueue.concat(commands)
     return nextBattler
   })
-  return {
+  return Object.freeze({
     state: { ...state, battlers },
     commandQueue
-  }
+  })
 }
 export function processCommandPhase(
   state: BattleState,
   commandQueue: Command[]
 ): CommandApplicationProgress {
-  return commandQueue.reduce(
-    (next: CommandApplicationProgress, nextCmd: Command) => {
-      const { state: nextState, commandResults } = nextCmd(next.state)
-      return {
-        state: nextState,
-        commandResults: next.commandResults.concat(commandResults)
-      }
-    },
-    { state, commandResults: [] }
+  return Object.freeze(
+    commandQueue.reduce(
+      (next: CommandApplicationProgress, nextCmd: Command) => {
+        const { state: nextState, commandResults } = nextCmd(next.state)
+        return {
+          state: nextState,
+          commandResults: next.commandResults.concat(commandResults)
+        }
+      },
+      { state, commandResults: [] }
+    )
   )
 }
 
@@ -81,14 +83,14 @@ export function processTurn(
     decisionedState,
     commandQueue
   )
-  return {
+  return Object.freeze({
     state: {
       ...resultedState,
       turn: state.turn + 1,
       inputQueue: []
     },
     commandResults
-  }
+  })
 }
 
 export function createBattleState(): BattleState {

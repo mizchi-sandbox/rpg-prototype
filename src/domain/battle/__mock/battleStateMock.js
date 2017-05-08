@@ -3,7 +3,7 @@ import { loadMonsterData } from '../../master'
 import { buildBattlerSkill } from '../BattlerSkill'
 import type { BattleState } from '../BattleState'
 
-export const battleStateMock0: BattleState = {
+export const battleStateMock0: BattleState = Object.freeze({
   inputQueue: [],
   battlers: [
     {
@@ -49,4 +49,4 @@ export const battleStateMock0: BattleState = {
     }
   ],
   turn: 0
-}
+})

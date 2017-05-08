@@ -66,7 +66,7 @@ export function createCommand(
               ]
             }
           } else {
-            return {
+            return Object.freeze({
               state: env,
               commandResults: [
                 {
@@ -74,19 +74,19 @@ export function createCommand(
                   message: `${actor.name} failed to attack`
                 }
               ]
-            }
+            })
           }
         default:
-          return {
+          return Object.freeze({
             state: env,
             commandResults: []
-          }
+          })
       }
     } else {
-      return {
+      return Object.freeze({
         state: env,
         commandResults: []
-      }
+      })
     }
   }
 }
@@ -138,11 +138,11 @@ export function updateBattler(
       })
     }
   }
-  return {
+  return Object.freeze({
     battler: {
       ...battler,
       skills: updatedSkills
     },
     commands
-  }
+  })
 }

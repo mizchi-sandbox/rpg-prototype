@@ -13,7 +13,7 @@ export type BattlerSkill = {
 
 export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {
   const data = loadSkillData(id)
-  return {
+  return Object.freeze({
     data,
     lv,
     id: Symbol('BattlerSkill'),
@@ -21,24 +21,24 @@ export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {
       val: 0,
       max: data.cooldownCount
     }
-  }
+  })
 }
 
 export function updateCooldownCount(skill: BattlerSkill): BattlerSkill {
-  return {
+  return Object.freeze({
     ...skill,
     cooldown: increment(skill.cooldown)
-  }
+  })
 }
 
 export function resetCooldownCount(skill: BattlerSkill): BattlerSkill {
-  return {
+  return Object.freeze({
     ...skill,
     cooldown: {
       val: 0,
       max: skill.data.cooldownCount
     }
-  }
+  })
 }
 
 export function isExecutable(skill: BattlerSkill): boolean {
