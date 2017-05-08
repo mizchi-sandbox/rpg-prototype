@@ -6,5 +6,5 @@ export type Command = BattleState => CommandApplicationProgress
 
 export type CommandApplicationProgress = {
   state: BattleState,
-  results: CommandResult[]
+  commandResults: CommandResult[]
 }

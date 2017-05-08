@@ -58,7 +58,7 @@ export function createCommand(
             )
             return {
               state: { ...env, battlers },
-              results: [
+              commandResults: [
                 {
                   type: CommandResult.LOG,
                   message: `${actor.name} attacked ${target.name} : ${damageAmmount} damage`
@@ -68,7 +68,7 @@ export function createCommand(
           } else {
             return {
               state: env,
-              results: [
+              commandResults: [
                 {
                   type: CommandResult.LOG,
                   message: `${actor.name} failed to attack`
@@ -79,13 +79,13 @@ export function createCommand(
         default:
           return {
             state: env,
-            results: []
+            commandResults: []
           }
       }
     } else {
       return {
         state: env,
-        results: []
+        commandResults: []
       }
     }
   }

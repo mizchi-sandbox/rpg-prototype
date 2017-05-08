@@ -91,7 +91,7 @@ function* start(_action: any) {
     // Update state
     const processed = processTurn(state, takenInputQueue)
     state = processed.state
-    for (const result of processed.results) {
+    for (const result of processed.commandResults) {
       switch (result.type) {
         case CommandResultActions.LOG:
           yield put(battleActions.log(result.message))

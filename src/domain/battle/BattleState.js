@@ -39,13 +39,13 @@ export function processCommandPhase(
 ): CommandApplicationProgress {
   return commandQueue.reduce(
     (next: CommandApplicationProgress, nextCmd: Command) => {
-      const { state: nextState, results } = nextCmd(next.state)
+      const { state: nextState, commandResults } = nextCmd(next.state)
       return {
         state: nextState,
-        results: next.results.concat(results)
+        commandResults: next.commandResults.concat(commandResults)
       }
     },
-    { state, results: [] }
+    { state, commandResults: [] }
   )
 }
 
@@ -70,14 +70,14 @@ export function isBattleFinished(
 export function processTurn(
   state: BattleState,
   inputQueue: Input[]
-): { state: BattleState, results: CommandResult[] } {
+): { state: BattleState, commandResults: CommandResult[] } {
   // decide command
   const { state: decisionedState, commandQueue } = processDecisionPhase(
     state,
     inputQueue
   )
   // exec command
-  const { state: resultedState, results } = processCommandPhase(
+  const { state: resultedState, commandResults } = processCommandPhase(
     decisionedState,
     commandQueue
   )
@@ -87,7 +87,7 @@ export function processTurn(
       turn: state.turn + 1,
       inputQueue: []
     },
-    results
+    commandResults
   }
 }
 
