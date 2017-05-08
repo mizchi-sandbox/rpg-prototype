@@ -50,7 +50,7 @@ export function processCommandPhase(
   )
 }
 
-export function isFinished(state: BattleState): ?{ winner: 'ally' | 'enemy' } {
+export function isBattleFinished(state: BattleState): ?{ winner: 'ally' | 'enemy' } {
   if (
     state.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
   ) {
