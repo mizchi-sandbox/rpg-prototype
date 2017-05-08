@@ -1,11 +1,10 @@
 /* @flow */
-import { loadMonsterData } from '../master'
 import { updateBattler } from './Battler'
-import { buildBattlerSkill } from './BattlerSkill'
 import type { Battler } from './Battler'
 import type { Command, CommandApplicationProgress } from './Command'
 import type { CommandResult } from './CommandResult'
 import type { Input } from './Input'
+import { battleStateMock0 } from './__mock/battleStateMock'
 
 // State
 export type BattleState = {
@@ -50,7 +49,9 @@ export function processCommandPhase(
   )
 }
 
-export function isBattleFinished(state: BattleState): ?{ winner: 'ally' | 'enemy' } {
+export function isBattleFinished(
+  state: BattleState
+): ?{ winner: 'ally' | 'enemy' } {
   if (
     state.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
   ) {
@@ -90,54 +91,7 @@ export function processTurn(
   }
 }
 
-const initialState: BattleState = {
-  inputQueue: [],
-  battlers: [
-    {
-      id: Symbol('ally'),
-      side: 'ally',
-      formationOrder: 0,
-      controllable: true,
-      name: 'Player1',
-      life: { val: 150, max: 150 },
-      skills: [
-        buildBattlerSkill('$attack', 1),
-        buildBattlerSkill('$power-attack', 1)
-      ]
-    },
-    {
-      id: Symbol('ally'),
-      side: 'ally',
-      formationOrder: 1,
-      controllable: false,
-      name: 'BOT1',
-      life: { val: 30, max: 30 },
-      skills: [buildBattlerSkill('$attack', 1)]
-    },
-    {
-      id: Symbol('enemy'),
-      side: 'enemy',
-      monsterData: loadMonsterData('$goblin'),
-      formationOrder: 0,
-      controllable: false,
-      name: 'goblin',
-      life: { val: 30, max: 30 },
-      skills: [buildBattlerSkill('$attack', 1)]
-    },
-    {
-      id: Symbol('enemy'),
-      side: 'enemy',
-      monsterData: loadMonsterData('$hob-goblin'),
-      formationOrder: 0,
-      controllable: false,
-      name: 'goblin',
-      life: { val: 45, max: 45 },
-      skills: [buildBattlerSkill('$attack', 1)]
-    }
-  ],
-  turn: 0
-}
-
-export function createBattleMock(): BattleState {
-  return initialState
+export function createBattleState(): BattleState {
+  // TODO: Return real state
+  return battleStateMock0
 }
