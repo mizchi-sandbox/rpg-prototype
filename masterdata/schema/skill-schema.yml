@@ -14,7 +14,13 @@ properties:
   cooldownCount:
     type: number
   skillType:
-    type: string
+    type: 'string'
+    enum:
+      - DAMAGE_OPONENT_SINGLE
+      - DAMAGE_OPONENT_ALL
+      - HEAL_SELF
+      - HEAL_ALLY_SINGLE
+      - HEAL_ALLY_ALL
   # Instant name instead of icon
   altIconText:
     type: string

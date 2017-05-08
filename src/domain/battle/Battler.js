@@ -37,7 +37,7 @@ export function createCommand(
     const skill = actor && actor.skills.find(s => s.id === skillId)
     if (actor && skill && skill.data) {
       switch (skill.data.skillType) {
-        case 'DAMAGE_SINGLE':
+        case 'DAMAGE_OPONENT_SINGLE':
           let target: ?Battler
           if (plannedTargetId) {
             target = env.battlers.find(b => b.id === plannedTargetId)
@@ -51,7 +51,7 @@ export function createCommand(
             const damageAmmount = 5
             const damaged: Battler = {
               ...target,
-              life: ConsumableValueAction.consume(target.life, damageAmmount)
+              life: ConsumableValueAction.sub(target.life, damageAmmount)
             }
             const battlers = env.battlers.map(
               b => (target && b.id === target.id ? damaged : b)

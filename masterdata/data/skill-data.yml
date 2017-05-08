@@ -3,11 +3,29 @@
   cooldownCount: 5
   displayName: Attack
   displayIcon: assets/icons/icon000.png
-  altIconText: A
-  skillType: DAMAGE_SINGLE
+  altIconText: At
+  skillType: DAMAGE_OPONENT_SINGLE
 -
   id: $power-attack
   cooldownCount: 12
   displayName: Power Attack
   altIconText: PA
-  skillType: DAMAGE_SINGLE
+  skillType: DAMAGE_OPONENT_SINGLE
+-
+  id: $fire-wave
+  cooldownCount: 18
+  displayName: Fire Wave
+  altIconText: FW
+  skillType: DAMAGE_OPONENT_ALL
+-
+  id: $heal-self
+  cooldownCount: 20
+  displayName: Heal Self
+  altIconText: HS
+  skillType: HEAL_SELF
+-
+  id: $heal-all
+  cooldownCount: 20
+  displayName: Heal All
+  altIconText: HA
+  skillType: HEAL_ALLY_ALL
