@@ -4,10 +4,11 @@ import * as CommandResult from './CommandResult'
 import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
+import type { CommandApplicationProgress } from './Command'
 import * as RangedValueAction from 'domain/values/RangedValue'
 import type { RangedValue } from 'domain/values/RangedValue'
 import type { MonsterData } from 'domain/master'
-import { pickRandom } from 'domain/utils/arrayUtils'
+import { pickRandom, updateIn } from 'domain/utils/arrayUtils'
 
 export type Battler = {
   side: 'ally' | 'enemy',
@@ -28,70 +29,12 @@ export type EnemyBattler = Battler & {
   monsterData: MonsterData
 }
 
-export function createCommand(
-  skillId: Symbol,
-  actorId: Symbol,
-  plannedTargetId?: Symbol
-): Command {
-  return (env: BattleState) => {
-    const actor: ?Battler = env.battlers.find(b => b.id === actorId)
-    const skill = actor && actor.skills.find(s => s.id === skillId)
-    if (actor && skill && skill.data) {
-      switch (skill.data.skillType) {
-        case 'DAMAGE_OPONENT_SINGLE':
-          let target: ?Battler
-          if (plannedTargetId) {
-            target = env.battlers.find(b => b.id === plannedTargetId)
-          } else {
-            target = pickRandom(
-              env.battlers.filter(b => {
-                return b.side !== actor.side && b.life.val > 0
-              })
-            )
-          }
-          if (target) {
-            // TODO: Calc damage by master
-            const damageAmmount = 5
-            const damaged: Battler = {
-              ...target,
-              life: RangedValueAction.sub(target.life, damageAmmount)
-            }
-            const battlers = env.battlers.map(
-              b => (target && b.id === target.id ? damaged : b)
-            )
-            return {
-              state: { ...env, battlers },
-              commandResults: [
-                {
-                  type: CommandResult.LOG,
-                  message: `${actor.name} attacked ${target.name} : ${damageAmmount} damage`
-                }
-              ]
-            }
-          } else {
-            return Object.freeze({
-              state: env,
-              commandResults: [
-                {
-                  type: CommandResult.LOG,
-                  message: `${actor.name} failed to attack`
-                }
-              ]
-            })
-          }
-        default:
-          return Object.freeze({
-            state: env,
-            commandResults: []
-          })
-      }
-    } else {
-      return Object.freeze({
-        state: env,
-        commandResults: []
-      })
-    }
-  }
+export const isAlive = (battler: Battler): boolean => {
+  return battler.life.val > 0
+}
+
+export const isTargetable = (battler: Battler): boolean => {
+  return isAlive(battler)
 }
 
 export function updateBattler(
@@ -101,9 +44,11 @@ export function updateBattler(
 ): { battler: Battler, commands: Command[] } {
   let commands: Command[] = []
 
-  let updatedSkills = battler.skills.map(skill => {
-    return BattlerSkillAction.updateCooldownCount(skill)
-  })
+  let updatedSkills = isAlive(battler)
+    ? battler.skills.map(skill => {
+        return BattlerSkillAction.updateCooldownCount(skill)
+      })
+    : battler.skills
 
   if (battler.controllable) {
     // Player
@@ -148,4 +93,82 @@ export function updateBattler(
     },
     commands
   })
+}
+
+export const handleDamageOponentSingleSkill = (
+  state: BattleState,
+  actor: Battler,
+  skill: BattlerSkill,
+  target: Battler
+): CommandApplicationProgress => {
+  // TODO: Calc damage by master
+  const damageAmmount = 5
+  const damaged: Battler = {
+    ...target,
+    life: RangedValueAction.sub(target.life, damageAmmount)
+  }
+  const targetId = target && target.id
+  const battlers = updateIn(
+    state.battlers,
+    b => b.id === targetId,
+    () => damaged
+  )
+  return {
+    state: { ...state, battlers },
+    commandResults: [
+      {
+        type: CommandResult.LOG,
+        message: `${actor.name} attacked ${target.name} : ${damageAmmount} damage`
+      }
+    ]
+  }
+}
+
+export function createCommand(
+  skillId: Symbol,
+  actorId: Symbol,
+  plannedTargetId?: Symbol
+): Command {
+  return (env: BattleState) => {
+    const actor: ?Battler = env.battlers.find(b => b.id === actorId)
+    const skill = actor && actor.skills.find(s => s.id === skillId)
+    if (actor && skill && skill.data) {
+      switch (skill.data.skillType) {
+        case 'DAMAGE_OPONENT_SINGLE':
+          let target: ?Battler
+          if (plannedTargetId) {
+            target = env.battlers.find(b => b.id === plannedTargetId)
+          } else {
+            target = pickRandom(
+              env.battlers.filter(b => {
+                return b.side !== actor.side && isTargetable(b)
+              })
+            )
+          }
+          if (target) {
+            return handleDamageOponentSingleSkill(env, actor, skill, target)
+          } else {
+            return Object.freeze({
+              state: env,
+              commandResults: [
+                {
+                  type: CommandResult.LOG,
+                  message: `${actor.name} failed to attack`
+                }
+              ]
+            })
+          }
+        default:
+          return Object.freeze({
+            state: env,
+            commandResults: []
+          })
+      }
+    } else {
+      return Object.freeze({
+        state: env,
+        commandResults: []
+      })
+    }
+  }
 }
