@@ -4,7 +4,8 @@ import App from '../components/App'
 // eslint-disable-next-line
 import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 import type { State as RootState } from '../reducers'
-import type { State as AppState, Action as AppAction } from '../reducers/app'
+import type { State as AppState } from '../reducers/app'
+import type { AppAction } from '../actions/appActions'
 
 export type AppContainerProps = AppState & Dispatcher<AppAction>
 

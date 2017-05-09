@@ -6,9 +6,9 @@ import {
   addInputToQueue,
   requestPause,
   requestRestart,
-  requestStart,
-  closeCommandResult
+  requestStart
 } from '../../actions/battleActions'
+import { popScene } from '../../actions/appActions'
 import Button from '../atoms/Button'
 import LogBoard from '../molecules/LogBoard'
 import AllyBattlersDisplay from '../molecules/AllyBattlersDisplay'
@@ -71,7 +71,8 @@ export default class BattleScene extends React.Component {
             isOpen={!!runner.battleCommandResult}
             result={runner.battleCommandResult}
             onClickClose={_ev => {
-              dispatch(closeCommandResult())
+              // dispatch(closeCommandResult())
+              dispatch(popScene())
             }}
           />
           <GlobalKeyListner

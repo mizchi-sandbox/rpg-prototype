@@ -1,6 +1,6 @@
 /* @flow */
-import * as AppActions from '../actions/AppActions'
-import type { Action as AppAction } from '../actions/AppActions'
+import * as AppActions from '../actions/appActions'
+import type { AppAction } from '../actions/appActions'
 
 export type Action = AppAction
 

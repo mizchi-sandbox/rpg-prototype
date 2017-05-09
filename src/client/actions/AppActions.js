@@ -3,7 +3,7 @@ import type { Scene } from '../reducers/app'
 
 export const PUSH_SCENE = 'app/PUSH_SCENE'
 export const POP_SCENE = 'app/POP_SCENE'
-export type Action =
+export type AppAction =
   | {
       type: typeof PUSH_SCENE,
       payload: Scene
