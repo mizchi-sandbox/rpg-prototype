@@ -22,13 +22,13 @@ const initialState: State = {
   sceneStack: [{ sceneId: 'debug-mode', sceneData: {} }]
 }
 
-export default (session: State = initialState, action: AppAction) => {
+export default (state: State = initialState, action: AppAction) => {
   switch (action.type) {
     case AppActions.PUSH_SCENE:
-      return { ...session, sceneStack: session.sceneStack.concat([action.payload]) }
+      return { ...state, sceneStack: state.sceneStack.concat([action.payload]) }
     case AppActions.POP_SCENE:
-      return { ...session, sceneStack: session.sceneStack.slice(0, -1) }
+      return { ...state, sceneStack: state.sceneStack.slice(0, -1) }
     default:
-      return session
+      return state
   }
 }

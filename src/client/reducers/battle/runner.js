@@ -27,7 +27,7 @@ export type SkillSelector = {
   y: number
 }
 export type State = {
-  battleState: ?BattleSession,
+  battleSession: ?BattleSession,
   inputQueue: Input[],
   loading: boolean,
   paused: boolean,
@@ -38,7 +38,7 @@ export type State = {
 const initialState: State = {
   loading: true,
   paused: false,
-  battleState: null,
+  battleSession: null,
   inputQueue: [],
   skillSelectCursor: { x: 0, y: 0 },
   battleCommandResult: null
@@ -46,77 +46,77 @@ const initialState: State = {
 
 // Reducer
 export default (
-  session: State = initialState,
+  state: State = initialState,
   action: BattleAction | BattleSagaAction
 ) => {
   switch (action.type) {
     case REQUEST_START:
       return {
-        ...session,
-        battleState: null,
+        ...state,
+        battleSession: null,
         loading: false
       }
     case PAUSED:
       return {
-        ...session,
+        ...state,
         paused: true
       }
     case RESTARTED:
       return {
-        ...session,
+        ...state,
         paused: false
       }
     case SYNC:
       return {
-        ...session,
-        battleState: action.payload,
+        ...state,
+        battleSession: action.payload,
         loading: true
       }
     case OPEN_RESULT:
       return {
-        ...session,
+        ...state,
         battleCommandResult: action.payload
       }
     case CLOSE_RESULT:
       return {
-        ...session,
+        ...state,
         battleCommandResult: null
       }
     case UPDATE_INPUT_QUEUE:
       return {
-        ...session,
+        ...state,
         inputQueue: action.payload.inputQueue
       }
     case SET_SKILL_SELECTOR:
       return {
-        ...session,
+        ...state,
         skillSelectCursor: action.payload
       }
     case UNSET_SKILL_SELECTOR:
       return {
-        ...session,
+        ...state,
         skillSelectCursor: null
       }
     case MOVE_SKILL_SELECTOR:
-      if (session.skillSelectCursor && session.battleState) {
-        const { skillSelectCursor, battleState } = session
-        const allies = battleState.battlers.filter(b => b.side === 'ally')
+      if (state.skillSelectCursor && state.battleSession) {
+        const { skillSelectCursor, battleSession } = state
+        const allies = battleSession.battlers.filter(b => b.side === 'ally')
         const { x, y } = skillSelectCursor
         const { dx, dy } = action.payload
         return {
-          ...session,
+          ...state,
           skillSelectCursor: moveSkillCursorWithOverflow(allies, x + dx, y + dy)
         }
       } else {
         return {
-          ...session,
+          ...state,
           skillSelectCursor: { x: 0, y: 0 }
         }
       }
     case RESET:
       return initialState
     default:
-      return session
+      return state
   }
 }
 

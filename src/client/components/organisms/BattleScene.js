@@ -59,10 +59,10 @@ export default class BattleScene extends React.Component {
 
   render() {
     const { runner, log, dispatch } = this.props
-    if (!runner.battleState) {
+    if (!runner.battleSession) {
       return <h1>Loading</h1>
     } else {
-      const { battleState, inputQueue, paused, skillSelectCursor } = runner
+      const { battleSession, inputQueue, paused, skillSelectCursor } = runner
       return (
         <div
           className={css(styles.container)}
@@ -117,7 +117,7 @@ export default class BattleScene extends React.Component {
             handler={_ => {
               if (skillSelectCursor) {
                 const { x, y } = skillSelectCursor
-                const ally = battleState.battlers[y]
+                const ally = battleSession.battlers[y]
                 if (ally) {
                   const skill = ally.skills[x]
                   if (
@@ -143,13 +143,13 @@ export default class BattleScene extends React.Component {
           </div>
           <div className={css(styles.enemies)}>
             <EnemyBattlersDisplay
-              enemies={battleState.battlers.filter(b => b.side === 'enemy')}
+              enemies={battleSession.battlers.filter(b => b.side === 'enemy')}
             />
           </div>
           <div className={css(styles.allies)}>
             <AllyBattlersDisplay
               skillSelectCursor={skillSelectCursor}
-              allies={battleState.battlers.filter(b => b.side === 'ally')}
+              allies={battleSession.battlers.filter(b => b.side === 'ally')}
               isSkillInQueue={skill =>
                 inputQueue.map(input => input.skillId).includes(skill.id)}
               onAllyAndSkillSelect={ally => skill => {
@@ -166,7 +166,7 @@ export default class BattleScene extends React.Component {
           <div className={css(styles.log)}>
             <InputQueueDisplay
               inputQueue={inputQueue}
-              battleState={battleState}
+              battleSession={battleSession}
             />
             {inputQueue.length > 0 && <hr />}
             <LogBoard messages={log} direction="bottom" />

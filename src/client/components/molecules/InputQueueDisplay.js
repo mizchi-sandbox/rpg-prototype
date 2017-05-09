@@ -4,15 +4,15 @@ import type { Input, BattleSession } from 'domain/battle'
 
 export default function InputQueueDisplay({
   inputQueue,
-  battleState
+  battleSession
 }: {
   inputQueue: Input[],
-  battleState: BattleSession
+  battleSession: BattleSession
 }) {
   return (
     <div>
       {inputQueue.map((input, index) => {
-        const actorToAction = battleState.battlers.find(
+        const actorToAction = battleSession.battlers.find(
           b => b.id === input.battlerId
         )
         return (

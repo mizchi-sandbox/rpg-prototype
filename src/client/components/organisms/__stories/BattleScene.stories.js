@@ -10,7 +10,7 @@ storiesOf('BattleScene', module)
       <BattleScene
         log={[]}
         runner={{
-          battleState: null,
+          battleSession: null,
           inputQueue: [],
           loading: true,
           paused: false,
@@ -28,7 +28,7 @@ storiesOf('BattleScene', module)
       <BattleScene
         log={[]}
         runner={{
-          battleState: createBattleSession(),
+          battleSession: createBattleSession(),
           inputQueue: [],
           loading: false,
           paused: true,
