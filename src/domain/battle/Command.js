@@ -5,6 +5,6 @@ import type { CommandResult } from './CommandResult'
 export type Command = BattleSession => CommandApplicationProgress
 
 export type CommandApplicationProgress = {
-  state: BattleSession,
+  session: BattleSession,
   commandResults: CommandResult[]
 }

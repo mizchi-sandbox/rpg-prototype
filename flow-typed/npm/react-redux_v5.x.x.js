@@ -15,7 +15,7 @@ declare module 'react-redux' {
   */
 
   declare type MapStateToProps<S, OP: Object, SP: Object> = (
-    state: S,
+    session: S,
     ownProps: OP
   ) => SP | MapStateToProps<S, OP, SP>
 
@@ -24,7 +24,7 @@ declare module 'react-redux' {
     | DP
 
   declare type MergeProps<SP, DP: Object, OP: Object, P: Object> = (
-    stateProps: SP,
+    sessionProps: SP,
     dispatchProps: DP,
     ownProps: OP
   ) => P
@@ -37,7 +37,7 @@ declare module 'react-redux' {
     getWrappedInstance(): React$Component<Def, P, St>,
     static defaultProps: void,
     props: OP,
-    state: void
+    session: void
   }
 
   declare type ConnectedComponentClass<OP, P, Def, St> = Class<

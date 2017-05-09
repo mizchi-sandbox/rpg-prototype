@@ -45,9 +45,7 @@ export function buildEnemyBattler(data: {
     controllable: false,
     displayName: monsterData.displayName,
     life: { val: monsterData.life, max: monsterData.life },
-    skills: monsterData.skills.map(as =>
-      buildSkill((as.skillId: any), as.lv)
-    )
+    skills: monsterData.skills.map(as => buildSkill((as.skillId: any), as.lv))
   }
 }
 

@@ -13,7 +13,7 @@ export type SyncAction = {
 export type BattleSagaAction = SyncAction
 
 // Action creator
-export const sync = (state: BattleSession): SyncAction => ({
+export const sync = (session: BattleSession): SyncAction => ({
   type: SYNC,
-  payload: state
+  payload: session
 })

@@ -9,7 +9,7 @@ import * as RangedValueAction from 'domain/values/RangedValue'
 import { pickRandom, updateIn } from 'domain/utils/arrayUtils'
 
 const handleDamageOponentSingleSkill = (
-  state: BattleSession,
+  session: BattleSession,
   actor: Battler,
   skill: Skill,
   target: Battler
@@ -22,7 +22,7 @@ const handleDamageOponentSingleSkill = (
   }
   const targetId = target && target.id
   const battlers = updateIn(
-    state.battlers,
+    session.battlers,
     b => b.id === targetId,
     () => damaged
   )
@@ -32,7 +32,7 @@ const handleDamageOponentSingleSkill = (
     b => BattlerActions.consumeSkillCooldown(b, skill.id)
   )
   return {
-    state: { ...state, battlers: skillConsumedBattlers },
+    session: { ...session, battlers: skillConsumedBattlers },
     commandResults: [
       {
         type: CommandResult.LOG,
@@ -79,7 +79,7 @@ const planDamageOponentSingleSkill: (
       )
     } else {
       return Object.freeze({
-        state: nextEnv,
+        session: nextEnv,
         commandResults: [
           {
             type: CommandResult.LOG,

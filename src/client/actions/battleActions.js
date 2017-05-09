@@ -1,5 +1,5 @@
 /* @flow */
-import type { Input, BattleResult } from 'domain/battle'
+import type { Input, BattleSessionResult } from 'domain/battle'
 import { createNoTargetedSkillInput } from 'domain/battle'
 
 // Constants
@@ -25,7 +25,7 @@ export type BattleAction =
   | { type: typeof RESET }
   | {
       type: typeof OPEN_RESULT,
-      payload: BattleResult
+      payload: BattleSessionResult
     }
   | {
       type: typeof CLOSE_RESULT

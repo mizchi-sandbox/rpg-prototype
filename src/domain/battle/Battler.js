@@ -70,10 +70,7 @@ export function planNextCommand(
     if (inputs.length) {
       for (const input of inputs) {
         commands = battler.skills.reduce((commands, skill) => {
-          if (
-            skill.id === input.skillId &&
-            SkillAction.isExecutable(skill)
-          ) {
+          if (skill.id === input.skillId && SkillAction.isExecutable(skill)) {
             return commands.concat([
               CommandPlanner.createCommand(env, input.skillId, battler.id)
             ])

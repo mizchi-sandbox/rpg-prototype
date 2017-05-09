@@ -285,14 +285,14 @@ declare module 'redux-saga/effects' {
   declare type Fn5<T1, T2, T3, T4, T5, R> = (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => R | Promise<R> | Generator<*,R,*>;
   declare type Fn6<T1, T2, T3, T4, T5, T6, R> = (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => R | Promise<R> | Generator<*,R,*>;
 
-  declare type SelectFnSpread<T> = (state: any, ...args: Array<T>) => any;
-  declare type SelectFn0 = ((state: any) => any) & (() => any);
-  declare type SelectFn1<T1> = (state: any, t1: T1) => any;
-  declare type SelectFn2<T1, T2> = (state: any, t1: T1, t2: T2) => any;
-  declare type SelectFn3<T1, T2, T3> = (state: any, t1: T1, t2: T2, t3: T3) => any;
-  declare type SelectFn4<T1, T2, T3, T4> = (state: any, t1: T1, t2: T2, t3: T3, t4: T4) => any;
-  declare type SelectFn5<T1, T2, T3, T4, T5> = (state: any, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => any;
-  declare type SelectFn6<T1, T2, T3, T4, T5, T6> = (state: any, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => any;
+  declare type SelectFnSpread<T> = (session: any, ...args: Array<T>) => any;
+  declare type SelectFn0 = ((session: any) => any) & (() => any);
+  declare type SelectFn1<T1> = (session: any, t1: T1) => any;
+  declare type SelectFn2<T1, T2> = (session: any, t1: T1, t2: T2) => any;
+  declare type SelectFn3<T1, T2, T3> = (session: any, t1: T1, t2: T2, t3: T3) => any;
+  declare type SelectFn4<T1, T2, T3, T4> = (session: any, t1: T1, t2: T2, t3: T3, t4: T4) => any;
+  declare type SelectFn5<T1, T2, T3, T4, T5> = (session: any, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => any;
+  declare type SelectFn6<T1, T2, T3, T4, T5, T6> = (session: any, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => any;
 
   declare type CallEffectSpread<C, Fn, T> = CallEffect<C, Fn, Array<T>>;
   declare type CallEffect0<C, Fn> = CallEffect<C, Fn, []>;

@@ -12,56 +12,56 @@ export type BattleSession = {
   turn: number
 }
 
-export function processPreUpdatePhase(state: BattleSession): BattleSession {
+export function processPreUpdatePhase(session: BattleSession): BattleSession {
   return {
-    ...state,
-    battlers: state.battlers.map(BattlerActions.updateBattlerState)
+    ...session,
+    battlers: session.battlers.map(BattlerActions.updateBattlerState)
   }
 }
 
 export function processPlanningPhase(
-  state: BattleSession,
+  session: BattleSession,
   inputQueue: Input[]
 ): Command[] {
   return Object.freeze(
-    state.battlers.reduce((commands, battler) => {
+    session.battlers.reduce((commands, battler) => {
       const inputs = inputQueue.filter(input => input.battlerId === battler.id)
       return commands.concat(
-        BattlerActions.planNextCommand(battler, inputs, state)
+        BattlerActions.planNextCommand(battler, inputs, session)
       )
     }, [])
   )
 }
 
 export function processCommandExecPhase(
-  state: BattleSession,
+  session: BattleSession,
   commandQueue: Command[]
 ): CommandApplicationProgress {
   return Object.freeze(
     commandQueue.reduce(
       (next: CommandApplicationProgress, nextCmd: Command) => {
-        const { state: nextState, commandResults } = nextCmd(next.state)
+        const { session: nextState, commandResults } = nextCmd(next.session)
         return {
-          state: nextState,
+          session: nextState,
           commandResults: next.commandResults.concat(commandResults)
         }
       },
-      { state, commandResults: [] }
+      { session, commandResults: [] }
     )
   )
 }
 
 export function isBattleFinished(
-  state: BattleSession
+  session: BattleSession
 ): ?{ winner: 'ally' | 'enemy' } {
   if (
-    state.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
+    session.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
   ) {
     return { winner: 'ally' }
   }
 
   if (
-    state.battlers.filter(b => b.side === 'ally').every(b => b.life.val <= 0)
+    session.battlers.filter(b => b.side === 'ally').every(b => b.life.val <= 0)
   ) {
     return { winner: 'enemy' }
   }
@@ -70,11 +70,11 @@ export function isBattleFinished(
 }
 
 export function processTurn(
-  state: BattleSession,
+  session: BattleSession,
   inputQueue: Input[]
-): { state: BattleSession, commandResults: CommandResult[] } {
+): { session: BattleSession, commandResults: CommandResult[] } {
   // update pre-actions
-  const preUpdatedState = processPreUpdatePhase(state, inputQueue)
+  const preUpdatedState = processPreUpdatePhase(session, inputQueue)
 
   // create commands
   const commandQueue = processPlanningPhase(preUpdatedState, inputQueue)
@@ -84,6 +84,6 @@ export function processTurn(
 }
 
 export function createBattleSession(): BattleSession {
-  // TODO: Return real state
+  // TODO: Return real session
   return battleStateMock0
 }

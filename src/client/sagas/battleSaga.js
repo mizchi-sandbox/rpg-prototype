@@ -3,7 +3,11 @@ import { delay } from 'redux-saga'
 import { sync } from '../actions/battleSagaActions'
 import * as battleActions from '../actions/battleActions'
 import type { BattleSession } from 'domain/battle'
-import { createBattleSession, isBattleFinished, processTurn } from 'domain/battle'
+import {
+  createBattleSession,
+  isBattleFinished,
+  processTurn
+} from 'domain/battle'
 import { call, put, race, take, takeEvery } from 'redux-saga/effects'
 import * as CommandResultActions from 'domain/battle/CommandResult'
 import type { Input, Battler, Skill } from 'domain/battle'
@@ -44,10 +48,10 @@ function* start(_action: any) {
   // Use wait mode
   waitMode = location.search.indexOf('wait') > -1
 
-  let state: BattleSession = createBattleSession()
+  let session: BattleSession = createBattleSession()
 
   // Sync first
-  yield put(sync(state))
+  yield put(sync(session))
 
   // Start loop
   while (true) {
@@ -57,9 +61,9 @@ function* start(_action: any) {
     // WaitMode: check executableSkill
     if (waitMode) {
       // Wait input on wait mode
-      const executableSkill = findActiveSkill(state.battlers)
+      const executableSkill = findActiveSkill(session.battlers)
       if (executableSkill) {
-        yield put(sync(state))
+        yield put(sync(session))
         yield put(battleActions.paused())
         const takenInputAction: { payload: Input } = yield take(
           battleActions.ADD_INPUT_TO_QUEUE
@@ -88,15 +92,15 @@ function* start(_action: any) {
       yield put(battleActions.updateInputQueue([]))
     }
 
-    // Update state
-    const processed = processTurn(state, takenInputQueue)
-    state = processed.state
+    // Update session
+    const processed = processTurn(session, takenInputQueue)
+    session = processed.session
     for (const result of processed.commandResults) {
       switch (result.type) {
         case CommandResultActions.LOG:
           yield put(battleActions.log(result.message))
           if (waitMode) {
-            yield put(sync(state))
+            yield put(sync(session))
             yield call(delay, 100)
           }
           break
@@ -104,17 +108,17 @@ function* start(_action: any) {
     }
 
     // Check finished flag
-    const finshed = isBattleFinished(state)
+    const finshed = isBattleFinished(session)
     if (finshed) {
-      yield put(sync(state))
+      yield put(sync(session))
       // yield put(battleActions.log(`${finshed.winner} win.`))
       yield put(battleActions.openCommandResult(`${finshed.winner} win.`))
       break
     }
 
-    // Sync state by each frame on active
+    // Sync session by each frame on active
     if (!waitMode) {
-      yield put(sync(state))
+      yield put(sync(session))
     }
 
     // Clear inputQueue

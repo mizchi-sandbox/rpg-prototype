@@ -51,7 +51,7 @@ export function createCommand(
       return plan(nextEnv)
     } else {
       return {
-        state: nextEnv,
+        session: nextEnv,
         commandResults: []
       }
     }

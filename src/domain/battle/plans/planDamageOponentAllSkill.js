@@ -9,7 +9,7 @@ import * as RangedValueAction from 'domain/values/RangedValue'
 import { updateIn } from 'domain/utils/arrayUtils'
 
 const handleDamageOponentAllSkill = (
-  state: BattleSession,
+  session: BattleSession,
   actor: Battler,
   skill: Skill,
   targets: Battler[]
@@ -19,7 +19,7 @@ const handleDamageOponentAllSkill = (
   const targetIds = targets.map(t => t.id)
   let results = []
   const battlers = updateIn(
-    state.battlers,
+    session.battlers,
     b => targetIds.includes(b.id),
     target => {
       results = results.concat({
@@ -38,7 +38,7 @@ const handleDamageOponentAllSkill = (
     b => BattlerActions.consumeSkillCooldown(b, skill.id)
   )
   return {
-    state: { ...state, battlers: skillConsumedBattlers },
+    session: { ...session, battlers: skillConsumedBattlers },
     commandResults: results
   }
 }

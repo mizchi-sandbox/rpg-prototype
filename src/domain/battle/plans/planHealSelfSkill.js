@@ -9,7 +9,7 @@ import * as RangedValueAction from 'domain/values/RangedValue'
 import { updateIn } from 'domain/utils/arrayUtils'
 
 const handleHealSelfSkill = (
-  state: BattleSession,
+  session: BattleSession,
   actor: Battler,
   skill: Skill
 ): CommandApplicationProgress => {
@@ -17,7 +17,7 @@ const handleHealSelfSkill = (
   const healAmmount = 5
   let results = []
   const battlers = updateIn(
-    state.battlers,
+    session.battlers,
     b => b.id === actor.id,
     target => {
       results = results.concat({
@@ -36,7 +36,7 @@ const handleHealSelfSkill = (
     b => BattlerActions.consumeSkillCooldown(b, skill.id)
   )
   return {
-    state: { ...state, battlers: skillConsumedBattlers },
+    session: { ...session, battlers: skillConsumedBattlers },
     commandResults: results
   }
 }

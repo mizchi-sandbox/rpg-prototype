@@ -17,7 +17,7 @@ import InputQueueDisplay from '../molecules/InputQueueDisplay'
 import GlobalKeyListner from '../helpers/GlobalKeyListener'
 import type { BattleContainerProps } from '../../containers/BattleContainer'
 
-export function BattleResultModal(props: {
+export function BattleSessionResultModal(props: {
   isOpen: boolean,
   onClickClose: Function,
   result: any
@@ -67,7 +67,7 @@ export default class BattleScene extends React.Component {
             backgroundColor: paused ? '#eee' : '#fff'
           }}
         >
-          <BattleResultModal
+          <BattleSessionResultModal
             isOpen={!!runner.battleCommandResult}
             result={runner.battleCommandResult}
             onClickClose={_ev => {

@@ -11,7 +11,7 @@ import {
 import type { BattleSagaAction } from '../../actions/battleSagaActions'
 import { SYNC } from '../../actions/battleSagaActions'
 import type { BattleAction } from '../../actions/battleActions'
-import type { BattleSession, Input, BattleResult } from 'domain/battle'
+import type { BattleSession, Input, BattleSessionResult } from 'domain/battle'
 
 // State
 export type State = {
@@ -19,7 +19,7 @@ export type State = {
   inputQueue: Input[],
   loading: boolean,
   paused: boolean,
-  battleCommandResult: ?BattleResult
+  battleCommandResult: ?BattleSessionResult
 }
 
 const initialState: State = {
@@ -32,50 +32,50 @@ const initialState: State = {
 
 // Reducer
 export default (
-  state: State = initialState,
+  session: State = initialState,
   action: BattleAction | BattleSagaAction
 ) => {
   switch (action.type) {
     case REQUEST_START:
       return {
-        ...state,
+        ...session,
         battleState: null,
         loading: false
       }
     case PAUSED:
       return {
-        ...state,
+        ...session,
         paused: true
       }
     case RESTARTED:
       return {
-        ...state,
+        ...session,
         paused: false
       }
     case SYNC:
       return {
-        ...state,
+        ...session,
         battleState: action.payload,
         loading: true
       }
     case OPEN_RESULT:
       return {
-        ...state,
+        ...session,
         battleCommandResult: action.payload
       }
     case CLOSE_RESULT:
       return {
-        ...state,
+        ...session,
         battleCommandResult: null
       }
     case UPDATE_INPUT_QUEUE:
       return {
-        ...state,
+        ...session,
         inputQueue: action.payload.inputQueue
       }
     case RESET:
       return initialState
     default:
-      return state
+      return session
   }
 }
