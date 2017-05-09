@@ -7,6 +7,7 @@ export const battleStateMock0: BattleState = Object.freeze({
   inputQueue: [],
   battlers: BattlerFactory.buildAllyBattlers([
     {
+      id: '$player1',
       controllable: true,
       displayName: 'Player1',
       lifeValue: 150,
@@ -18,6 +19,7 @@ export const battleStateMock0: BattleState = Object.freeze({
       ]
     },
     {
+      id: '$bot1',
       controllable: false,
       displayName: 'BOT1',
       lifeValue: 50,

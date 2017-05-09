@@ -2,6 +2,7 @@
 import type { SkillId } from 'domain/master'
 
 export type Actor = {
+  id: string,
   displayName: string,
   controllable: boolean,
   lifeValue: number,
