@@ -26,8 +26,13 @@ const handleDamageOponentSingleSkill = (
     b => b.id === targetId,
     () => damaged
   )
+  const skillConsumedBattlers = updateIn(
+    battlers,
+    b => b.id === actor.id,
+    b => BattlerActions.consumeSkillCooldown(b, skill.id)
+  )
   return {
-    state: { ...state, battlers },
+    state: { ...state, battlers: skillConsumedBattlers },
     commandResults: [
       {
         type: CommandResult.LOG,

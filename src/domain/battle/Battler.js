@@ -34,6 +34,22 @@ export const isTargetable = (battler: Battler): boolean => {
   return isAlive(battler)
 }
 
+export const consumeSkillCooldown: (Battler, Symbol) => Battler = (
+  battler,
+  skillId
+) => {
+  return {
+    ...battler,
+    skills: battler.skills.map(s => {
+      if (s.id === skillId) {
+        return BattlerSkillAction.resetCooldownCount(s)
+      } else {
+        return s
+      }
+    })
+  }
+}
+
 export function updateBattler(
   battler: Battler,
   inputs: Input[],
@@ -41,29 +57,26 @@ export function updateBattler(
 ): { battler: Battler, commands: Command[] } {
   let commands: Command[] = []
 
-  let updatedSkills = isAlive(battler)
-    ? battler.skills.map(skill => {
-        return BattlerSkillAction.updateCooldownCount(skill)
-      })
+  const updatedSkills = isAlive(battler)
+    ? battler.skills.map(s => BattlerSkillAction.updateCooldownCount(s))
     : battler.skills
 
   if (battler.controllable) {
     // Player
     if (inputs.length) {
       for (const input of inputs) {
-        updatedSkills = updatedSkills.map(skill => {
+        commands = updatedSkills.reduce((commands, skill) => {
           if (
             skill.id === input.skillId &&
             BattlerSkillAction.isExecutable(skill)
           ) {
-            commands = commands.concat([
+            return commands.concat([
               BattlePlanner.createCommand(env, input.skillId, battler.id)
             ])
-            return BattlerSkillAction.resetCooldownCount(skill)
           } else {
-            return skill
+            return commands
           }
-        })
+        }, [])
       }
     }
   } else {
@@ -73,16 +86,15 @@ export function updateBattler(
       BattlerSkillAction.isExecutable(s)
     )
     if (executableSkill) {
-      updatedSkills = updatedSkills.map(skill => {
+      commands = updatedSkills.reduce((commands, skill) => {
         if (skill.id === executableSkill.id) {
-          commands = commands.concat([
+          return commands.concat([
             BattlePlanner.createCommand(env, skill.id, battler.id)
           ])
-          return BattlerSkillAction.resetCooldownCount(skill)
         } else {
-          return skill
+          return commands
         }
-      })
+      }, [])
     }
   }
   return Object.freeze({
