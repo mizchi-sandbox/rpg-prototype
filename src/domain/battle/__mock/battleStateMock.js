@@ -1,88 +1,11 @@
 /* @flow */
-import { loadMonsterData } from '../../master'
-import { buildBattlerSkill } from '../BattlerSkill'
+import * as BattlerFactory from '../BattlerFactory'
 import type { BattleState } from '../BattleState'
-import type { Battler } from '../Battler'
-import type { SkillId, MonsterId } from 'domain/master'
-
-export type Actor = {
-  displayName: string,
-  controllable: boolean,
-  lifeValue: number,
-  acquiredSkills: AcquiredSkill[]
-}
-
-export type AcquiredSkill = {
-  skillId: SkillId,
-  lv: number
-}
-
-export function buildAllyBattler(data: {
-  formationOrder: number,
-  displayName: string,
-  controllable: boolean,
-  lifeValue: number,
-  acquiredSkills: AcquiredSkill[]
-}): Battler {
-  return {
-    id: Symbol('ally'),
-    side: 'ally',
-    formationOrder: data.formationOrder,
-    controllable: data.controllable,
-    displayName: data.displayName,
-    life: { val: data.lifeValue, max: data.lifeValue },
-    skills: data.acquiredSkills.map(as => buildBattlerSkill(as.skillId, as.lv))
-  }
-}
-
-export function buildAllyBattlers(actors: Actor[]): Battler[] {
-  return actors.map((actor, index) => {
-    return buildAllyBattler({
-      ...actor,
-      formationOrder: index
-    })
-  })
-}
-
-export function buildEnemyBattler(data: {
-  formationOrder: number,
-  monsterId: MonsterId,
-  lifeValue: number, // TODO
-  acquiredSkills: AcquiredSkill[] // TODO
-}): Battler {
-  const monsterData = loadMonsterData(data.monsterId)
-  return {
-    monsterData,
-    id: Symbol('enemy'),
-    side: 'enemy',
-    formationOrder: data.formationOrder,
-    controllable: false,
-    displayName: monsterData.displayName,
-    life: { val: data.lifeValue, max: data.lifeValue },
-    skills: data.acquiredSkills.map(as => buildBattlerSkill(as.skillId, as.lv))
-  }
-}
-
-export function buildEnemyBattlers(
-  enemies: {
-    monsterId: MonsterId,
-    lifeValue: number,
-    acquiredSkills: AcquiredSkill[]
-  }[]
-): Battler[] {
-  return enemies.map((actor, index) => {
-    return buildEnemyBattler({
-      ...actor,
-      formationOrder: index,
-      lifeValue: actor.lifeValue
-    })
-  })
-}
 
 export const battleStateMock0: BattleState = Object.freeze({
   turn: 0,
   inputQueue: [],
-  battlers: buildAllyBattlers([
+  battlers: BattlerFactory.buildAllyBattlers([
     {
       controllable: true,
       displayName: 'Player1',
@@ -104,7 +27,7 @@ export const battleStateMock0: BattleState = Object.freeze({
       ]
     }
   ]).concat(
-    buildEnemyBattlers([
+    BattlerFactory.buildEnemyBattlers([
       {
         monsterId: '$goblin',
         lifeValue: 30,
