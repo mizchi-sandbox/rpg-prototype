@@ -10,7 +10,7 @@ import type { MonsterData } from 'domain/master'
 export type Battler = {
   side: 'ally' | 'enemy',
   controllable: boolean,
-  formationOrder: 0 | 1 | 2 | 3 | 4,
+  formationOrder: number,
   id: Symbol,
   displayName: string,
   life: RangedValue,

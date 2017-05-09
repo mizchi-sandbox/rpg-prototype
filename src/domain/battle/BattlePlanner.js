@@ -1,6 +1,7 @@
 /* @flow */
 import planDamageOponentSingleSkill from './plans/planDamageOponentSingleSkill'
 import planDamageOponentAllSkill from './plans/planDamageOponentAllSkill'
+import planHealSelfSkill from './plans/planHealSelfSkill'
 import type { BattleState } from './BattleState'
 import type { Command, CommandApplicationProgress } from './Command'
 
@@ -24,6 +25,11 @@ export function createCommandPlan(
         })
       case 'DAMAGE_OPONENT_ALL':
         return planDamageOponentAllSkill(prevEnv, {
+          actor,
+          skill
+        })
+      case 'HEAL_SELF':
+        return planHealSelfSkill(prevEnv, {
           actor,
           skill
         })
