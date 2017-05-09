@@ -2655,13 +2655,14 @@ function planNextCommand(battler, inputs, env) {
     // Player
     if (inputs.length) {
       var _loop = function _loop(input) {
-        commands = battler.skills.reduce(function (commands, skill) {
+        var cs = battler.skills.reduce(function (commands, skill) {
           if (skill.id === input.skillId && SkillAction.isExecutable(skill)) {
             return commands.concat([CommandPlanner.createCommand(env, input.skillId, battler.id)]);
           } else {
             return commands;
           }
         }, []);
+        commands = commands.concat(cs);
       };
 
       var _iteratorNormalCompletion = true;
