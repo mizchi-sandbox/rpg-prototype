@@ -1,6 +1,6 @@
 /* @flow */
 import * as BattlerSkillAction from './BattlerSkill'
-import * as BattlePlanner from './BattlePlanner'
+import * as CommandPlanner from './CommandPlanner'
 import type { BattlerSkill } from './BattlerSkill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
@@ -75,7 +75,7 @@ export function planNextCommand(
             BattlerSkillAction.isExecutable(skill)
           ) {
             return commands.concat([
-              BattlePlanner.createCommand(env, input.skillId, battler.id)
+              CommandPlanner.createCommand(env, input.skillId, battler.id)
             ])
           } else {
             return commands
@@ -93,7 +93,7 @@ export function planNextCommand(
       commands = battler.skills.reduce((commands, skill) => {
         if (skill.id === executableSkill.id) {
           return commands.concat([
-            BattlePlanner.createCommand(env, skill.id, battler.id)
+            CommandPlanner.createCommand(env, skill.id, battler.id)
           ])
         } else {
           return commands

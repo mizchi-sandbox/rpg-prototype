@@ -5,7 +5,7 @@ import { increment } from 'domain/values/RangedValue'
 import { loadSkillData } from 'domain/master'
 
 export type BattlerSkill = {
-  id: Symbol,
+  id: Symbol, // FIXIT: can not seriarize to send
   data: SkillData,
   lv: number,
   cooldown: RangedValue

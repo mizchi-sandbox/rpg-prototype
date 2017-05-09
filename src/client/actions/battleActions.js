@@ -1,5 +1,6 @@
 /* @flow */
 import type { Input, BattleResult } from 'domain/battle'
+import { createNoTargetedSkillInput } from 'domain/battle'
 
 // Constants
 export const REQUEST_START = 'battle:request-start'
@@ -65,10 +66,7 @@ export const addInputToQueue = (
 ): BattleAction => {
   return {
     type: ADD_INPUT_TO_QUEUE,
-    payload: {
-      battlerId,
-      skillId
-    }
+    payload: createNoTargetedSkillInput(battlerId, skillId)
   }
 }
 export const updateInputQueue = (inputQueue: Input[]) => ({
