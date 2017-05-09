@@ -18,8 +18,8 @@ export const battleStateMock0: BattleState = Object.freeze({
       ]
     },
     {
-      controllable: true,
-      displayName: 'Player1',
+      controllable: false,
+      displayName: 'BOT1',
       lifeValue: 50,
       acquiredSkills: [
         { skillId: '$attack', lv: 1 },
@@ -29,28 +29,10 @@ export const battleStateMock0: BattleState = Object.freeze({
   ]).concat(
     BattlerFactory.buildEnemyBattlers([
       {
-        monsterId: '$goblin',
-        lifeValue: 30,
-        acquiredSkills: [
-          {
-            skillId: '$attack',
-            lv: 1
-          }
-        ]
+        monsterId: '$goblin'
       },
       {
-        monsterId: '$hob-goblin',
-        lifeValue: 50,
-        acquiredSkills: [
-          {
-            skillId: '$attack',
-            lv: 1
-          },
-          {
-            skillId: '$power-attack',
-            lv: 1
-          }
-        ]
+        monsterId: '$hob-goblin'
       }
     ])
   )

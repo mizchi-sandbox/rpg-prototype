@@ -2,20 +2,20 @@
   id: $goblin
   displayName: Goblin
   displayImage: assets/EnemyGraphic/GD_Goblin(Green).png
-  race_id: goblin
-  job_id: novice
-  status:
-    str: 10
-    int: 10
-    dex: 10
-
+  life: 30
+  skills:
+    -
+      skillId: $attack
+      lv: 1
 -
   id: $hob-goblin
   displayName: Hob Goblin
   displayImage: assets/EnemyGraphic/GD_Goblin(Red).png
-  race_id: goblin
-  job_id: novice
-  status:
-    str: 10
-    int: 10
-    dex: 10
+  life: 50
+  skills:
+    -
+      skillId: $attack
+      lv: 1
+    -
+      skillId: $power-attack
+      lv: 1

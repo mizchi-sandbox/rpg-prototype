@@ -5,14 +5,24 @@ properties:
     type: string
   displayImage:
     type: string
-  race_id:
-    type: string
-  job_id:
-    type: string
+  life:
+    type: integer
+  skills:
+    type: array
+    items:
+      -
+        required:
+          - skillId
+          - lv
+        properties:
+          skillId:
+            type: string
+          lv:
+            type: integer
 
 required:
   - id
   - displayName
   - displayImage
-  - race_id
-  - job_id
+  - life
+  - skills

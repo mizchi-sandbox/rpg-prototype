@@ -34,9 +34,7 @@ export function buildAllyBattlers(actors: Actor[]): Battler[] {
 
 export function buildEnemyBattler(data: {
   formationOrder: number,
-  monsterId: MonsterId,
-  lifeValue: number, // TODO
-  acquiredSkills: AcquiredSkill[] // TODO
+  monsterId: MonsterId
 }): Battler {
   const monsterData = loadMonsterData(data.monsterId)
   return {
@@ -46,23 +44,22 @@ export function buildEnemyBattler(data: {
     formationOrder: data.formationOrder,
     controllable: false,
     displayName: monsterData.displayName,
-    life: { val: data.lifeValue, max: data.lifeValue },
-    skills: data.acquiredSkills.map(as => buildBattlerSkill(as.skillId, as.lv))
+    life: { val: monsterData.life, max: monsterData.life },
+    skills: monsterData.skills.map(as =>
+      buildBattlerSkill((as.skillId: any), as.lv)
+    )
   }
 }
 
 export function buildEnemyBattlers(
   enemies: {
-    monsterId: MonsterId,
-    lifeValue: number,
-    acquiredSkills: AcquiredSkill[]
+    monsterId: MonsterId
   }[]
 ): Battler[] {
-  return enemies.map((actor, index) => {
+  return enemies.map((enemy, index) => {
     return buildEnemyBattler({
-      ...actor,
-      formationOrder: index,
-      lifeValue: actor.lifeValue
+      ...enemy,
+      formationOrder: index
     })
   })
 }
