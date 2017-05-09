@@ -4,10 +4,12 @@ import SkillBar from './SkillBar'
 import type { Battler, Skill } from 'domain/battle'
 
 export default function AllyBattlersDisplay({
+  skillSelector,
   allies,
   onAllyAndSkillSelect,
   isSkillInQueue
 }: {
+  skillSelector: ?{ x: number, y: number },
   allies: Battler[],
   onAllyAndSkillSelect: Battler => Skill => void,
   isSkillInQueue: Skill => boolean
@@ -31,6 +33,8 @@ export default function AllyBattlersDisplay({
           </div>
           <div style={{ flex: 1 }}>
             <SkillBar
+              skillSelector={skillSelector}
+              y={index}
               skills={ally.skills}
               onSkillSelect={onAllyAndSkillSelect(ally)}
               isSkillInQueue={isSkillInQueue}

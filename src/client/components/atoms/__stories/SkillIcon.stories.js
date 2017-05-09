@@ -15,6 +15,7 @@ storiesOf('SkillIcon', module)
 
     return (
       <SkillIcon
+        focused={false}
         skill={mockSkill}
         onClick={action('clicked')}
         inQueue={false}
@@ -31,6 +32,7 @@ storiesOf('SkillIcon', module)
 
     return (
       <SkillIcon
+        focused={false}
         skill={mockSkill}
         onClick={action('clicked')}
         inQueue={false}
@@ -47,6 +49,7 @@ storiesOf('SkillIcon', module)
 
     return (
       <SkillIcon
+        focused={false}
         skill={mockSkill}
         onClick={action('clicked')}
         inQueue={false}
@@ -64,6 +67,7 @@ storiesOf('SkillIcon', module)
     return (
       <SkillIcon
         skill={mockSkill}
+        focused={false}
         onClick={action('clicked')}
         inQueue={false}
       />
@@ -78,6 +82,28 @@ storiesOf('SkillIcon', module)
     }
 
     return (
-      <SkillIcon skill={mockSkill} onClick={action('clicked')} inQueue={true} />
+      <SkillIcon
+        skill={mockSkill}
+        onClick={action('clicked')}
+        inQueue={true}
+        focused={false}
+      />
+    )
+  })
+  .add('15/15 onFocus', () => {
+    const mockSkill = {
+      data: loadSkillData('$power-attack'),
+      id: Symbol(),
+      cooldown: { val: 15, max: 15 },
+      lv: 1
+    }
+
+    return (
+      <SkillIcon
+        skill={mockSkill}
+        onClick={action('clicked')}
+        inQueue={true}
+        focused={true}
+      />
     )
   })

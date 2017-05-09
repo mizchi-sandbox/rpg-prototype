@@ -14,6 +14,7 @@ storiesOf('BattleScene', module)
           inputQueue: [],
           loading: true,
           paused: false,
+          skillSelector: null,
           battleCommandResult: null
         }}
         dispatch={() => {
@@ -31,6 +32,7 @@ storiesOf('BattleScene', module)
           inputQueue: [],
           loading: false,
           paused: true,
+          skillSelector: null,
           battleCommandResult: null
         }}
         dispatch={() => {

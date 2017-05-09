@@ -20,10 +20,12 @@ const arcPath = (
 }
 
 export default function SkillIcon({
+  focused,
   skill,
   inQueue,
   onClick
 }: {
+  focused: boolean,
   skill: Skill,
   inQueue: boolean,
   onClick: Function
@@ -33,7 +35,13 @@ export default function SkillIcon({
   const tooltipId = `skillName${skill.data.displayName}`
   const size = 40
   return (
-    <span style={{ width: `${size}px`, height: `${size}px` }} onClick={onClick}>
+    <span
+      style={{
+        width: `${size}px`,
+        height: `${size}px`
+      }}
+      onClick={onClick}
+    >
       <Tooltip id={tooltipId} place="top" type="dark" effect="solid">
         {skill.data.displayName}
       </Tooltip>
@@ -45,6 +53,9 @@ export default function SkillIcon({
         width="40px"
         height="40px"
         viewBox="0 0 100 100"
+        style={{
+          backgroundColor: focused ? 'rgba(0, 0, 200, 0.3)' : 'transparent'
+        }}
       >
         {filled
           ? <circle

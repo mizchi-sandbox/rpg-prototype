@@ -5,6 +5,9 @@ import {
   RESET,
   RESTARTED,
   UPDATE_INPUT_QUEUE,
+  MOVE_SKILL_SELECTOR,
+  SET_SKILL_SELECTOR,
+  UNSET_SKILL_SELECTOR,
   OPEN_RESULT,
   CLOSE_RESULT
 } from '../../actions/battleActions'
@@ -14,11 +17,16 @@ import type { BattleAction } from '../../actions/battleActions'
 import type { BattleSession, Input, BattleSessionResult } from 'domain/battle'
 
 // State
+export type SkillSelector = {
+  x: number,
+  y: number
+}
 export type State = {
   battleState: ?BattleSession,
   inputQueue: Input[],
   loading: boolean,
   paused: boolean,
+  skillSelector: ?SkillSelector,
   battleCommandResult: ?BattleSessionResult
 }
 
@@ -27,6 +35,7 @@ const initialState: State = {
   paused: false,
   battleState: null,
   inputQueue: [],
+  skillSelector: { x: 0, y: 0 },
   battleCommandResult: null
 }
 
@@ -72,6 +81,31 @@ export default (
       return {
         ...session,
         inputQueue: action.payload.inputQueue
+      }
+    case SET_SKILL_SELECTOR:
+      return {
+        ...session,
+        skillSelector: action.payload
+      }
+    case UNSET_SKILL_SELECTOR:
+      return {
+        ...session,
+        skillSelector: null
+      }
+    case MOVE_SKILL_SELECTOR:
+      if (session.skillSelector) {
+        return {
+          ...session,
+          skillSelector: {
+            x: session.skillSelector.x + action.payload.dx,
+            y: session.skillSelector.x + action.payload.dy
+          }
+        }
+      } else {
+        return {
+          ...session,
+          skillSelector: { x: 0, y: 0 }
+        }
       }
     case RESET:
       return initialState

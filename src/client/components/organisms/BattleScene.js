@@ -6,7 +6,10 @@ import {
   addInputToQueue,
   requestPause,
   requestRestart,
-  requestStart
+  requestStart,
+  setSkillSelector,
+  unsetSkillSelector,
+  moveSkillSelector
 } from '../../actions/battleActions'
 import { popScene } from '../../actions/appActions'
 import Button from '../atoms/Button'
@@ -59,7 +62,7 @@ export default class BattleScene extends React.Component {
     if (!runner.battleState) {
       return <h1>Loading</h1>
     } else {
-      const { battleState, inputQueue, paused } = runner
+      const { battleState, inputQueue, paused, skillSelector } = runner
       return (
         <div
           className={css(styles.container)}
@@ -103,6 +106,7 @@ export default class BattleScene extends React.Component {
           </div>
           <div className={css(styles.allies)}>
             <AllyBattlersDisplay
+              skillSelector={skillSelector}
               allies={battleState.battlers.filter(b => b.side === 'ally')}
               isSkillInQueue={skill =>
                 inputQueue.map(input => input.skillId).includes(skill.id)}

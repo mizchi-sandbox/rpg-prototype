@@ -12,6 +12,9 @@ export const OPEN_RESULT = 'battle:open-result'
 export const CLOSE_RESULT = 'battle:close-result'
 export const ADD_INPUT_TO_QUEUE = 'battle:add-input-to-queue'
 export const UPDATE_INPUT_QUEUE = 'battle:update-input-queue'
+export const MOVE_SKILL_SELECTOR = 'battle:move-skill-selector'
+export const SET_SKILL_SELECTOR = 'battle:set-skill-selector'
+export const UNSET_SKILL_SELECTOR = 'battle:unset-skill-selector'
 export const RESET = 'battle:reset'
 export const LOG = 'battle:log'
 
@@ -23,6 +26,9 @@ export type BattleAction =
   | { type: typeof PAUSED }
   | { type: typeof RESTARTED }
   | { type: typeof RESET }
+  | { type: typeof MOVE_SKILL_SELECTOR, payload: { dx: number, dy: number } }
+  | { type: typeof SET_SKILL_SELECTOR, payload: { x: number, y: number } }
+  | { type: typeof UNSET_SKILL_SELECTOR }
   | {
       type: typeof OPEN_RESULT,
       payload: BattleSessionResult
@@ -52,6 +58,20 @@ export const requestRestart = () => ({ type: REQUEST_RESTART })
 export const paused = () => ({ type: PAUSED })
 export const restarted = () => ({ type: RESTARTED })
 export const reset = () => ({ type: RESET })
+
+// Skill Selector
+export const moveSkillSelector = (dx: number, dy: number) => ({
+  type: MOVE_SKILL_SELECTOR,
+  payload: { dx, dy }
+})
+export const setSkillSelector = (x: number, y: number) => ({
+  type: SET_SKILL_SELECTOR,
+  payload: { x, y }
+})
+export const unsetSkillSelector = () => ({
+  type: UNSET_SKILL_SELECTOR
+})
+
 export const openCommandResult = (message: string) => ({
   type: OPEN_RESULT,
   payload: {

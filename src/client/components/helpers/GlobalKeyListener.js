@@ -16,6 +16,7 @@ export default class GlobalKeyListner extends React.Component {
     const keyCode = this.props.keyCode
     this._bound = (ev: SyntheticEvent) => {
       if (ev.keyCode === keyCode) {
+        ev.preventDefault()
         this.props.handler(ev)
       }
     }
