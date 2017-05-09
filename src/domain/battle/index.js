@@ -1,5 +1,5 @@
 /* @flow */
-export type { BattleState } from './BattleState'
+export type { BattleSession } from './BattleSession'
 export type { Battler, AllyBattler, EnemyBattler } from './Battler'
 export type { Command } from './Command'
 export type { CommandResult } from './CommandResult'
@@ -8,4 +8,4 @@ export type { Input } from './Input'
 export type { Skill } from './Skill'
 
 export { createNoTargetedSkillInput } from './Input'
-export { processTurn, createBattleState, isBattleFinished } from './BattleState'
+export { processTurn, createBattleSession, isBattleFinished } from './BattleSession'

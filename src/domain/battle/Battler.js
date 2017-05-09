@@ -2,7 +2,7 @@
 import * as SkillAction from './Skill'
 import * as CommandPlanner from './CommandPlanner'
 import type { Skill } from './Skill'
-import type { BattleState } from './BattleState'
+import type { BattleSession } from './BattleSession'
 import type { Command, Input } from './index'
 import type { RangedValue } from 'domain/values/RangedValue'
 import type { MonsterData } from 'domain/master'
@@ -61,7 +61,7 @@ export function updateBattlerState(battler: Battler): Battler {
 export function planNextCommand(
   battler: Battler,
   inputs: Input[],
-  env: BattleState
+  env: BattleSession
 ): Command[] {
   let commands: Command[] = []
 

@@ -1,8 +1,8 @@
 /* @flow */
 import * as BattlerFactory from '../BattlerFactory'
-import type { BattleState } from '../BattleState'
+import type { BattleSession } from '../BattleSession'
 
-export const battleStateMock0: BattleState = Object.freeze({
+export const battleStateMock0: BattleSession = Object.freeze({
   turn: 0,
   battlers: BattlerFactory.buildAllyBattlers([
     {

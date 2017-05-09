@@ -86,7 +86,7 @@ export default class BattleScene extends React.Component {
             }}
           />
           <div className={css(styles.header)}>
-            <BattleStateController
+            <BattleSessionController
               paused={paused}
               onClickPause={_ => {
                 dispatch(requestPause())
@@ -131,7 +131,7 @@ export default class BattleScene extends React.Component {
   }
 }
 
-export function BattleStateController({
+export function BattleSessionController({
   paused,
   onClickPause,
   onClickRestart

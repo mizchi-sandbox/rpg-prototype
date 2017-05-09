@@ -1,10 +1,10 @@
 /* @flow */
-import type { BattleState } from './BattleState'
+import type { BattleSession } from './BattleSession'
 import type { CommandResult } from './CommandResult'
 
-export type Command = BattleState => CommandApplicationProgress
+export type Command = BattleSession => CommandApplicationProgress
 
 export type CommandApplicationProgress = {
-  state: BattleState,
+  state: BattleSession,
   commandResults: CommandResult[]
 }

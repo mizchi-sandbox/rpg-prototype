@@ -7,12 +7,12 @@ import type { Input } from './Input'
 import { battleStateMock0 } from './__mock/battleStateMock'
 
 // State
-export type BattleState = {
+export type BattleSession = {
   battlers: Battler[],
   turn: number
 }
 
-export function processPreUpdatePhase(state: BattleState): BattleState {
+export function processPreUpdatePhase(state: BattleSession): BattleSession {
   return {
     ...state,
     battlers: state.battlers.map(BattlerActions.updateBattlerState)
@@ -20,7 +20,7 @@ export function processPreUpdatePhase(state: BattleState): BattleState {
 }
 
 export function processPlanningPhase(
-  state: BattleState,
+  state: BattleSession,
   inputQueue: Input[]
 ): Command[] {
   return Object.freeze(
@@ -34,7 +34,7 @@ export function processPlanningPhase(
 }
 
 export function processCommandExecPhase(
-  state: BattleState,
+  state: BattleSession,
   commandQueue: Command[]
 ): CommandApplicationProgress {
   return Object.freeze(
@@ -52,7 +52,7 @@ export function processCommandExecPhase(
 }
 
 export function isBattleFinished(
-  state: BattleState
+  state: BattleSession
 ): ?{ winner: 'ally' | 'enemy' } {
   if (
     state.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
@@ -70,9 +70,9 @@ export function isBattleFinished(
 }
 
 export function processTurn(
-  state: BattleState,
+  state: BattleSession,
   inputQueue: Input[]
-): { state: BattleState, commandResults: CommandResult[] } {
+): { state: BattleSession, commandResults: CommandResult[] } {
   // update pre-actions
   const preUpdatedState = processPreUpdatePhase(state, inputQueue)
 
@@ -83,7 +83,7 @@ export function processTurn(
   return processCommandExecPhase(preUpdatedState, commandQueue)
 }
 
-export function createBattleState(): BattleState {
+export function createBattleSession(): BattleSession {
   // TODO: Return real state
   return battleStateMock0
 }

@@ -2,11 +2,11 @@
 import { combineReducers } from 'redux'
 import battle from './battle'
 import app from './app'
-import type { State as BattleState } from './battle'
+import type { State as BattleSession } from './battle'
 import type { State as AppState } from './app'
 
 export type State = {
-  battle: BattleState,
+  battle: BattleSession,
   app: AppState
 }
 

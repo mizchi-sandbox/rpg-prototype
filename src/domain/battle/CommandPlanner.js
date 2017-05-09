@@ -2,13 +2,13 @@
 import planDamageOponentSingleSkill from './plans/planDamageOponentSingleSkill'
 import planDamageOponentAllSkill from './plans/planDamageOponentAllSkill'
 import planHealSelfSkill from './plans/planHealSelfSkill'
-import type { BattleState } from './BattleState'
+import type { BattleSession } from './BattleSession'
 import type { Command, CommandApplicationProgress } from './Command'
 
-type CommandPlan = (next: BattleState) => CommandApplicationProgress
+type CommandPlan = (next: BattleSession) => CommandApplicationProgress
 
 export function createCommandPlan(
-  prevEnv: BattleState,
+  prevEnv: BattleSession,
   skillId: Symbol,
   actorId: Symbol,
   plannedTargetId?: Symbol
@@ -40,7 +40,7 @@ export function createCommandPlan(
 }
 
 export function createCommand(
-  prevEnv: BattleState,
+  prevEnv: BattleSession,
   skillId: Symbol,
   actorId: Symbol,
   plannedTargetId?: Symbol

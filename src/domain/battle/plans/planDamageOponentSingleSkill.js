@@ -3,13 +3,13 @@ import * as CommandResult from '../CommandResult'
 import * as BattlerActions from '../Battler'
 import type { Battler } from '../Battler'
 import type { Skill } from '../Skill'
-import type { BattleState } from '../BattleState'
+import type { BattleSession } from '../BattleSession'
 import type { CommandApplicationProgress } from '../Command'
 import * as RangedValueAction from 'domain/values/RangedValue'
 import { pickRandom, updateIn } from 'domain/utils/arrayUtils'
 
 const handleDamageOponentSingleSkill = (
-  state: BattleState,
+  state: BattleSession,
   actor: Battler,
   skill: Skill,
   target: Battler
@@ -43,19 +43,19 @@ const handleDamageOponentSingleSkill = (
 }
 
 const planDamageOponentSingleSkill: (
-  BattleState,
+  BattleSession,
   {
     actor: Battler,
     skill: Skill,
     plannedTargetId?: Symbol
   }
-) => BattleState => CommandApplicationProgress = (env, plan) => {
+) => BattleSession => CommandApplicationProgress = (env, plan) => {
   let plannedTarget: ?Battler = null
   if (plan.plannedTargetId) {
     plannedTarget = env.battlers.find(b => b.id === plan.plannedTargetId)
   }
 
-  const defineRealTarget = (env: BattleState): ?Battler => {
+  const defineRealTarget = (env: BattleSession): ?Battler => {
     if (plannedTarget && BattlerActions.isAlive(plannedTarget)) {
       return plannedTarget
     } else {
@@ -68,7 +68,7 @@ const planDamageOponentSingleSkill: (
     }
   }
 
-  return (nextEnv: BattleState) => {
+  return (nextEnv: BattleSession) => {
     const target = defineRealTarget(nextEnv)
     if (target) {
       return handleDamageOponentSingleSkill(

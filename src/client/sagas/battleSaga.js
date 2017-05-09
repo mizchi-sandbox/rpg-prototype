@@ -2,8 +2,8 @@
 import { delay } from 'redux-saga'
 import { sync } from '../actions/battleSagaActions'
 import * as battleActions from '../actions/battleActions'
-import type { BattleState } from 'domain/battle'
-import { createBattleState, isBattleFinished, processTurn } from 'domain/battle'
+import type { BattleSession } from 'domain/battle'
+import { createBattleSession, isBattleFinished, processTurn } from 'domain/battle'
 import { call, put, race, take, takeEvery } from 'redux-saga/effects'
 import * as CommandResultActions from 'domain/battle/CommandResult'
 import type { Input, Battler, Skill } from 'domain/battle'
@@ -44,7 +44,7 @@ function* start(_action: any) {
   // Use wait mode
   waitMode = location.search.indexOf('wait') > -1
 
-  let state: BattleState = createBattleState()
+  let state: BattleSession = createBattleSession()
 
   // Sync first
   yield put(sync(state))

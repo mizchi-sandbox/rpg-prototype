@@ -1,6 +1,6 @@
 ## Battle
 
-- createBattleStateFromSave
+- createBattleSessionFromSave
 - DAMAGE_OPONENT_SINGLE_TARGET
 - DAMAGE_OPPONENT_ALL
 - HEAL_SELF

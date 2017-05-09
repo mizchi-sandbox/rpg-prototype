@@ -3,13 +3,13 @@ import * as CommandResult from '../CommandResult'
 import * as BattlerActions from '../Battler'
 import type { Battler } from '../Battler'
 import type { Skill } from '../Skill'
-import type { BattleState } from '../BattleState'
+import type { BattleSession } from '../BattleSession'
 import type { CommandApplicationProgress } from '../Command'
 import * as RangedValueAction from 'domain/values/RangedValue'
 import { updateIn } from 'domain/utils/arrayUtils'
 
 const handleHealSelfSkill = (
-  state: BattleState,
+  state: BattleSession,
   actor: Battler,
   skill: Skill
 ): CommandApplicationProgress => {
@@ -42,13 +42,13 @@ const handleHealSelfSkill = (
 }
 
 const planHealSelfSkill: (
-  BattleState,
+  BattleSession,
   {
     actor: Battler,
     skill: Skill
   }
-) => BattleState => CommandApplicationProgress = (_env, plan) => {
-  return (nextEnv: BattleState) => {
+) => BattleSession => CommandApplicationProgress = (_env, plan) => {
+  return (nextEnv: BattleSession) => {
     const targets = nextEnv.battlers.filter(b => {
       return b.side !== plan.actor.side && BattlerActions.isTargetable(b)
     })

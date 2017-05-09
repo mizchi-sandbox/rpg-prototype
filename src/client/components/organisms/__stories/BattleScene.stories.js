@@ -2,7 +2,7 @@
 import React from 'react'
 import { action, storiesOf } from '@kadira/storybook'
 import BattleScene from '../BattleScene'
-import { createBattleState } from 'domain/battle/BattleState'
+import { createBattleSession } from 'domain/battle/BattleSession'
 
 storiesOf('BattleScene', module)
   .add('Loading', () => {
@@ -27,7 +27,7 @@ storiesOf('BattleScene', module)
       <BattleScene
         log={[]}
         runner={{
-          battleState: createBattleState(),
+          battleState: createBattleSession(),
           inputQueue: [],
           loading: false,
           paused: true,

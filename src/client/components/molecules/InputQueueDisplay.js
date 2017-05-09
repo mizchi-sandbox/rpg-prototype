@@ -1,13 +1,13 @@
 /* @flow */
 import React from 'react'
-import type { Input, BattleState } from 'domain/battle'
+import type { Input, BattleSession } from 'domain/battle'
 
 export default function InputQueueDisplay({
   inputQueue,
   battleState
 }: {
   inputQueue: Input[],
-  battleState: BattleState
+  battleState: BattleSession
 }) {
   return (
     <div>

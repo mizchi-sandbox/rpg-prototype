@@ -11,11 +11,11 @@ import {
 import type { BattleSagaAction } from '../../actions/battleSagaActions'
 import { SYNC } from '../../actions/battleSagaActions'
 import type { BattleAction } from '../../actions/battleActions'
-import type { BattleState, Input, BattleResult } from 'domain/battle'
+import type { BattleSession, Input, BattleResult } from 'domain/battle'
 
 // State
 export type State = {
-  battleState: ?BattleState,
+  battleState: ?BattleSession,
   inputQueue: Input[],
   loading: boolean,
   paused: boolean,
