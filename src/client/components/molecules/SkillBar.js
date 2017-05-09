@@ -5,13 +5,13 @@ import SkillIcon from '../atoms/SkillIcon'
 import type { Skill } from 'domain/battle'
 
 export default function SkillBar({
-  skillSelector,
+  skillSelectCursor,
   y,
   skills,
   onSkillSelect,
   isSkillInQueue
 }: {
-  skillSelector: ?{ x: number, y: number },
+  skillSelectCursor: ?{ x: number, y: number },
   y: number,
   skills: Skill[],
   onSkillSelect: Skill => void,
@@ -22,7 +22,7 @@ export default function SkillBar({
       {skills.map((skill, index) => {
         const x = index
         const focused: boolean =
-          !!skillSelector && skillSelector.x === x && skillSelector.y === y
+          !!skillSelectCursor && skillSelectCursor.x === x && skillSelectCursor.y === y
         return (
           <div key={index}>
             <span className={css(styles.skillSlot)}>

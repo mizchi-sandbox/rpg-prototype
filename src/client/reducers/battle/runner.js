@@ -14,7 +14,12 @@ import {
 import type { BattleSagaAction } from '../../actions/battleSagaActions'
 import { SYNC } from '../../actions/battleSagaActions'
 import type { BattleAction } from '../../actions/battleActions'
-import type { BattleSession, Input, BattleSessionResult } from 'domain/battle'
+import type {
+  BattleSession,
+  Input,
+  BattleSessionResult,
+  Battler
+} from 'domain/battle'
 
 // State
 export type SkillSelector = {
@@ -26,7 +31,7 @@ export type State = {
   inputQueue: Input[],
   loading: boolean,
   paused: boolean,
-  skillSelector: ?SkillSelector,
+  skillSelectCursor: ?SkillSelector,
   battleCommandResult: ?BattleSessionResult
 }
 
@@ -35,7 +40,7 @@ const initialState: State = {
   paused: false,
   battleState: null,
   inputQueue: [],
-  skillSelector: { x: 0, y: 0 },
+  skillSelectCursor: { x: 0, y: 0 },
   battleCommandResult: null
 }
 
@@ -85,31 +90,55 @@ export default (
     case SET_SKILL_SELECTOR:
       return {
         ...session,
-        skillSelector: action.payload
+        skillSelectCursor: action.payload
       }
     case UNSET_SKILL_SELECTOR:
       return {
         ...session,
-        skillSelector: null
+        skillSelectCursor: null
       }
     case MOVE_SKILL_SELECTOR:
-      if (session.skillSelector) {
+      if (session.skillSelectCursor && session.battleState) {
+        const { skillSelectCursor, battleState } = session
+        const allies = battleState.battlers.filter(b => b.side === 'ally')
+        const { x, y } = skillSelectCursor
+        const { dx, dy } = action.payload
         return {
           ...session,
-          skillSelector: {
-            x: session.skillSelector.x + action.payload.dx,
-            y: session.skillSelector.x + action.payload.dy
-          }
+          skillSelectCursor: moveSkillCursorWithOverflow(allies, x + dx, y + dy)
         }
       } else {
         return {
           ...session,
-          skillSelector: { x: 0, y: 0 }
+          skillSelectCursor: { x: 0, y: 0 }
         }
       }
     case RESET:
       return initialState
     default:
       return session
+  }
+}
+
+const { abs } = Math
+function moveSkillCursorWithOverflow(
+  battlers: Battler[],
+  x: number,
+  y: number
+): { x: number, y: number } {
+  // select battler as y axis
+  const my = battlers.length
+  let ry = y < my ? y : abs(y % my)
+  ry = ry < 0 ? my - 1 : ry
+  const b = battlers[ry]
+
+  // select skill as x axis
+  const mx = b.skills.length
+  let rx = x < mx ? x : abs(x % mx)
+  rx = rx < 0 ? mx - 1 : rx
+  console.log(x, y, rx, ry)
+  return {
+    x: rx,
+    y: ry
   }
 }

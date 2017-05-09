@@ -62,7 +62,7 @@ export default class BattleScene extends React.Component {
     if (!runner.battleState) {
       return <h1>Loading</h1>
     } else {
-      const { battleState, inputQueue, paused, skillSelector } = runner
+      const { battleState, inputQueue, paused, skillSelectCursor } = runner
       return (
         <div
           className={css(styles.container)}
@@ -88,6 +88,48 @@ export default class BattleScene extends React.Component {
               }
             }}
           />
+          <GlobalKeyListner
+            keyCode={38} // up
+            handler={_ => {
+              dispatch(moveSkillSelector(0, -1))
+            }}
+          />
+          <GlobalKeyListner
+            keyCode={40} // down
+            handler={_ => {
+              dispatch(moveSkillSelector(0, +1))
+            }}
+          />
+          <GlobalKeyListner
+            keyCode={37} // left
+            handler={_ => {
+              dispatch(moveSkillSelector(-1, 0))
+            }}
+          />
+          <GlobalKeyListner
+            keyCode={39} // right
+            handler={_ => {
+              dispatch(moveSkillSelector(+1, 0))
+            }}
+          />
+          <GlobalKeyListner
+            keyCode={13} // enter
+            handler={_ => {
+              if (skillSelectCursor) {
+                const { x, y } = skillSelectCursor
+                const ally = battleState.battlers[y]
+                if (ally) {
+                  const skill = ally.skills[x]
+                  if (
+                    skill.cooldown.val >= skill.cooldown.max &&
+                    !inputQueue.map(iq => iq.skillId).includes(skill.id)
+                  ) {
+                    dispatch(addInputToQueue(ally.id, skill.id))
+                  }
+                }
+              }
+            }}
+          />
           <div className={css(styles.header)}>
             <BattleSessionController
               paused={paused}
@@ -106,7 +148,7 @@ export default class BattleScene extends React.Component {
           </div>
           <div className={css(styles.allies)}>
             <AllyBattlersDisplay
-              skillSelector={skillSelector}
+              skillSelectCursor={skillSelectCursor}
               allies={battleState.battlers.filter(b => b.side === 'ally')}
               isSkillInQueue={skill =>
                 inputQueue.map(input => input.skillId).includes(skill.id)}
