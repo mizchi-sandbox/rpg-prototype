@@ -2,16 +2,16 @@
 import React from 'react'
 import { StyleSheet, css } from 'aphrodite'
 import SkillIcon from '../atoms/SkillIcon'
-import type { BattlerSkill } from 'domain/battle'
+import type { Skill } from 'domain/battle'
 
 export default function SkillBar({
   skills,
   onSkillSelect,
   isSkillInQueue
 }: {
-  skills: BattlerSkill[],
-  onSkillSelect: BattlerSkill => void,
-  isSkillInQueue: BattlerSkill => boolean
+  skills: Skill[],
+  onSkillSelect: Skill => void,
+  isSkillInQueue: Skill => boolean
 }) {
   return (
     <span className={css(styles.container)}>

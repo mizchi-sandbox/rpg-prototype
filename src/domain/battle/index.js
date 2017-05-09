@@ -5,7 +5,7 @@ export type { Command } from './Command'
 export type { CommandResult } from './CommandResult'
 export type { BattleResult } from './BattleResult'
 export type { Input } from './Input'
-export type { BattlerSkill } from './BattlerSkill'
+export type { Skill } from './Skill'
 
 export { createNoTargetedSkillInput } from './Input'
 export { processTurn, createBattleState, isBattleFinished } from './BattleState'

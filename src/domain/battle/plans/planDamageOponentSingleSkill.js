@@ -2,7 +2,7 @@
 import * as CommandResult from '../CommandResult'
 import * as BattlerActions from '../Battler'
 import type { Battler } from '../Battler'
-import type { BattlerSkill } from '../BattlerSkill'
+import type { Skill } from '../Skill'
 import type { BattleState } from '../BattleState'
 import type { CommandApplicationProgress } from '../Command'
 import * as RangedValueAction from 'domain/values/RangedValue'
@@ -11,7 +11,7 @@ import { pickRandom, updateIn } from 'domain/utils/arrayUtils'
 const handleDamageOponentSingleSkill = (
   state: BattleState,
   actor: Battler,
-  skill: BattlerSkill,
+  skill: Skill,
   target: Battler
 ): CommandApplicationProgress => {
   // TODO: Calc damage by master
@@ -46,7 +46,7 @@ const planDamageOponentSingleSkill: (
   BattleState,
   {
     actor: Battler,
-    skill: BattlerSkill,
+    skill: Skill,
     plannedTargetId?: Symbol
   }
 ) => BattleState => CommandApplicationProgress = (env, plan) => {

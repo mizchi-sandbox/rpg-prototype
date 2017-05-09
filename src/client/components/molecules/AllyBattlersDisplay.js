@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import SkillBar from './SkillBar'
-import type { Battler, BattlerSkill } from 'domain/battle'
+import type { Battler, Skill } from 'domain/battle'
 
 export default function AllyBattlersDisplay({
   allies,
@@ -9,8 +9,8 @@ export default function AllyBattlersDisplay({
   isSkillInQueue
 }: {
   allies: Battler[],
-  onAllyAndSkillSelect: Battler => BattlerSkill => void,
-  isSkillInQueue: BattlerSkill => boolean
+  onAllyAndSkillSelect: Battler => Skill => void,
+  isSkillInQueue: Skill => boolean
 }) {
   return (
     <div>

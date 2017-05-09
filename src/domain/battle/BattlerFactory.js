@@ -1,6 +1,6 @@
 /* @flow */
 import { loadMonsterData } from '../master'
-import { buildBattlerSkill } from './BattlerSkill'
+import { buildSkill } from './Skill'
 import type { Battler } from './Battler'
 import type { MonsterId } from 'domain/master'
 import type { Actor, AcquiredSkill } from 'domain/entities/Actor'
@@ -19,7 +19,7 @@ export function buildAllyBattler(data: {
     controllable: data.controllable,
     displayName: data.displayName,
     life: { val: data.lifeValue, max: data.lifeValue },
-    skills: data.acquiredSkills.map(as => buildBattlerSkill(as.skillId, as.lv))
+    skills: data.acquiredSkills.map(as => buildSkill(as.skillId, as.lv))
   }
 }
 
@@ -46,7 +46,7 @@ export function buildEnemyBattler(data: {
     displayName: monsterData.displayName,
     life: { val: monsterData.life, max: monsterData.life },
     skills: monsterData.skills.map(as =>
-      buildBattlerSkill((as.skillId: any), as.lv)
+      buildSkill((as.skillId: any), as.lv)
     )
   }
 }

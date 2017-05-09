@@ -6,7 +6,7 @@ import type { BattleState } from 'domain/battle'
 import { createBattleState, isBattleFinished, processTurn } from 'domain/battle'
 import { call, put, race, take, takeEvery } from 'redux-saga/effects'
 import * as CommandResultActions from 'domain/battle/CommandResult'
-import type { Input, Battler, BattlerSkill } from 'domain/battle'
+import type { Input, Battler, Skill } from 'domain/battle'
 
 let _inputQueue: Input[] = []
 
@@ -25,7 +25,7 @@ function* addInputToQueue(action: any) {
   yield put(battleActions.updateInputQueue(_inputQueue))
 }
 
-export function findActiveSkill(battlers: Battler[]): ?BattlerSkill {
+export function findActiveSkill(battlers: Battler[]): ?Skill {
   for (const b of battlers) {
     if (b.controllable) {
       const executableSkill = b.skills.find(

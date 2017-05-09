@@ -2,7 +2,7 @@
 import * as CommandResult from '../CommandResult'
 import * as BattlerActions from '../Battler'
 import type { Battler } from '../Battler'
-import type { BattlerSkill } from '../BattlerSkill'
+import type { Skill } from '../Skill'
 import type { BattleState } from '../BattleState'
 import type { CommandApplicationProgress } from '../Command'
 import * as RangedValueAction from 'domain/values/RangedValue'
@@ -11,7 +11,7 @@ import { updateIn } from 'domain/utils/arrayUtils'
 const handleHealSelfSkill = (
   state: BattleState,
   actor: Battler,
-  skill: BattlerSkill
+  skill: Skill
 ): CommandApplicationProgress => {
   // TODO: Calc damage by master
   const healAmmount = 5
@@ -45,7 +45,7 @@ const planHealSelfSkill: (
   BattleState,
   {
     actor: Battler,
-    skill: BattlerSkill
+    skill: Skill
   }
 ) => BattleState => CommandApplicationProgress = (_env, plan) => {
   return (nextEnv: BattleState) => {

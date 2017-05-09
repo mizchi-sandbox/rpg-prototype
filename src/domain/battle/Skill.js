@@ -4,19 +4,19 @@ import type { SkillData, SkillId } from 'domain/master'
 import { increment } from 'domain/values/RangedValue'
 import { loadSkillData } from 'domain/master'
 
-export type BattlerSkill = {
+export type Skill = {
   id: Symbol, // FIXIT: can not seriarize to send
   data: SkillData,
   lv: number,
   cooldown: RangedValue
 }
 
-export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {
+export function buildSkill(id: SkillId, lv: number): Skill {
   const data = loadSkillData(id)
   return Object.freeze({
     data,
     lv,
-    id: Symbol('BattlerSkill'),
+    id: Symbol('Skill'),
     cooldown: {
       val: 0,
       max: data.cooldownCount
@@ -24,14 +24,14 @@ export function buildBattlerSkill(id: SkillId, lv: number): BattlerSkill {
   })
 }
 
-export function updateCooldownCount(skill: BattlerSkill): BattlerSkill {
+export function updateCooldownCount(skill: Skill): Skill {
   return Object.freeze({
     ...skill,
     cooldown: increment(skill.cooldown)
   })
 }
 
-export function resetCooldownCount(skill: BattlerSkill): BattlerSkill {
+export function resetCooldownCount(skill: Skill): Skill {
   return Object.freeze({
     ...skill,
     cooldown: {
@@ -41,6 +41,6 @@ export function resetCooldownCount(skill: BattlerSkill): BattlerSkill {
   })
 }
 
-export function isExecutable(skill: BattlerSkill): boolean {
+export function isExecutable(skill: Skill): boolean {
   return skill.cooldown.val >= skill.cooldown.max
 }

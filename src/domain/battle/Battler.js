@@ -1,7 +1,7 @@
 /* @flow */
-import * as BattlerSkillAction from './BattlerSkill'
+import * as SkillAction from './Skill'
 import * as CommandPlanner from './CommandPlanner'
-import type { BattlerSkill } from './BattlerSkill'
+import type { Skill } from './Skill'
 import type { BattleState } from './BattleState'
 import type { Command, Input } from './index'
 import type { RangedValue } from 'domain/values/RangedValue'
@@ -15,7 +15,7 @@ export type Battler = {
   displayName: string,
   life: RangedValue,
   monsterData?: MonsterData,
-  skills: BattlerSkill[]
+  skills: Skill[]
 }
 
 export type AllyBattler = Battler & {
@@ -42,7 +42,7 @@ export const consumeSkillCooldown: (Battler, Symbol) => Battler = (
     ...battler,
     skills: battler.skills.map(s => {
       if (s.id === skillId) {
-        return BattlerSkillAction.resetCooldownCount(s)
+        return SkillAction.resetCooldownCount(s)
       } else {
         return s
       }
@@ -53,7 +53,7 @@ export const consumeSkillCooldown: (Battler, Symbol) => Battler = (
 export function updateBattlerState(battler: Battler): Battler {
   // update cooldown
   const updatedSkills = isAlive(battler)
-    ? battler.skills.map(s => BattlerSkillAction.updateCooldownCount(s))
+    ? battler.skills.map(s => SkillAction.updateCooldownCount(s))
     : battler.skills
   return { ...battler, skills: updatedSkills }
 }
@@ -72,7 +72,7 @@ export function planNextCommand(
         commands = battler.skills.reduce((commands, skill) => {
           if (
             skill.id === input.skillId &&
-            BattlerSkillAction.isExecutable(skill)
+            SkillAction.isExecutable(skill)
           ) {
             return commands.concat([
               CommandPlanner.createCommand(env, input.skillId, battler.id)
@@ -87,7 +87,7 @@ export function planNextCommand(
     // AI or BOT
     // Search executable skill
     const executableSkill = battler.skills.find(s =>
-      BattlerSkillAction.isExecutable(s)
+      SkillAction.isExecutable(s)
     )
     if (executableSkill) {
       commands = battler.skills.reduce((commands, skill) => {

@@ -2,7 +2,7 @@
 import React from 'react'
 // import { StyleSheet, css } from 'aphrodite'
 import Tooltip from 'react-tooltip'
-import type { BattlerSkill } from 'domain/battle'
+import type { Skill } from 'domain/battle'
 
 const { sin, cos, PI } = Math
 const arcPath = (
@@ -24,7 +24,7 @@ export default function SkillIcon({
   inQueue,
   onClick
 }: {
-  skill: BattlerSkill,
+  skill: Skill,
   inQueue: boolean,
   onClick: Function
 }) {
