@@ -50,22 +50,26 @@ export const consumeSkillCooldown: (Battler, Symbol) => Battler = (
   }
 }
 
-export function updateBattler(
-  battler: Battler,
-  inputs: Input[],
-  env: BattleState
-): { battler: Battler, commands: Command[] } {
-  let commands: Command[] = []
-
+export function updateBattlerState(battler: Battler): Battler {
+  // update cooldown
   const updatedSkills = isAlive(battler)
     ? battler.skills.map(s => BattlerSkillAction.updateCooldownCount(s))
     : battler.skills
+  return { ...battler, skills: updatedSkills }
+}
+
+export function planNextCommand(
+  battler: Battler,
+  inputs: Input[],
+  env: BattleState
+): Command[] {
+  let commands: Command[] = []
 
   if (battler.controllable) {
     // Player
     if (inputs.length) {
       for (const input of inputs) {
-        commands = updatedSkills.reduce((commands, skill) => {
+        commands = battler.skills.reduce((commands, skill) => {
           if (
             skill.id === input.skillId &&
             BattlerSkillAction.isExecutable(skill)
@@ -82,11 +86,11 @@ export function updateBattler(
   } else {
     // AI or BOT
     // Search executable skill
-    const executableSkill = updatedSkills.find(s =>
+    const executableSkill = battler.skills.find(s =>
       BattlerSkillAction.isExecutable(s)
     )
     if (executableSkill) {
-      commands = updatedSkills.reduce((commands, skill) => {
+      commands = battler.skills.reduce((commands, skill) => {
         if (skill.id === executableSkill.id) {
           return commands.concat([
             BattlePlanner.createCommand(env, skill.id, battler.id)
@@ -97,11 +101,5 @@ export function updateBattler(
       }, [])
     }
   }
-  return Object.freeze({
-    battler: {
-      ...battler,
-      skills: updatedSkills
-    },
-    commands
-  })
+  return commands
 }

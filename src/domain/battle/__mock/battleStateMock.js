@@ -4,7 +4,6 @@ import type { BattleState } from '../BattleState'
 
 export const battleStateMock0: BattleState = Object.freeze({
   turn: 0,
-  inputQueue: [],
   battlers: BattlerFactory.buildAllyBattlers([
     {
       id: '$player1',

@@ -1,5 +1,5 @@
 /* @flow */
-import { updateBattler } from './Battler'
+import * as BattlerActions from './Battler'
 import type { Battler } from './Battler'
 import type { Command, CommandApplicationProgress } from './Command'
 import type { CommandResult } from './CommandResult'
@@ -12,28 +12,28 @@ export type BattleState = {
   turn: number
 }
 
-export function processDecisionPhase(
+export function processPreUpdatePhase(state: BattleState): BattleState {
+  return {
+    ...state,
+    battlers: state.battlers.map(BattlerActions.updateBattlerState)
+  }
+}
+
+export function processPlanningPhase(
   state: BattleState,
   inputQueue: Input[]
-): { state: BattleState, commandQueue: Command[] } {
-  let commandQueue: Command[] = []
-  // process battlers
-  const battlers = state.battlers.map(battler => {
-    const inputs = inputQueue.filter(input => input.battlerId === battler.id)
-    const { battler: nextBattler, commands } = updateBattler(
-      battler,
-      inputs,
-      state
-    )
-    commandQueue = commandQueue.concat(commands)
-    return nextBattler
-  })
-  return Object.freeze({
-    state: { ...state, battlers },
-    commandQueue
-  })
+): Command[] {
+  return Object.freeze(
+    state.battlers.reduce((commands, battler) => {
+      const inputs = inputQueue.filter(input => input.battlerId === battler.id)
+      return commands.concat(
+        BattlerActions.planNextCommand(battler, inputs, state)
+      )
+    }, [])
+  )
 }
-export function processCommandPhase(
+
+export function processCommandExecPhase(
   state: BattleState,
   commandQueue: Command[]
 ): CommandApplicationProgress {
@@ -73,24 +73,14 @@ export function processTurn(
   state: BattleState,
   inputQueue: Input[]
 ): { state: BattleState, commandResults: CommandResult[] } {
-  // decide command
-  const { state: decisionedState, commandQueue } = processDecisionPhase(
-    state,
-    inputQueue
-  )
-  // exec command
-  const { state: resultedState, commandResults } = processCommandPhase(
-    decisionedState,
-    commandQueue
-  )
-  return Object.freeze({
-    state: {
-      ...resultedState,
-      turn: state.turn + 1,
-      inputQueue: []
-    },
-    commandResults
-  })
+  // update pre-actions
+  const preUpdatedState = processPreUpdatePhase(state, inputQueue)
+
+  // create commands
+  const commandQueue = processPlanningPhase(preUpdatedState, inputQueue)
+
+  // exec commands
+  return processCommandExecPhase(preUpdatedState, commandQueue)
 }
 
 export function createBattleState(): BattleState {
