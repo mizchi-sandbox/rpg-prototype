@@ -22,7 +22,9 @@ export default function SkillBar({
       {skills.map((skill, index) => {
         const x = index
         const focused: boolean =
-          !!skillSelectCursor && skillSelectCursor.x === x && skillSelectCursor.y === y
+          !!skillSelectCursor &&
+          skillSelectCursor.x === x &&
+          skillSelectCursor.y === y
         return (
           <div key={index}>
             <span className={css(styles.skillSlot)}>

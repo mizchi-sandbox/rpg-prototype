@@ -7,8 +7,8 @@ import {
   requestPause,
   requestRestart,
   requestStart,
-  setSkillSelector,
-  unsetSkillSelector,
+  // setSkillSelector,
+  // unsetSkillSelector,
   moveSkillSelector
 } from '../../actions/battleActions'
 import { popScene } from '../../actions/appActions'
