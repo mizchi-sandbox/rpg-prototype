@@ -9,7 +9,8 @@ import {
   requestStart,
   // setSkillSelector,
   // unsetSkillSelector,
-  moveSkillSelector
+  moveSkillSelector,
+  closeBattleSessionResult
 } from '../../actions/battleActions'
 import { popScene } from '../../actions/appActions'
 import Button from '../atoms/Button'
@@ -74,7 +75,7 @@ export default class BattleScene extends React.Component {
             isOpen={!!runner.battleCommandResult}
             result={runner.battleCommandResult}
             onClickClose={_ev => {
-              // dispatch(closeCommandResult())
+              dispatch(closeBattleSessionResult())
               dispatch(popScene())
             }}
           />

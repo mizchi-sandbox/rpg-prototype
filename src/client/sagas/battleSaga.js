@@ -111,9 +111,10 @@ function* start(_action: any) {
     const finshed = isBattleFinished(session)
     if (finshed) {
       yield put(sync(session))
-      // yield put(battleActions.log(`${finshed.winner} win.`))
-      yield put(battleActions.openCommandResult(`${finshed.winner} win.`))
-      break
+      yield put(battleActions.openBattleSessionResult(`${finshed.winner} win.`))
+      yield take(battleActions.CLOSE_RESULT)
+      return
+      // break
     }
 
     // Sync session by each frame on active

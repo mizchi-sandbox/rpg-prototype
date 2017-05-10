@@ -72,13 +72,13 @@ export const unsetSkillSelector = () => ({
   type: UNSET_SKILL_SELECTOR
 })
 
-export const openCommandResult = (message: string) => ({
+export const openBattleSessionResult = (message: string) => ({
   type: OPEN_RESULT,
   payload: {
     message
   }
 })
-export const closeCommandResult = () => ({ type: CLOSE_RESULT })
+export const closeBattleSessionResult = () => ({ type: CLOSE_RESULT })
 export const log = (message: string) => ({ type: LOG, payload: message })
 export const addInputToQueue = (
   battlerId: Symbol,

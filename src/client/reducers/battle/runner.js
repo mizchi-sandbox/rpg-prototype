@@ -35,14 +35,14 @@ export type State = {
   battleCommandResult: ?BattleSessionResult
 }
 
-const initialState: State = {
+const initialState: State = Object.freeze({
   loading: true,
   paused: false,
   battleSession: null,
   inputQueue: [],
   skillSelectCursor: { x: 0, y: 0 },
   battleCommandResult: null
-}
+})
 
 // Reducer
 export default (
@@ -78,10 +78,7 @@ export default (
         battleCommandResult: action.payload
       }
     case CLOSE_RESULT:
-      return {
-        ...state,
-        battleCommandResult: null
-      }
+      return initialState
     case UPDATE_INPUT_QUEUE:
       return {
         ...state,
