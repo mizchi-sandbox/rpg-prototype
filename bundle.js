@@ -2504,7 +2504,7 @@ module.exports = g;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateInputQueue = exports.addInputToQueue = exports.log = exports.closeCommandResult = exports.openCommandResult = exports.unsetSkillSelector = exports.setSkillSelector = exports.moveSkillSelector = exports.reset = exports.restarted = exports.paused = exports.requestRestart = exports.requestPause = exports.requestStart = exports.LOG = exports.RESET = exports.UNSET_SKILL_SELECTOR = exports.SET_SKILL_SELECTOR = exports.MOVE_SKILL_SELECTOR = exports.UPDATE_INPUT_QUEUE = exports.ADD_INPUT_TO_QUEUE = exports.CLOSE_RESULT = exports.OPEN_RESULT = exports.RESTARTED = exports.PAUSED = exports.REQUEST_RESTART = exports.REQUEST_PAUSE = exports.REQUEST_START = undefined;
+exports.updateInputQueue = exports.addInputToQueue = exports.log = exports.closeBattleSessionResult = exports.openBattleSessionResult = exports.unsetSkillSelector = exports.setSkillSelector = exports.moveSkillSelector = exports.reset = exports.restarted = exports.paused = exports.requestRestart = exports.requestPause = exports.requestStart = exports.LOG = exports.RESET = exports.UNSET_SKILL_SELECTOR = exports.SET_SKILL_SELECTOR = exports.MOVE_SKILL_SELECTOR = exports.UPDATE_INPUT_QUEUE = exports.ADD_INPUT_TO_QUEUE = exports.EXIT_BATTLE_SESSION = exports.OPEN_BATTLE_SESSION_RESULT = exports.RESTARTED = exports.PAUSED = exports.REQUEST_RESTART = exports.REQUEST_PAUSE = exports.REQUEST_START = undefined;
 
 var _battle = __webpack_require__(207);
 
@@ -2514,8 +2514,8 @@ var REQUEST_PAUSE = exports.REQUEST_PAUSE = 'battle:request-pause';
 var REQUEST_RESTART = exports.REQUEST_RESTART = 'battle:request-restart';
 var PAUSED = exports.PAUSED = 'battle:paused';
 var RESTARTED = exports.RESTARTED = 'battle:restarted';
-var OPEN_RESULT = exports.OPEN_RESULT = 'battle:open-result';
-var CLOSE_RESULT = exports.CLOSE_RESULT = 'battle:close-result';
+var OPEN_BATTLE_SESSION_RESULT = exports.OPEN_BATTLE_SESSION_RESULT = 'battle:open-battle-session-result';
+var EXIT_BATTLE_SESSION = exports.EXIT_BATTLE_SESSION = 'battle:exit-battle-session';
 var ADD_INPUT_TO_QUEUE = exports.ADD_INPUT_TO_QUEUE = 'battle:add-input-to-queue';
 var UPDATE_INPUT_QUEUE = exports.UPDATE_INPUT_QUEUE = 'battle:update-input-queue';
 var MOVE_SKILL_SELECTOR = exports.MOVE_SKILL_SELECTOR = 'battle:move-skill-selector';
@@ -2566,16 +2566,16 @@ var unsetSkillSelector = exports.unsetSkillSelector = function unsetSkillSelecto
   };
 };
 
-var openCommandResult = exports.openCommandResult = function openCommandResult(message) {
+var openBattleSessionResult = exports.openBattleSessionResult = function openBattleSessionResult(message) {
   return {
-    type: OPEN_RESULT,
+    type: OPEN_BATTLE_SESSION_RESULT,
     payload: {
       message: message
     }
   };
 };
-var closeCommandResult = exports.closeCommandResult = function closeCommandResult() {
-  return { type: CLOSE_RESULT };
+var closeBattleSessionResult = exports.closeBattleSessionResult = function closeBattleSessionResult() {
+  return { type: EXIT_BATTLE_SESSION };
 };
 var log = exports.log = function log(message) {
   return { type: LOG, payload: message };
@@ -24475,7 +24475,7 @@ var BattleScene = function (_React$Component) {
             isOpen: !!runner.battleCommandResult,
             result: runner.battleCommandResult,
             onClickClose: function onClickClose(_ev) {
-              // dispatch(closeCommandResult())
+              dispatch((0, _battleActions.closeBattleSessionResult)());
               dispatch((0, _appActions.popScene)());
             }
           }),
@@ -24981,14 +24981,14 @@ var _battleActions = __webpack_require__(71);
 var _battleSagaActions = __webpack_require__(205);
 
 // State
-var initialState = {
+var initialState = Object.freeze({
   loading: true,
   paused: false,
   battleSession: null,
   inputQueue: [],
   skillSelectCursor: { x: 0, y: 0 },
   battleCommandResult: null
-};
+});
 
 // Reducer
 
@@ -25015,14 +25015,12 @@ exports.default = function () {
         battleSession: action.payload,
         loading: true
       });
-    case _battleActions.OPEN_RESULT:
+    case _battleActions.OPEN_BATTLE_SESSION_RESULT:
       return _extends({}, state, {
         battleCommandResult: action.payload
       });
-    case _battleActions.CLOSE_RESULT:
-      return _extends({}, state, {
-        battleCommandResult: null
-      });
+    case _battleActions.EXIT_BATTLE_SESSION:
+      return initialState;
     case _battleActions.UPDATE_INPUT_QUEUE:
       return _extends({}, state, {
         inputQueue: action.payload.inputQueue
@@ -25290,9 +25288,10 @@ function* start(_action) {
     var finshed = (0, _battle.isBattleFinished)(session);
     if (finshed) {
       yield (0, _effects.put)((0, _battleSagaActions.sync)(session));
-      // yield put(battleActions.log(`${finshed.winner} win.`))
-      yield (0, _effects.put)(battleActions.openCommandResult(finshed.winner + ' win.'));
-      break;
+      yield (0, _effects.put)(battleActions.openBattleSessionResult(finshed.winner + ' win.'));
+      yield (0, _effects.take)(battleActions.EXIT_BATTLE_SESSION);
+      return;
+      // break
     }
 
     // Sync session by each frame on active
