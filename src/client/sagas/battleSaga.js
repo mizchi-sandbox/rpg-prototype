@@ -112,7 +112,7 @@ function* start(_action: any) {
     if (finshed) {
       yield put(sync(session))
       yield put(battleActions.openBattleSessionResult(`${finshed.winner} win.`))
-      yield take(battleActions.CLOSE_RESULT)
+      yield take(battleActions.EXIT_BATTLE_SESSION)
       return
       // break
     }

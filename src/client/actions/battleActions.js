@@ -8,8 +8,8 @@ export const REQUEST_PAUSE = 'battle:request-pause'
 export const REQUEST_RESTART = 'battle:request-restart'
 export const PAUSED = 'battle:paused'
 export const RESTARTED = 'battle:restarted'
-export const OPEN_RESULT = 'battle:open-result'
-export const CLOSE_RESULT = 'battle:close-result'
+export const OPEN_BATTLE_SESSION_RESULT = 'battle:open-battle-session-result'
+export const EXIT_BATTLE_SESSION = 'battle:exit-battle-session'
 export const ADD_INPUT_TO_QUEUE = 'battle:add-input-to-queue'
 export const UPDATE_INPUT_QUEUE = 'battle:update-input-queue'
 export const MOVE_SKILL_SELECTOR = 'battle:move-skill-selector'
@@ -30,11 +30,11 @@ export type BattleAction =
   | { type: typeof SET_SKILL_SELECTOR, payload: { x: number, y: number } }
   | { type: typeof UNSET_SKILL_SELECTOR }
   | {
-      type: typeof OPEN_RESULT,
+      type: typeof OPEN_BATTLE_SESSION_RESULT,
       payload: BattleSessionResult
     }
   | {
-      type: typeof CLOSE_RESULT
+      type: typeof EXIT_BATTLE_SESSION
     }
   | { type: typeof LOG, payload: string }
   | {
@@ -73,12 +73,12 @@ export const unsetSkillSelector = () => ({
 })
 
 export const openBattleSessionResult = (message: string) => ({
-  type: OPEN_RESULT,
+  type: OPEN_BATTLE_SESSION_RESULT,
   payload: {
     message
   }
 })
-export const closeBattleSessionResult = () => ({ type: CLOSE_RESULT })
+export const closeBattleSessionResult = () => ({ type: EXIT_BATTLE_SESSION })
 export const log = (message: string) => ({ type: LOG, payload: message })
 export const addInputToQueue = (
   battlerId: Symbol,

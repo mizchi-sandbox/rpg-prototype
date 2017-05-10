@@ -8,8 +8,8 @@ import {
   MOVE_SKILL_SELECTOR,
   SET_SKILL_SELECTOR,
   UNSET_SKILL_SELECTOR,
-  OPEN_RESULT,
-  CLOSE_RESULT
+  OPEN_BATTLE_SESSION_RESULT,
+  EXIT_BATTLE_SESSION
 } from '../../actions/battleActions'
 import type { BattleSagaAction } from '../../actions/battleSagaActions'
 import { SYNC } from '../../actions/battleSagaActions'
@@ -72,12 +72,12 @@ export default (
         battleSession: action.payload,
         loading: true
       }
-    case OPEN_RESULT:
+    case OPEN_BATTLE_SESSION_RESULT:
       return {
         ...state,
         battleCommandResult: action.payload
       }
-    case CLOSE_RESULT:
+    case EXIT_BATTLE_SESSION:
       return initialState
     case UPDATE_INPUT_QUEUE:
       return {
