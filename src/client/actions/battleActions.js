@@ -1,4 +1,5 @@
 /* @flow */
+import type { PlayingSession } from 'domain/entities/PlayingSession'
 import type { Input, BattleSessionResult } from 'domain/battle'
 import { createNoTargetedSkillInput } from 'domain/battle'
 
@@ -20,7 +21,7 @@ export const LOG = 'battle:log'
 
 // Actions
 export type BattleAction =
-  | { type: typeof REQUEST_START }
+  | { type: typeof REQUEST_START, payload: { playingSession: PlayingSession } }
   | { type: typeof REQUEST_PAUSE }
   | { type: typeof REQUEST_RESTART }
   | { type: typeof PAUSED }
@@ -52,7 +53,12 @@ export type BattleAction =
     }
 
 // Action creator
-export const requestStart = () => ({ type: REQUEST_START })
+export const requestStart = (playingSession: PlayingSession) => ({
+  type: REQUEST_START,
+  payload: {
+    playingSession
+  }
+})
 export const requestPause = () => ({ type: REQUEST_PAUSE })
 export const requestRestart = () => ({ type: REQUEST_RESTART })
 export const paused = () => ({ type: PAUSED })
@@ -80,10 +86,7 @@ export const openBattleSessionResult = (message: string) => ({
 })
 export const closeBattleSessionResult = () => ({ type: EXIT_BATTLE_SESSION })
 export const log = (message: string) => ({ type: LOG, payload: message })
-export const addInputToQueue = (
-  battlerId: Symbol,
-  skillId: Symbol
-): BattleAction => {
+export const addInputToQueue = (battlerId: Symbol, skillId: Symbol) => {
   return {
     type: ADD_INPUT_TO_QUEUE,
     payload: createNoTargetedSkillInput(battlerId, skillId)

@@ -1,15 +1,33 @@
 /* @flow */
 import * as BattlerActions from './Battler'
+import * as BattlerFactory from './BattlerFactory'
 import type { Battler } from './Battler'
 import type { Command, CommandApplicationProgress } from './Command'
 import type { CommandResult } from './CommandResult'
 import type { Input } from './Input'
 import { battleStateMock0 } from './__mock/battleStateMock'
+import type { PlayingSession } from 'domain/entities/PlayingSession'
 
 // State
 export type BattleSession = {
   battlers: Battler[],
   turn: number
+}
+
+export function buildBattleSession(ps: PlayingSession): BattleSession {
+  const allies = BattlerFactory.buildAllyBattlers(ps.actors)
+  const enemies = BattlerFactory.buildEnemyBattlers([
+    {
+      monsterId: '$goblin'
+    },
+    {
+      monsterId: '$hob-goblin'
+    }
+  ])
+  return {
+    turn: 0,
+    battlers: allies.concat(enemies)
+  }
 }
 
 export function processPreUpdatePhase(session: BattleSession): BattleSession {

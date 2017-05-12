@@ -11,5 +11,6 @@ export { createNoTargetedSkillInput } from './Input'
 export {
   processTurn,
   createBattleSession,
-  isBattleFinished
+  isBattleFinished,
+  buildBattleSession
 } from './BattleSession'

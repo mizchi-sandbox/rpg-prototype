@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react'
 import Modal from 'react-modal'
+import PropTypes from 'prop-types'
 import { StyleSheet, css } from 'aphrodite'
 import {
   addInputToQueue,
@@ -53,9 +54,16 @@ export function BattleSessionResultModal(props: {
 
 export default class BattleScene extends React.Component {
   props: BattleContainerProps
+  static contextTypes = {
+    store: PropTypes.any
+  }
 
   componentDidMount() {
-    this.props.dispatch(requestStart())
+    // debugger
+    const { playingSession: { playingSession } } = this.context.store.getState()
+    if (playingSession) {
+      this.props.dispatch(requestStart(playingSession))
+    }
   }
 
   render() {

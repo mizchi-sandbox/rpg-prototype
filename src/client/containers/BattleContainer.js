@@ -2,7 +2,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BattleScene from '../components/organisms/BattleScene'
-import type { State as BattleReducerState } from '../reducers/battle'
+import type { State as BattleState } from '../reducers/battle'
 import type { State as RootReducerState } from '../reducers'
 import type { BattleAction } from '../actions/battleActions'
 import type { AppAction } from '../actions/appActions'
@@ -10,15 +10,14 @@ import type { AppAction } from '../actions/appActions'
 import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 
 export type BattleContainerAction = BattleAction | AppAction
-export type BattleContainerProps = BattleReducerState &
+export type BattleContainerProps = BattleState &
   Dispatcher<BattleContainerAction>
 
 function BattleContainer(props: BattleContainerProps) {
   return <BattleScene {...props} dispatch={props.dispatch} />
 }
 
-const mapStateToProps: RootReducerState => BattleReducerState = root =>
-  root.battle
+const mapStateToProps: RootReducerState => BattleState = root => root.battle
 
 const connector: Connector<
   {},
