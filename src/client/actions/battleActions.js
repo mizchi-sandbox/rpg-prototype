@@ -21,7 +21,10 @@ export const LOG = 'battle:log'
 
 // Actions
 export type BattleAction =
-  | { type: typeof REQUEST_START, payload: { adventureSession: AdventureSession } }
+  | {
+      type: typeof REQUEST_START,
+      payload: { adventureSession: AdventureSession }
+    }
   | { type: typeof REQUEST_PAUSE }
   | { type: typeof REQUEST_RESTART }
   | { type: typeof PAUSED }
@@ -78,11 +81,9 @@ export const unsetSkillSelector = () => ({
   type: UNSET_SKILL_SELECTOR
 })
 
-export const openBattleSessionResult = (message: string) => ({
+export const openBattleSessionResult = (result: BattleSessionResult) => ({
   type: OPEN_BATTLE_SESSION_RESULT,
-  payload: {
-    message
-  }
+  payload: result
 })
 export const closeBattleSessionResult = () => ({ type: EXIT_BATTLE_SESSION })
 export const log = (message: string) => ({ type: LOG, payload: message })

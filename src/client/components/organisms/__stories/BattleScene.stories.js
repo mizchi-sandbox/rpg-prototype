@@ -15,7 +15,7 @@ storiesOf('BattleScene', module)
           loading: true,
           paused: false,
           skillSelectCursor: null,
-          battleCommandResult: null
+          battleSessionResult: null
         }}
         dispatch={() => {
           action('clicked')
@@ -33,7 +33,7 @@ storiesOf('BattleScene', module)
           loading: false,
           paused: true,
           skillSelectCursor: null,
-          battleCommandResult: null
+          battleSessionResult: null
         }}
         dispatch={() => {
           action('clicked')

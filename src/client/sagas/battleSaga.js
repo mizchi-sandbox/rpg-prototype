@@ -51,7 +51,9 @@ function* start(action: { payload: { adventureSession: AdventureSession } }) {
 
   // let session: BattleSession = createBattleSession()
   // debugger
-  let session: BattleSession = buildBattleSession(action.payload.adventureSession)
+  let session: BattleSession = buildBattleSession(
+    action.payload.adventureSession
+  )
 
   // Sync first
   yield put(sync(session))
@@ -111,10 +113,11 @@ function* start(action: { payload: { adventureSession: AdventureSession } }) {
     }
 
     // Check finished flag
-    const finshed = isBattleFinished(session)
-    if (finshed) {
+    const result = isBattleFinished(session)
+    if (result) {
       yield put(sync(session))
-      yield put(battleActions.openBattleSessionResult(`${finshed.winner} win.`))
+      yield put(battleActions.openBattleSessionResult(result))
+      // yield put(battleActions.openBattleSessionResult(`${finshed.winner} win.`))
       yield take(battleActions.EXIT_BATTLE_SESSION)
       return
       // break

@@ -5,6 +5,7 @@ import type { Battler } from './Battler'
 import type { Command, CommandApplicationProgress } from './Command'
 import type { CommandResult } from './CommandResult'
 import type { Input } from './Input'
+import type { BattleSessionResult } from './BattleSessionResult'
 import { battleStateMock0 } from './__mock/battleStateMock'
 import type { AdventureSession } from 'domain/entities/AdventureSession'
 
@@ -69,13 +70,22 @@ export function processCommandExecPhase(
   )
 }
 
-export function isBattleFinished(
-  session: BattleSession
-): ?{ winner: 'ally' | 'enemy' } {
+export function isBattleFinished(session: BattleSession): ?BattleSessionResult {
   if (
     session.battlers.filter(b => b.side === 'enemy').every(b => b.life.val <= 0)
   ) {
-    return { winner: 'ally' }
+    return {
+      winner: 'ally',
+      rewards: {
+        resources: [
+          {
+            resourceId: '$gold',
+            resourceName: 'gold',
+            amount: 30
+          }
+        ]
+      }
+    }
   }
 
   if (

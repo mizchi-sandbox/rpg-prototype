@@ -21,11 +21,12 @@ import EnemyBattlersDisplay from '../molecules/EnemyBattlersDisplay'
 import InputQueueDisplay from '../molecules/InputQueueDisplay'
 import GlobalKeyListner from '../helpers/GlobalKeyListener'
 import type { BattleContainerProps } from '../../containers/BattleContainer'
+import type { BattleSessionResult } from 'domain/battle'
 
 export function BattleSessionResultModal(props: {
   isOpen: boolean,
   onClickClose: Function,
-  result: any
+  result: ?BattleSessionResult
 }) {
   return (
     <Modal
@@ -43,9 +44,15 @@ export function BattleSessionResultModal(props: {
       }}
       contentLabel="Modal"
     >
+      <h2>Reward</h2>
+      {props.result &&
+        props.result.winner === 'ally' &&
+        props.result.rewards.resources.map((r, index) => (
+          <p key={index}>{r.resourceName}: {r.amount}</p>
+        ))}
       {props.result &&
         <div>
-          <h1>{props.result.message}</h1>
+          <h1>{props.result.winner} win.</h1>
           <button onClick={props.onClickClose}>close</button>
         </div>}
     </Modal>
@@ -59,8 +66,9 @@ export default class BattleScene extends React.Component {
   }
 
   componentDidMount() {
-    // debugger
-    const { adventureSession: { adventureSession } } = this.context.store.getState()
+    const {
+      adventureSession: { adventureSession }
+    } = this.context.store.getState()
     if (adventureSession) {
       this.props.dispatch(requestStart(adventureSession))
     }
@@ -80,8 +88,8 @@ export default class BattleScene extends React.Component {
           }}
         >
           <BattleSessionResultModal
-            isOpen={!!runner.battleCommandResult}
-            result={runner.battleCommandResult}
+            isOpen={!!runner.battleSessionResult}
+            result={runner.battleSessionResult}
             onClickClose={_ev => {
               dispatch(closeBattleSessionResult())
               dispatch(popScene())
