@@ -6,7 +6,7 @@ import type { Command, CommandApplicationProgress } from './Command'
 import type { CommandResult } from './CommandResult'
 import type { Input } from './Input'
 import { battleStateMock0 } from './__mock/battleStateMock'
-import type { PlayingSession } from 'domain/entities/PlayingSession'
+import type { AdventureSession } from 'domain/entities/AdventureSession'
 
 // State
 export type BattleSession = {
@@ -14,7 +14,7 @@ export type BattleSession = {
   turn: number
 }
 
-export function buildBattleSession(ps: PlayingSession): BattleSession {
+export function buildBattleSession(ps: AdventureSession): BattleSession {
   const allies = BattlerFactory.buildAllyBattlers(ps.actors)
   const enemies = BattlerFactory.buildEnemyBattlers([
     {

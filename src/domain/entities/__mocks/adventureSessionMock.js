@@ -1,9 +1,9 @@
 /* @flow */
 import uuid from 'uuid'
-import type { PlayingSession } from '../PlayingSession'
+import type { AdventureSession } from '../AdventureSession'
 import { resourcesMock0 } from './resourceMock'
 
-export const playingSessionMockMinimum: PlayingSession = {
+export const adventureSessionMockMinimum: AdventureSession = {
   id: uuid(),
   resources: resourcesMock0,
   actors: [
@@ -17,7 +17,7 @@ export const playingSessionMockMinimum: PlayingSession = {
   ]
 }
 
-export const playingSessionMock0: PlayingSession = {
+export const adventureSessionMock0: AdventureSession = {
   id: uuid(),
   resources: resourcesMock0,
   actors: [

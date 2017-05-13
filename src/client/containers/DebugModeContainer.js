@@ -5,10 +5,10 @@ import DebugMode from '../components/organisms/DebugMode'
 import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 import type { State as RootState } from '../reducers'
 import type { AppAction } from '../actions/appActions'
-import type { PlayingSessionAction } from '../actions/playingSessionActions'
+import type { AdventureSessionAction } from '../actions/adventureSessionActions'
 
 export type DebugModeContainerProps = RootState &
-  Dispatcher<AppAction | PlayingSessionAction>
+  Dispatcher<AppAction | AdventureSessionAction>
 
 const mapStateToProps: RootState => RootState = root => root
 

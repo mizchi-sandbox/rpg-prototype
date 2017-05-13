@@ -1,24 +1,24 @@
 /* @flow */
-import type { PlayingSession } from 'domain/entities/PlayingSession'
+import type { AdventureSession } from 'domain/entities/AdventureSession'
 
 export const REQUEST_LOAD_PLAYING_SESSION = 'playingSession/request-loading'
 export const PLAYING_SESSION_LOADED = 'playingSession/loaded'
-export type PlayingSessionAction =
+export type AdventureSessionAction =
   | {
       type: typeof REQUEST_LOAD_PLAYING_SESSION
     }
   | {
       type: typeof PLAYING_SESSION_LOADED,
-      payload: PlayingSession
+      payload: AdventureSession
     }
 
-export function requestLoadPlayingSession() {
+export function requestLoadAdventureSession() {
   return {
     type: REQUEST_LOAD_PLAYING_SESSION
   }
 }
 
-export function loadedPlayingSession(payload: PlayingSession) {
+export function loadedAdventureSession(payload: AdventureSession) {
   return {
     type: PLAYING_SESSION_LOADED,
     payload

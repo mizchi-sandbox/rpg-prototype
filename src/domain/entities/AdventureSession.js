@@ -1,14 +1,14 @@
 /* @flow */
 import type { Actor } from './Actor'
 import type { Resource } from './Resource'
-import { playingSessionMock0 } from './__mocks/playSessionMock'
+import { adventureSessionMock0 } from './__mocks/adventureSessionMock'
 
-export type PlayingSession = {
+export type AdventureSession = {
   id: string,
   resources: Resource[],
   actors: Actor[]
 }
 
 export function load() {
-  return playingSessionMock0
+  return adventureSessionMock0
 }

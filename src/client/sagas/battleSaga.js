@@ -3,7 +3,7 @@ import { delay } from 'redux-saga'
 import { sync } from '../actions/battleSagaActions'
 import * as battleActions from '../actions/battleActions'
 import type { BattleSession } from 'domain/battle'
-import type { PlayingSession } from 'domain/entities/PlayingSession'
+import type { AdventureSession } from 'domain/entities/AdventureSession'
 import {
   isBattleFinished,
   processTurn,
@@ -45,13 +45,13 @@ export function findActiveSkill(battlers: Battler[]): ?Skill {
 }
 
 let waitMode = false
-function* start(action: { payload: { playingSession: PlayingSession } }) {
+function* start(action: { payload: { adventureSession: AdventureSession } }) {
   // Use wait mode
   waitMode = location.search.indexOf('wait') > -1
 
   // let session: BattleSession = createBattleSession()
   // debugger
-  let session: BattleSession = buildBattleSession(action.payload.playingSession)
+  let session: BattleSession = buildBattleSession(action.payload.adventureSession)
 
   // Sync first
   yield put(sync(session))

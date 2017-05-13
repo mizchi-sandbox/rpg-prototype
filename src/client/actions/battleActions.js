@@ -1,5 +1,5 @@
 /* @flow */
-import type { PlayingSession } from 'domain/entities/PlayingSession'
+import type { AdventureSession } from 'domain/entities/AdventureSession'
 import type { Input, BattleSessionResult } from 'domain/battle'
 import { createNoTargetedSkillInput } from 'domain/battle'
 
@@ -21,7 +21,7 @@ export const LOG = 'battle:log'
 
 // Actions
 export type BattleAction =
-  | { type: typeof REQUEST_START, payload: { playingSession: PlayingSession } }
+  | { type: typeof REQUEST_START, payload: { adventureSession: AdventureSession } }
   | { type: typeof REQUEST_PAUSE }
   | { type: typeof REQUEST_RESTART }
   | { type: typeof PAUSED }
@@ -53,10 +53,10 @@ export type BattleAction =
     }
 
 // Action creator
-export const requestStart = (playingSession: PlayingSession) => ({
+export const requestStart = (adventureSession: AdventureSession) => ({
   type: REQUEST_START,
   payload: {
-    playingSession
+    adventureSession
   }
 })
 export const requestPause = () => ({ type: REQUEST_PAUSE })
