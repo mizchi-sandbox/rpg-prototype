@@ -13,6 +13,10 @@ export type Scene =
       sceneId: 'debug-mode',
       sceneData: {}
     }
+  | {
+      sceneId: 'adventure',
+      sceneData: {}
+    }
 
 export type State = {
   sceneStack: Scene[]

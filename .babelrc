@@ -8,11 +8,15 @@
         "transform-regenerator"
       ]
     }],
-    "@mizchi/babel-preset"
+    "react"
   ],
   "plugins": [
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "transform-object-rest-spread",
     "react-hot-loader/babel",
     "dynamic-import-webpack",
+    ["flow-runtime", {"assert": true}],
     ["module-resolver", {
       "root": ["./src"],
       "alias": {

@@ -47,7 +47,7 @@ const planDamageOponentSingleSkill: (
   {
     actor: Battler,
     skill: Skill,
-    plannedTargetId?: Symbol
+    plannedTargetId?: string
   }
 ) => BattleSession => CommandApplicationProgress = (env, plan) => {
   let plannedTarget: ?Battler = null

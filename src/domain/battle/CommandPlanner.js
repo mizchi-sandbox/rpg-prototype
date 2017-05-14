@@ -9,9 +9,9 @@ type CommandPlan = (next: BattleSession) => CommandApplicationProgress
 
 export function createCommandPlan(
   prevEnv: BattleSession,
-  skillId: Symbol,
-  actorId: Symbol,
-  plannedTargetId?: Symbol
+  skillId: string,
+  actorId: string,
+  plannedTargetId?: string
 ): ?CommandPlan {
   const actor = prevEnv.battlers.find(b => b.id === actorId)
   const skill = actor && actor.skills.find(s => s.id === skillId)
@@ -41,9 +41,9 @@ export function createCommandPlan(
 
 export function createCommand(
   prevEnv: BattleSession,
-  skillId: Symbol,
-  actorId: Symbol,
-  plannedTargetId?: Symbol
+  skillId: string,
+  actorId: string,
+  plannedTargetId?: string
 ): Command {
   const plan = createCommandPlan(prevEnv, skillId, actorId, plannedTargetId)
   return nextEnv => {

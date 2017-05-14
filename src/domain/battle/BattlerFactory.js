@@ -1,4 +1,5 @@
 /* @flow */
+import uuid from 'uuid'
 import { loadMonsterData } from '../master'
 import { buildSkill } from './Skill'
 import type { Battler } from './Battler'
@@ -13,7 +14,7 @@ export function buildAllyBattler(data: {
   acquiredSkills: AcquiredSkill[]
 }): Battler {
   return {
-    id: Symbol('ally'),
+    id: uuid('ally'),
     side: 'ally',
     formationOrder: data.formationOrder,
     controllable: data.controllable,
@@ -39,7 +40,7 @@ export function buildEnemyBattler(data: {
   const monsterData = loadMonsterData(data.monsterId)
   return {
     monsterData,
-    id: Symbol('enemy'),
+    id: uuid('enemy'),
     side: 'enemy',
     formationOrder: data.formationOrder,
     controllable: false,

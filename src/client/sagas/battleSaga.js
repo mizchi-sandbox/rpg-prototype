@@ -1,4 +1,5 @@
 /* @flow */
+import uuid from 'uuid'
 import { delay } from 'redux-saga'
 import { sync } from '../actions/battleSagaActions'
 import * as battleActions from '../actions/battleActions'
@@ -26,7 +27,7 @@ function* addInputToQueue(action: any) {
     // Can't intercept
     return
   }
-  _inputQueue = _inputQueue.concat([{ ...action.payload, id: Symbol('input') }])
+  _inputQueue = _inputQueue.concat([{ ...action.payload, id: uuid('input') }])
   yield put(battleActions.updateInputQueue(_inputQueue))
 }
 

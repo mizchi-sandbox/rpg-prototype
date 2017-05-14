@@ -11,7 +11,7 @@ export type Battler = {
   side: 'ally' | 'enemy',
   controllable: boolean,
   formationOrder: number,
-  id: Symbol,
+  id: string,
   displayName: string,
   life: RangedValue,
   monsterData?: MonsterData,
@@ -34,7 +34,7 @@ export const isTargetable = (battler: Battler): boolean => {
   return isAlive(battler)
 }
 
-export const consumeSkillCooldown: (Battler, Symbol) => Battler = (
+export const consumeSkillCooldown: (Battler, string) => Battler = (
   battler,
   skillId
 ) => {

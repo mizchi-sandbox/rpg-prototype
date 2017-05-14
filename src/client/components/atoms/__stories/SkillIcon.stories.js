@@ -1,4 +1,5 @@
 /* @flow */
+import uuid from 'uuid'
 import React from 'react'
 import { action, storiesOf } from '@kadira/storybook'
 import SkillIcon from '../SkillIcon'
@@ -8,7 +9,7 @@ storiesOf('SkillIcon', module)
   .add('0/15', () => {
     const mockSkill = {
       data: loadSkillData('$power-attack'),
-      id: Symbol(),
+      id: uuid(),
       cooldown: { val: 0, max: 15 },
       lv: 1
     }
@@ -25,7 +26,7 @@ storiesOf('SkillIcon', module)
   .add('5/15', () => {
     const mockSkill = {
       data: loadSkillData('$power-attack'),
-      id: Symbol(),
+      id: uuid(),
       cooldown: { val: 5, max: 15 },
       lv: 1
     }
@@ -42,7 +43,7 @@ storiesOf('SkillIcon', module)
   .add('10/15', () => {
     const mockSkill = {
       data: loadSkillData('$power-attack'),
-      id: Symbol(),
+      id: uuid(),
       cooldown: { val: 9, max: 15 },
       lv: 1
     }
@@ -59,7 +60,7 @@ storiesOf('SkillIcon', module)
   .add('15/15', () => {
     const mockSkill = {
       data: loadSkillData('$power-attack'),
-      id: Symbol(),
+      id: uuid(),
       cooldown: { val: 15, max: 15 },
       lv: 1
     }
@@ -76,7 +77,7 @@ storiesOf('SkillIcon', module)
   .add('15/15 inQueue', () => {
     const mockSkill = {
       data: loadSkillData('$power-attack'),
-      id: Symbol(),
+      id: uuid(),
       cooldown: { val: 15, max: 15 },
       lv: 1
     }
@@ -93,7 +94,7 @@ storiesOf('SkillIcon', module)
   .add('15/15 onFocus', () => {
     const mockSkill = {
       data: loadSkillData('$power-attack'),
-      id: Symbol(),
+      id: uuid(),
       cooldown: { val: 15, max: 15 },
       lv: 1
     }

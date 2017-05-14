@@ -6,6 +6,7 @@ import * as adventureActions from '../../actions/adventureActions'
 import type {
   AdventureContainerProps
 } from '../../containers/AdventureContainer'
+import LogBoard from '../molecules/LogBoard'
 
 export default lifecycle({
   componentDidMount() {
@@ -21,7 +22,14 @@ export default lifecycle({
             props.dispatch(appActions.pushBattleScene({}))
           }}
         >
-          Go forward
+          Enter battle
+        </button>
+        <button
+          onClick={() => {
+            props.dispatch(adventureActions.addLog('Test'))
+          }}
+        >
+          Exec something event
         </button>
         <button
           onClick={() => {
@@ -31,10 +39,12 @@ export default lifecycle({
           Exit
         </button>
       </div>
+      <LogBoard direction="upper" messages={props.log} />
+      <div />
       <div>
         <h3>Actors</h3>
-        {props.adventure.adventureSession &&
-          props.adventure.adventureSession.actors.map((a, index) => (
+        {props.adventureSession &&
+          props.adventureSession.actors.map((a, index) => (
             <div key={index}>{a.displayName}</div>
           ))}
       </div>

@@ -1,20 +1,21 @@
 /* @flow */
+import uuid from 'uuid'
 
 export const NO_TARGETED_SKILL = 'NO_TARGETED_SKILL'
 
 export type Input = {|
   type: typeof NO_TARGETED_SKILL,
-  id: Symbol,
-  battlerId: Symbol,
-  skillId: Symbol
+  id: string,
+  battlerId: string,
+  skillId: string
 |}
 
 export const createNoTargetedSkillInput = (
-  battlerId: Symbol,
-  skillId: Symbol
+  battlerId: string,
+  skillId: string
 ) =>
   Object.freeze({
-    id: Symbol,
+    id: uuid(),
     type: typeof NO_TARGETED_SKILL,
     battlerId,
     skillId

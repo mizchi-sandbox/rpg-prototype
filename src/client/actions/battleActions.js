@@ -44,8 +44,8 @@ export type BattleAction =
   | {
       type: typeof ADD_INPUT_TO_QUEUE,
       payload: {
-        battlerId: Symbol,
-        skillId: Symbol
+        battlerId: string,
+        skillId: string
       }
     }
   | {
@@ -87,7 +87,7 @@ export const openBattleSessionResult = (result: BattleSessionResult) => ({
 })
 export const closeBattleSessionResult = () => ({ type: EXIT_BATTLE_SESSION })
 export const log = (message: string) => ({ type: LOG, payload: message })
-export const addInputToQueue = (battlerId: Symbol, skillId: Symbol) => {
+export const addInputToQueue = (battlerId: string, skillId: string) => {
   return {
     type: ADD_INPUT_TO_QUEUE,
     payload: createNoTargetedSkillInput(battlerId, skillId)

@@ -6,12 +6,10 @@ import type { AppAction } from '../actions/appActions'
 import type { AdventureAction } from '../actions/adventureActions'
 import type { State as AdventureState } from '../reducers/adventure'
 
-export type AdventureContainerProps = RootState &
+export type AdventureContainerProps = AdventureState &
   Redux$Dispatcher<AppAction | AdventureAction>
 
-const mapStateToProps: RootState => { adventure: AdventureState } = root => ({
-  adventure: root.adventure
-})
+const mapStateToProps: RootState => AdventureState = root => root.adventure
 
 const connector: Redux$Connector<{}, RootState, any> = connect(mapStateToProps)
 export default connector(AdventureScene)

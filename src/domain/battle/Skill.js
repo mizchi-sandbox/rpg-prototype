@@ -1,11 +1,12 @@
 /* @flow */
+import uuid from 'uuid'
 import type { RangedValue } from 'domain/values/RangedValue'
 import type { SkillData, SkillId } from 'domain/master'
 import { increment } from 'domain/values/RangedValue'
 import { loadSkillData } from 'domain/master'
 
 export type Skill = {
-  id: Symbol, // FIXIT: can not seriarize to send
+  id: string, // FIXIT: can not seriarize to send
   data: SkillData,
   lv: number,
   cooldown: RangedValue
@@ -16,7 +17,7 @@ export function buildSkill(id: SkillId, lv: number): Skill {
   return Object.freeze({
     data,
     lv,
-    id: Symbol('Skill'),
+    id: uuid(),
     cooldown: {
       val: 0,
       max: data.cooldownCount

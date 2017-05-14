@@ -4,22 +4,26 @@ import type { AdventureAction } from '../actions/adventureActions'
 import type { AdventureSession } from 'domain/entities/AdventureSession'
 
 export type State = {
-  adventureSession: ?AdventureSession
+  adventureSession: ?AdventureSession,
+  log: string[]
 }
 
 const initialState: State = {
-  adventureSession: undefined
+  adventureSession: undefined,
+  log: []
 }
 
-export default (
-  state: State = initialState,
-  action: AdventureAction
-) => {
+export default (state: State = initialState, action: AdventureAction) => {
   switch (action.type) {
     case AdventureActions.PLAYING_SESSION_LOADED:
       return {
         ...state,
         adventureSession: action.payload
+      }
+    case AdventureActions.ADD_LOG:
+      return {
+        ...state,
+        log: [action.payload].concat(state.log)
       }
     default:
       return state
