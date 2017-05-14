@@ -2,6 +2,7 @@
 import React from 'react'
 import BattleContainer from '../containers/BattleContainer'
 import DebugModeContainer from '../containers/DebugModeContainer'
+import AdventureContainer from '../containers/AdventureContainer'
 import type { AppContainerProps } from '../containers/AppContainer'
 import Layout from './Layout'
 
@@ -13,6 +14,8 @@ export default function App(props: AppContainerProps) {
         switch (frontScene.sceneId) {
           case 'debug-mode':
             return <DebugModeContainer />
+          case 'adventure':
+            return <AdventureContainer />
           case 'battle':
             return <BattleContainer />
         }

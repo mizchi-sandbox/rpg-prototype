@@ -22,6 +22,16 @@ export function pushBattleScene(sceneData: {}) {
   }
 }
 
+export function pushAdventureScene(sceneData: {}) {
+  return {
+    type: PUSH_SCENE,
+    payload: {
+      sceneId: 'adventure',
+      sceneData
+    }
+  }
+}
+
 export function popScene() {
   return {
     type: POP_SCENE

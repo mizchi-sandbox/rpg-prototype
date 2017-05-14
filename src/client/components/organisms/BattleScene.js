@@ -66,9 +66,7 @@ export default class BattleScene extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      adventureSession: { adventureSession }
-    } = this.context.store.getState()
+    const { adventure: { adventureSession } } = this.context.store.getState()
     if (adventureSession) {
       this.props.dispatch(requestStart(adventureSession))
     }

@@ -19,6 +19,13 @@ export function DebugMode(props: DebugModeContainerProps) {
       >
         Battle start
       </button>
+      <button
+        onClick={() => {
+          props.dispatch(appActions.pushAdventureScene({}))
+        }}
+      >
+        Adventure start
+      </button>
       <hr />
       <p>AdventureSession Dump</p>
       <div>
