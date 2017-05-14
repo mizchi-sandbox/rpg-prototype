@@ -1,13 +1,18 @@
 /* @flow */
 import React from 'react'
+import { lifecycle } from 'recompose'
 import type {
   DebugModeContainerProps
 } from '../../containers/DebugModeContainer'
 import * as appActions from '../../actions/appActions'
-import * as adventureActions from '../../actions/adventureActions'
+// import * as adventureActions from '../../actions/adventureActions'
 import * as playingActions from '../../actions/playingActions'
 
-export function DebugMode(props: DebugModeContainerProps) {
+export default lifecycle({
+  componentDidMount() {
+    // console.log('didmount')
+  }
+})(function DebugMode(props: DebugModeContainerProps) {
   return (
     <div>
       <h1>DebugMode</h1>
@@ -51,15 +56,4 @@ export function DebugMode(props: DebugModeContainerProps) {
       </div>
     </div>
   )
-}
-
-export default class _DebugMode extends React.Component {
-  props: DebugModeContainerProps
-  componentDidMount() {
-    this.props.dispatch(playingActions.requestToStartPlayingSession('$save1'))
-    this.props.dispatch(adventureActions.requestLoadAdventureSession())
-  }
-  render() {
-    return <DebugMode {...this.props} dispatch={this.props.dispatch} />
-  }
-}
+})
