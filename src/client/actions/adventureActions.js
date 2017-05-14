@@ -3,7 +3,7 @@ import type { AdventureSession } from 'domain/entities/AdventureSession'
 
 export const REQUEST_LOAD_PLAYING_SESSION = 'playingSession/request-loading'
 export const PLAYING_SESSION_LOADED = 'playingSession/loaded'
-export type AdventureSessionAction =
+export type AdventureAction =
   | {
       type: typeof REQUEST_LOAD_PLAYING_SESSION
     }
@@ -12,7 +12,7 @@ export type AdventureSessionAction =
       payload: AdventureSession
     }
 
-export function requestLoadAdventureSession() {
+export function requestLoadAdventureSession(): AdventureAction {
   return {
     type: REQUEST_LOAD_PLAYING_SESSION
   }

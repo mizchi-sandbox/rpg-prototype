@@ -1,6 +1,6 @@
 /* @flow */
 import * as AdventureActions from '../actions/adventureActions'
-import type { AdventureSessionAction } from '../actions/adventureActions'
+import type { AdventureAction } from '../actions/adventureActions'
 import type { AdventureSession } from 'domain/entities/AdventureSession'
 
 export type State = {
@@ -13,7 +13,7 @@ const initialState: State = {
 
 export default (
   state: State = initialState,
-  action: AdventureSessionAction
+  action: AdventureAction
 ) => {
   switch (action.type) {
     case AdventureActions.PLAYING_SESSION_LOADED:
