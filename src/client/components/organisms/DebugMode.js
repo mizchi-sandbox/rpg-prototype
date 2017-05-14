@@ -4,7 +4,8 @@ import type {
   DebugModeContainerProps
 } from '../../containers/DebugModeContainer'
 import * as appActions from '../../actions/appActions'
-import * as adventureSessionActions from '../../actions/adventureSessionActions'
+import * as adventureActions from '../../actions/adventureActions'
+import * as playingActions from '../../actions/playingActions'
 
 export function DebugMode(props: DebugModeContainerProps) {
   return (
@@ -22,16 +23,16 @@ export function DebugMode(props: DebugModeContainerProps) {
       <p>AdventureSession Dump</p>
       <div>
         <h3>Actors</h3>
-        {props.adventureSession.adventureSession &&
-          props.adventureSession.adventureSession.actors.map((a, index) => (
+        {props.adventure.adventureSession &&
+          props.adventure.adventureSession.actors.map((a, index) => (
             <div key={index}>{a.displayName}</div>
           ))}
       </div>
       <hr />
       <div>
         <h3>Resources</h3>
-        {props.adventureSession.adventureSession &&
-          props.adventureSession.adventureSession.resources.map((r, index) => (
+        {props.adventure.adventureSession &&
+          props.adventure.adventureSession.resources.map((r, index) => (
             <div key={index}>{r.resourceName}: {r.amount}</div>
           ))}
       </div>
@@ -42,7 +43,8 @@ export function DebugMode(props: DebugModeContainerProps) {
 export default class _DebugMode extends React.Component {
   props: DebugModeContainerProps
   componentDidMount() {
-    this.props.dispatch(adventureSessionActions.requestLoadAdventureSession())
+    this.props.dispatch(playingActions.requestToStartPlayingSession({}))
+    this.props.dispatch(adventureActions.requestLoadAdventureSession())
   }
   render() {
     return <DebugMode {...this.props} dispatch={this.props.dispatch} />
