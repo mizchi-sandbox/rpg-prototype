@@ -6,12 +6,10 @@ import type { State as BattleState } from '../reducers/battle'
 import type { State as RootReducerState } from '../reducers'
 import type { BattleAction } from '../actions/battleActions'
 import type { AppAction } from '../actions/appActions'
-// eslint-disable-next-line
-import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 
 export type BattleContainerAction = BattleAction | AppAction
 export type BattleContainerProps = BattleState &
-  Dispatcher<BattleContainerAction>
+  Redux$Dispatcher<BattleContainerAction>
 
 function BattleContainer(props: BattleContainerProps) {
   return <BattleScene {...props} dispatch={props.dispatch} />
@@ -19,7 +17,7 @@ function BattleContainer(props: BattleContainerProps) {
 
 const mapStateToProps: RootReducerState => BattleState = root => root.battle
 
-const connector: Connector<
+const connector: Redux$Connector<
   {},
   BattleContainerProps,
   BattleContainerAction
