@@ -7,16 +7,20 @@ export const PLAYING_SESSION_LOADED = 'playingSession/PLAYING_SESSION_LOADED'
 
 export type PlayingAction =
   | {
-      type: typeof REQUEST_TO_START_PLYAING_SESSION
+      type: typeof REQUEST_TO_START_PLYAING_SESSION,
+      payload: {
+        savedataId: string
+      }
     }
   | {
       type: typeof PLAYING_SESSION_LOADED,
       payload: PlayingSession
     }
 
-export function requestToStartPlayingSession(_savedata: any) {
+export function requestToStartPlayingSession(savedataId: string) {
   return {
-    type: REQUEST_TO_START_PLYAING_SESSION
+    type: REQUEST_TO_START_PLYAING_SESSION,
+    payload: { savedataId }
   }
 }
 

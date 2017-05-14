@@ -1,12 +1,21 @@
 /* @flow */
-import { playingSessionMock0 } from './__mocks/playingSessionMock'
+import uuid from 'uuid'
 import type { Resource } from './Resource'
+import * as SavedataActions from './Savedata'
 
 export type PlayingSession = {
   id: string,
+  savedataId: string,
   resources: Resource[]
 }
 
-export function load() {
-  return playingSessionMock0
+// TODO: Mocked
+export function loadBySavedataId(savedataId: string): PlayingSession {
+  const savedata = SavedataActions.load(savedataId)
+  return {
+    id: uuid(),
+    savedataId: savedata.id,
+    playerName: savedata.playerName,
+    resources: savedata.resources
+  }
 }

@@ -212,18 +212,19 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     gridTemplateAreas: `
-      "header header"
       "enemies log"
       "allies log"
+      "header header"
     `,
     gridTemplateColumns: `3fr 2fr`,
     gridTemplateRows: `
+      2fr
+      1fr
       40px
-      1fr
-      1fr
     `
   },
   header: {
+    backgroundColor: 'rgba(200, 200, 200, 0.2)',
     padding: '3px',
     gridArea: 'header'
   },
@@ -231,6 +232,7 @@ const styles = StyleSheet.create({
     gridArea: 'main'
   },
   allies: {
+    backgroundColor: 'rgba(0, 0, 255, 0.2)',
     boxSizing: 'border-box',
     padding: '15px',
     minHeight: '100px',
@@ -238,11 +240,13 @@ const styles = StyleSheet.create({
   },
 
   enemies: {
+    backgroundColor: 'rgba(255, 0, 0, 0.2)',
     margin: 'auto auto',
     gridArea: 'enemies'
   },
 
   log: {
+    backgroundColor: 'rgba(0, 255, 0, 0.2)',
     paddingTop: '40px',
     gridArea: 'log'
   }

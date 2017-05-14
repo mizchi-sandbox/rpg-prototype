@@ -14,11 +14,19 @@ export function DebugMode(props: DebugModeContainerProps) {
       <hr />
       <button
         onClick={() => {
-          props.dispatch(appActions.pushBattleScene({}))
+          props.dispatch(playingActions.requestToStartPlayingSession('$save1'))
         }}
       >
-        Battle start
+        Use $save1
       </button>
+      <button
+        onClick={() => {
+          props.dispatch(playingActions.requestToStartPlayingSession('$save2'))
+        }}
+      >
+        Use $save2
+      </button>
+      &nbsp;
       <button
         onClick={() => {
           props.dispatch(appActions.pushAdventureScene({}))
@@ -26,21 +34,19 @@ export function DebugMode(props: DebugModeContainerProps) {
       >
         Adventure start
       </button>
+      <button
+        onClick={() => {
+          props.dispatch(appActions.pushBattleScene({}))
+        }}
+      >
+        Battle start with mock data
+      </button>
       <hr />
-      <p>AdventureSession Dump</p>
       <div>
         <h3>Actors</h3>
         {props.adventure.adventureSession &&
           props.adventure.adventureSession.actors.map((a, index) => (
             <div key={index}>{a.displayName}</div>
-          ))}
-      </div>
-      <hr />
-      <div>
-        <h3>Resources</h3>
-        {props.adventure.adventureSession &&
-          props.adventure.adventureSession.resources.map((r, index) => (
-            <div key={index}>{r.resourceName}: {r.amount}</div>
           ))}
       </div>
     </div>
@@ -50,7 +56,7 @@ export function DebugMode(props: DebugModeContainerProps) {
 export default class _DebugMode extends React.Component {
   props: DebugModeContainerProps
   componentDidMount() {
-    this.props.dispatch(playingActions.requestToStartPlayingSession({}))
+    this.props.dispatch(playingActions.requestToStartPlayingSession('$save1'))
     this.props.dispatch(adventureActions.requestLoadAdventureSession())
   }
   render() {

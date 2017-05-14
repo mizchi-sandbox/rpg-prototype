@@ -5,7 +5,7 @@ export const resourcesMock0: Resource[] = [
   {
     resourceId: '$gold',
     resourceName: 'gold',
-    amount: 100
+    amount: 0
   },
   {
     resourceId: '$energy',
