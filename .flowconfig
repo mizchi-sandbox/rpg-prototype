@@ -1,14 +1,12 @@
 [ignore]
-.*/.fusebox
 .*/node_modules/flow.*
-.*/node_modules/fuse-box.*
 .*/node_modules/babel-plugin-flow.*
 .*/node_modules/stylelint.*
 
 [include]
 
 [libs]
-./decls
+./flow-typed
 
 [options]
 module.ignore_non_literal_requires=true
