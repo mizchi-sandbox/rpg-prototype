@@ -23,7 +23,7 @@ export default (state: State = initialState, action: AdventureAction) => {
     case AdventureActions.ADD_LOG:
       return {
         ...state,
-        log: [action.payload].concat(state.log)
+        log: [action.payload].concat(state.log).slice(0, 4)
       }
     default:
       return state

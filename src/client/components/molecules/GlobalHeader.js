@@ -17,8 +17,8 @@ export default function GlobalHeader(props: GlobalHeaderContainerProps) {
       &nbsp;
       <div style={{ display: 'inline-block' }}>
         <span>Resources/</span>
-        {props.adventure.adventureSession &&
-          props.adventure.adventureSession.resources.map((r, index) => (
+        {props.playing.playingSession &&
+          props.playing.playingSession.resources.map((r, index) => (
             <span key={index}>{r.resourceName}: {r.amount}</span>
           ))}
       </div>

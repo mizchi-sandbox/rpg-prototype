@@ -35,3 +35,10 @@ export function addResource(
     return { ...session, resources: session.resources.concat([res]) }
   }
 }
+
+export function addResources(
+  session: AdventureSession,
+  resources: Resource[]
+): AdventureSession {
+  return resources.reduce((acc, res) => addResource(acc, res), session)
+}

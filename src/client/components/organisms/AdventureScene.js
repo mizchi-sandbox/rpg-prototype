@@ -26,7 +26,16 @@ export default lifecycle({
         </button>
         <button
           onClick={() => {
-            props.dispatch(adventureActions.addLog('Test'))
+            // props.dispatch(adventureActions.addLog('Test'))
+            props.dispatch(
+              adventureActions.requestAddResources([
+                {
+                  resourceId: '$energy',
+                  resourceName: 'energy',
+                  amount: 30
+                }
+              ])
+            )
           }}
         >
           Exec something event
@@ -46,6 +55,13 @@ export default lifecycle({
         {props.adventureSession &&
           props.adventureSession.actors.map((a, index) => (
             <div key={index}>{a.displayName}</div>
+          ))}
+      </div>
+      <div style={{ display: 'inline-block' }}>
+        <span>Resources/</span>
+        {props.adventureSession &&
+          props.adventureSession.resources.map((r, index) => (
+            <span key={index}>{r.resourceName}: {r.amount}</span>
           ))}
       </div>
     </div>
