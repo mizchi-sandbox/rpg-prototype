@@ -1,5 +1,5 @@
 /* @flow */
-import type { Resource } from '../Resource'
+import type { Resource } from '../entities/Resource'
 
 export const resourcesMock0: Resource[] = [
   {

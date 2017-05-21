@@ -1,7 +1,7 @@
 /* @flow */
 import * as AdventureActions from '../actions/adventureActions'
 // import * as PlayingActions from '../actions/playingActions'
-import * as AdventureSession from 'domain/entities/AdventureSession'
+import * as AdventureSession from 'domain/sessions/AdventureSession'
 import type { Resource } from 'domain/entities/Resource'
 import { take, takeEvery, put, race } from 'redux-saga/effects'
 

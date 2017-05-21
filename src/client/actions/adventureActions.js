@@ -1,5 +1,5 @@
 /* @flow */
-import type { AdventureSession } from 'domain/entities/AdventureSession'
+import type { AdventureSession } from 'domain/sessions/AdventureSession'
 import type { Resource } from 'domain/entities/Resource'
 
 export const REQUEST_ADD_RESOURCES = 'adventure/request-add-resource'

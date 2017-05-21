@@ -7,7 +7,7 @@ import type { CommandResult } from './CommandResult'
 import type { Input } from './Input'
 import type { BattleSessionResult } from './BattleSessionResult'
 import { battleStateMock0 } from './__mock/battleStateMock'
-import type { AdventureSession } from 'domain/entities/AdventureSession'
+import type { AdventureSession } from 'domain/sessions/AdventureSession'
 
 // State
 export type BattleSession = {

@@ -1,6 +1,6 @@
 /* @flow */
 import uuid from 'uuid'
-import type { PlayingSession } from '../PlayingSession'
+import type { PlayingSession } from '../sessions/PlayingSession'
 import { resourcesMock0 } from './resourceMock'
 
 export const playingSessionMock0: PlayingSession = {

@@ -1,5 +1,5 @@
 /* @flow */
-import type { Savedata } from '../Savedata'
+import type { Savedata } from '../entities/Savedata'
 
 export const savedataListForTest: Savedata[] = [
   {

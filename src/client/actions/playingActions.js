@@ -1,5 +1,5 @@
 /* @flow */
-import type { PlayingSession } from 'domain/entities/PlayingSession'
+import type { PlayingSession } from 'domain/sessions/PlayingSession'
 
 export const REQUEST_TO_START_PLYAING_SESSION =
   'playingSession/REQUEST_TO_START_PLYAING_SESSION'

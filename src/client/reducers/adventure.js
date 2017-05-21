@@ -1,7 +1,7 @@
 /* @flow */
 import * as AdventureActions from '../actions/adventureActions'
 import type { AdventureAction } from '../actions/adventureActions'
-import type { AdventureSession } from 'domain/entities/AdventureSession'
+import type { AdventureSession } from 'domain/sessions/AdventureSession'
 
 export type State = {
   adventureSession: ?AdventureSession,

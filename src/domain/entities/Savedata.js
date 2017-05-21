@@ -1,5 +1,5 @@
 /* @flow */
-import { savedataListForTest } from './__mocks/savedataMock'
+import { savedataListForTest } from '../__mocks/savedataMock'
 import type { Resource } from './Resource'
 
 export type Savedata = {

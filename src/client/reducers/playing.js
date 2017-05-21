@@ -1,7 +1,7 @@
 /* @flow */
 import * as PlayingSessionActions from '../actions/playingActions'
 import type { PlayingAction } from '../actions/playingActions'
-import type { PlayingSession } from 'domain/entities/PlayingSession'
+import type { PlayingSession } from 'domain/sessions/PlayingSession'
 
 export type State = {
   playingSession: ?PlayingSession

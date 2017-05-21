@@ -1,6 +1,6 @@
 /* @flow */
 import * as PlayingActions from '../actions/playingActions'
-import * as PlayingSession from 'domain/entities/PlayingSession'
+import * as PlayingSession from 'domain/sessions/PlayingSession'
 import { takeEvery, put } from 'redux-saga/effects'
 
 // export function* load(action: { payload: { savedataId: string } }): any {

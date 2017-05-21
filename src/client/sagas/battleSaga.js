@@ -4,7 +4,7 @@ import { delay } from 'redux-saga'
 import { sync } from '../actions/battleSagaActions'
 import * as battleActions from '../actions/battleActions'
 import type { BattleSession } from 'domain/battle'
-import type { AdventureSession } from 'domain/entities/AdventureSession'
+import type { AdventureSession } from 'domain/sessions/AdventureSession'
 import {
   isBattleFinished,
   processTurn,
