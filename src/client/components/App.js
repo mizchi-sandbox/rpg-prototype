@@ -3,6 +3,7 @@ import React from 'react'
 import BattleContainer from '../containers/BattleContainer'
 import DebugModeContainer from '../containers/DebugModeContainer'
 import AdventureContainer from '../containers/AdventureContainer'
+import SetupContainer from '../containers/SetupContainer'
 import type { AppContainerProps } from '../containers/AppContainer'
 import Layout from './Layout'
 
@@ -18,6 +19,8 @@ export default function App(props: AppContainerProps) {
             return <AdventureContainer />
           case 'battle':
             return <BattleContainer />
+          case 'setup':
+            return <SetupContainer />
         }
         return <h1>App</h1>
       })()}

@@ -6,15 +6,19 @@ export type Action = AppAction
 
 export type Scene =
   | {
-      sceneId: 'battle',
-      sceneData: {}
-    }
-  | {
       sceneId: 'debug-mode',
       sceneData: {}
     }
   | {
+      sceneId: 'battle',
+      sceneData: {}
+    }
+  | {
       sceneId: 'adventure',
+      sceneData: {}
+    }
+  | {
+      sceneId: 'setup',
       sceneData: {}
     }
 

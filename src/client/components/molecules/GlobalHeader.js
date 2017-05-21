@@ -1,5 +1,6 @@
 /* @flow */
 import React from 'react'
+import * as AppActions from '../../actions/appActions'
 import type { GlobalHeaderContainerProps } from '../../containers/GlobalHeader'
 
 export default function GlobalHeader(props: GlobalHeaderContainerProps) {
@@ -14,6 +15,13 @@ export default function GlobalHeader(props: GlobalHeaderContainerProps) {
       <div style={{ display: 'inline-block' }}>
         {props.app.sceneStack.map(scene => `[${scene.sceneId}]`).join(' > ')}
       </div>
+      {props.app.sceneStack.length > 1 &&
+        <button
+          style={{ color: 'black' }}
+          onClick={_ => props.dispatch(AppActions.popScene())}
+        >
+          back
+        </button>}
       &nbsp;
       <div style={{ display: 'inline-block' }}>
         <span>Resources/</span>

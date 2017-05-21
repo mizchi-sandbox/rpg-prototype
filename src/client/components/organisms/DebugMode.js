@@ -17,6 +17,7 @@ export default lifecycle({
     <div>
       <h1>DebugMode</h1>
       <hr />
+      debug:
       <button
         onClick={() => {
           props.dispatch(playingActions.requestToStartPlayingSession('$save1'))
@@ -34,17 +35,40 @@ export default lifecycle({
       &nbsp;
       <button
         onClick={() => {
-          props.dispatch(appActions.pushAdventureScene({}))
-        }}
-      >
-        Adventure start
-      </button>
-      <button
-        onClick={() => {
           props.dispatch(appActions.pushBattleScene({}))
         }}
       >
         Battle start with mock data
+      </button>
+      <button
+        onClick={() => {
+          props.dispatch(appActions.toggleResetOnReload())
+        }}
+      >
+        Reset on reload
+      </button>
+      <hr />
+      Menu:
+      <button
+        onClick={() => {
+          props.dispatch(appActions.pushSetupScene({}))
+        }}
+      >
+        Setup
+      </button>
+      <button
+        onClick={() => {
+          // props.dispatch(appActions.pushSetupScene({}))
+        }}
+      >
+        Select World
+      </button>
+      <button
+        onClick={() => {
+          props.dispatch(appActions.pushAdventureScene({}))
+        }}
+      >
+        Adventure Start
       </button>
       <hr />
       <div>

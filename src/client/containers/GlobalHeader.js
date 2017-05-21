@@ -1,9 +1,6 @@
 /* @flow */
 import { connect } from 'react-redux'
 import GlobalHeader from '../components/molecules/GlobalHeader'
-// eslint-disable-next-line
-// import type { Dispatcher, Connector } from '@mizchi/redux-helper'
-// import type { Dispatcher, Connector } from '@mizchi/redux-helper'
 import type { State as RootState } from '../reducers'
 import type { AppAction } from '../actions/appActions'
 import type { AdventureAction } from '../actions/adventureActions'
