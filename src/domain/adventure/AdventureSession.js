@@ -1,5 +1,4 @@
 /* @flow */
-// import { updateIn } from '../utils/arrayUtils'
 import type { Actor } from '../entities/Actor'
 import type { Resource } from '../entities/Resource'
 import { adventureSessionMock0 } from '../__mocks/adventureSessionMock'

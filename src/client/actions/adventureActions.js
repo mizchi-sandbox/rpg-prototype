@@ -1,5 +1,6 @@
 /* @flow */
 import type { AdventureSession } from 'domain/adventure/AdventureSession'
+import type { AdventureResult } from 'domain/adventure/AdventureResult'
 import type { Resource } from 'domain/entities/Resource'
 
 export const REQUEST_ADD_RESOURCES = 'adventure/request-add-resource'
@@ -9,24 +10,16 @@ export const PLAYING_SESSION_LOADED = 'adventure/loaded'
 export const ADD_LOG = 'adventure/add-log'
 export const EXIT = 'adventure/exit'
 
-// TODO: create file
-type AdventureSessionResult = {
-  type: {
-    resources: Resource[]
-  }
-}
-// ============
-
 export type AdventureAction =
   | {
       type: typeof REQUEST_START_ADVENTURE
     }
   | {
-      type: typeof REQUEST_EXIT
+      type: typeof REQUEST_EXIT,
+      payload: AdventureResult
     }
   | {
-      type: typeof EXIT,
-      payload: AdventureSessionResult
+      type: typeof EXIT
     }
   | {
       type: typeof ADD_LOG,
@@ -49,18 +42,16 @@ export function requestLoadAdventureSession(): AdventureAction {
   }
 }
 
-export function requestExit(): AdventureAction {
+export function exit(): AdventureAction {
   return {
-    type: REQUEST_EXIT
+    type: EXIT
   }
 }
 
-export function exit(
-  adventureSessionResult: AdventureSessionResult
-): AdventureAction {
+export function requestExit(result: AdventureResult): AdventureAction {
   return {
-    type: EXIT,
-    payload: adventureSessionResult
+    type: REQUEST_EXIT,
+    payload: result
   }
 }
 
@@ -72,7 +63,7 @@ export function requestAddResources(resources: Resource[]): AdventureAction {
   }
 }
 
-export function loadedAdventureSession(payload: AdventureSession) {
+export function sync(payload: AdventureSession) {
   return {
     type: PLAYING_SESSION_LOADED,
     payload

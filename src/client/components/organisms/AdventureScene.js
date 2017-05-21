@@ -26,7 +26,6 @@ export default lifecycle({
         </button>
         <button
           onClick={() => {
-            // props.dispatch(adventureActions.addLog('Test'))
             props.dispatch(
               adventureActions.requestAddResources([
                 {
@@ -42,7 +41,14 @@ export default lifecycle({
         </button>
         <button
           onClick={() => {
-            props.dispatch(appActions.popScene())
+            // props.dispatch(appActions.popScene())
+            // props.dispatch(adventureActions.exit())
+            if (props.adventureSession) {
+              const result = {
+                session: props.adventureSession
+              }
+              props.dispatch(adventureActions.requestExit(result))
+            }
           }}
         >
           Exit
