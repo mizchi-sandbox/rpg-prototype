@@ -1,7 +1,7 @@
 /* @flow */
 import uuid from 'uuid'
 import { resourcesMock0 } from './resourceMock'
-import type { AdventureSession } from 'domain/sessions/AdventureSession'
+import type { AdventureSession } from 'domain/adventure/AdventureSession'
 
 export const adventureSessionMockMinimum: AdventureSession = {
   id: uuid(),

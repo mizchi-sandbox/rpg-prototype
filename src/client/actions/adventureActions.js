@@ -1,9 +1,9 @@
 /* @flow */
-import type { AdventureSession } from 'domain/sessions/AdventureSession'
+import type { AdventureSession } from 'domain/adventure/AdventureSession'
 import type { Resource } from 'domain/entities/Resource'
 
 export const REQUEST_ADD_RESOURCES = 'adventure/request-add-resource'
-export const REQUEST_LOAD_PLAYING_SESSION = 'adventure/request-loading'
+export const REQUEST_START_ADVENTURE = 'adventure/request-loading'
 export const REQUEST_EXIT = 'adventure/request-exit'
 export const PLAYING_SESSION_LOADED = 'adventure/loaded'
 export const ADD_LOG = 'adventure/add-log'
@@ -19,7 +19,7 @@ type AdventureSessionResult = {
 
 export type AdventureAction =
   | {
-      type: typeof REQUEST_LOAD_PLAYING_SESSION
+      type: typeof REQUEST_START_ADVENTURE
     }
   | {
       type: typeof REQUEST_EXIT
@@ -45,7 +45,7 @@ export type AdventureAction =
 
 export function requestLoadAdventureSession(): AdventureAction {
   return {
-    type: REQUEST_LOAD_PLAYING_SESSION
+    type: REQUEST_START_ADVENTURE
   }
 }
 

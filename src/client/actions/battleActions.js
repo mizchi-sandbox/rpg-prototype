@@ -1,5 +1,5 @@
 /* @flow */
-import type { AdventureSession } from 'domain/sessions/AdventureSession'
+import type { AdventureSession } from 'domain/adventure/AdventureSession'
 import type { Input, BattleSessionResult } from 'domain/battle'
 import { createNoTargetedSkillInput } from 'domain/battle'
 
