@@ -45,7 +45,7 @@ export default lifecycle({
           props.dispatch(appActions.toggleResetOnReload())
         }}
       >
-        Reset on reload
+        [WIP] Reset on reload
       </button>
       <hr />
       Menu:
@@ -61,7 +61,7 @@ export default lifecycle({
           // props.dispatch(appActions.pushSetupScene({}))
         }}
       >
-        Select World
+        [WIP] Select World
       </button>
       <button
         onClick={() => {
