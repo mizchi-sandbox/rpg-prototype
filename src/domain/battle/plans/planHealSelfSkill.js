@@ -52,7 +52,7 @@ const planHealSelfSkill: (
     const targets = nextEnv.battlers.filter(b => {
       return b.side !== plan.actor.side && BattlerActions.isTargetable(b)
     })
-    return handleHealSelfSkill(nextEnv, plan.actor, plan.skill, targets)
+    return handleHealSelfSkill(nextEnv, plan.actor, plan.skill)
   }
 }
 

@@ -102,7 +102,7 @@ export function processTurn(
   inputQueue: Input[]
 ): { session: BattleSession, commandResults: CommandResult[] } {
   // update pre-actions
-  const preUpdatedState = processPreUpdatePhase(session, inputQueue)
+  const preUpdatedState = processPreUpdatePhase(session)
 
   // create commands
   const commandQueue = processPlanningPhase(preUpdatedState, inputQueue)

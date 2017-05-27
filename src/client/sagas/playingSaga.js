@@ -6,7 +6,10 @@ import type { AdventureResult } from 'domain/adventure/AdventureResult'
 
 let currentSession = null
 
-export function* load(action: { payload: { savedataId: string } }): any {
+export function* load(action: {
+  type: typeof PlayingActions.REQUEST_FINISH_ADVENTURE,
+  payload: { savedataId: string }
+}): any {
   currentSession = PlayingSession.loadBySavedataId(action.payload.savedataId)
   yield put(PlayingActions.loaded(currentSession))
 }

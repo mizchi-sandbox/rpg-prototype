@@ -12,16 +12,7 @@ let code = `
 import data from './data'
 `
 const all = {}
-;[
-  'consume-item',
-  'job',
-  'material',
-  'race',
-  'skill',
-  'monster',
-  'dungeon',
-  'troop'
-].forEach(t => {
+;['material', 'skill', 'shell', 'monster', 'dungeon', 'troop'].forEach(t => {
   const data = require(path.resolve(__dirname, `../masterdata/data/${t}-data`))
   const schema = require(path.resolve(
     __dirname,
