@@ -1,6 +1,6 @@
 /* @flow */
 /* eslint-disable */
-import { configure } from '@kadira/storybook'
+import { configure } from '@storybook/react'
 
 configure(() => {
   require('../src/client/components/atoms/__stories/SkillIcon.stories.js')

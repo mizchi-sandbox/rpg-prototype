@@ -2,13 +2,14 @@
   "presets": [
     ["env", {
       "targets": {
-        "Chorme": 56
+        "Chorme": 58
       },
       "exclude": [
         "transform-regenerator"
       ]
     }],
-    "react"
+    "react",
+    "flow"
   ],
   "plugins": [
     "transform-decorators-legacy",
@@ -16,7 +17,6 @@
     "transform-object-rest-spread",
     "react-hot-loader/babel",
     "dynamic-import-webpack",
-    ["flow-runtime", {"assert": true}],
     ["module-resolver", {
       "root": ["./src"],
       "alias": {

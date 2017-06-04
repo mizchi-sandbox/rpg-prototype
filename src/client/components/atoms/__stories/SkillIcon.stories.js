@@ -1,7 +1,7 @@
 /* @flow */
 import uuid from 'uuid'
 import React from 'react'
-import { action, storiesOf } from '@kadira/storybook'
+import { action, storiesOf } from '@storybook/react'
 import SkillIcon from '../SkillIcon'
 import { loadSkillData } from 'domain/master'
 

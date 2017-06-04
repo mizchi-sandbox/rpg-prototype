@@ -2,6 +2,7 @@
 .*/node_modules/flow.*
 .*/node_modules/babel-plugin-flow.*
 .*/node_modules/stylelint.*
+.*/node_modules/styled-components.*
 
 [include]
 
